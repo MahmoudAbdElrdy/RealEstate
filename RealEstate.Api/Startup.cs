@@ -1,16 +1,23 @@
+using AutoMapper;
+using Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RealEstate.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 
 namespace RealEstate.Api
 {
@@ -28,32 +35,74 @@ namespace RealEstate.Api
         {
             #region MVC Settings
 
-            services.AddCors();
+           // services.AddCors();
 
             //services.AddControllers(options => options.EnableEndpointRouting = false);
             //services.AddControllers().AddNewtonsoftJson(options =>
             //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             //);
-            services.AddControllers().AddJsonOptions(op => op.JsonSerializerOptions.PropertyNamingPolicy = null);
-            services.AddCors(options => {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
+            //services.AddControllers().AddJsonOptions(op => op.JsonSerializerOptions.PropertyNamingPolicy = null);
+            //services.AddCors(options => {
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.AllowAnyOrigin()
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader());
+            //});
 
           
 
-            services.AddDistributedMemoryCache();
+           // services.AddDistributedMemoryCache();
 
             #endregion
             #region DbContext
 
-            //services.AddEntityFrameworkSqlServer().AddDbContext<CTSContext>(options =>
-            // options.UseLazyLoadingProxies(false).UseSqlServer(Configuration["ConnectionStrings:RealEstateConnection"]));
-          
-            #endregion
+            services.AddEntityFrameworkSqlServer().AddDbContext<RealEstateContext>(options =>
+             options.UseLazyLoadingProxies(false).UseSqlServer(Configuration["ConnectionStrings:RealEstateConnection"]));
 
+            #endregion
+            #region 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            })
+         .AddJwtBearer("JwtBearer", jwtOptions =>
+         {
+             jwtOptions.TokenValidationParameters = new TokenValidationParameters()
+             {
+                   // The SigningKey is defined in the TokenController class
+                   IssuerSigningKey = Settings.SIGNING_KEY,
+                 ValidateIssuer = false,
+                 ValidateAudience = false,
+                 ValidateIssuerSigningKey = true,
+                 ValidateLifetime = true,
+                 ClockSkew = TimeSpan.FromMinutes(1500)
+             };
+         });
+            #endregion
+            #region ScopedServiceAttribute
+            string[] assembliesToBeScanned = new string[] { "RealEstate.DataAccess" };
+            services.AddServicesOfAllTypes(assembliesToBeScanned);
+            services.AddServicesWithAttributeOfType<ScopedServiceAttribute>(assembliesToBeScanned);
+           
+            services.AddServicesWithAttributeOfType<SingletonServiceAttribute>(assembliesToBeScanned);
+           
+            services.AddHttpContextAccessor();
+            #endregion
+            #region Mapper
+            if (services != null)
+            {
+                var provider = services.BuildServiceProvider();
+                BaseEntityExtension.Configure(provider.GetService<IMapper>());
+                provider.GetRequiredService<IServiceScopeFactory>();
+            }
+
+            services.AddAutoMapper(new Assembly[] {
+                typeof(AutoMapperProfile).GetTypeInfo().Assembly,
+            })
+            .AddHttpContextAccessor()
+            .AddHttpClient();
+            #endregion
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -80,5 +129,7 @@ namespace RealEstate.Api
                 endpoints.MapControllers();
             });
         }
+      
     }
+
 }
