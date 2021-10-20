@@ -2,8 +2,7 @@
 using Mapper;
 using RealEstate.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace RealEstate.DataAccess
 {
@@ -14,9 +13,17 @@ namespace RealEstate.DataAccess
         public string Department { get; set; }
         public DateTime? WorkSince { get; set; }
         public string Phone { get; set; }
+        public string PassWord { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Employee, EmployeeDto>().ReverseMap();
         }
+    }
+    public class EmployeeInfo 
+    {
+        public string  Name { get; set; }
+
+        public string PassWord { get; set; } 
+
     }
 }

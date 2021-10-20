@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using RealEstate.Data.Models;
+using RealEstate.DataAccess.Shared;
+using RealEstate.Specifications;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using TanvirArjel.Extensions.Microsoft.DependencyInjection;
@@ -19,18 +22,20 @@ namespace RealEstate.DataAccess
             _mapper = mapper;
 
         }
-        public ResponseData SaveUser(EmployeeDto user)
+        public ResponseData Saveemployee(EmployeeDto employee)
         {
-            if (user.Id == 0)
+            employee.PassWord = ClsStringEncryptionDecryption.Encrypt(employee.PassWord, false);
+
+            if (employee.Id == 0)
             {
                 try
                 {
-                    if (_db.Employees.Any(x => x.Name.Equals(user.Name)&& x.Phone.Equals(user.Phone)))
+                    if (_db.Employees.Any(x => x.Name.Equals(employee.Name)&& x.Phone.Equals(employee.Phone)))
                     {
                         return new ResponseData { Message = "إسم المستخدم موجود بالفعل", IsSuccess = false };
                     }
                     Employee newRec = new Employee();
-                    newRec = _mapper.Map<EmployeeDto, Employee>(user);
+                    newRec = _mapper.Map<EmployeeDto, Employee>(employee);
                     _db.Employees.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -40,14 +45,15 @@ namespace RealEstate.DataAccess
                     throw new NotSupportedException(ex.Message);
                 }
             }
-            else if (user.Id != 0)
+            else if (employee.Id != 0)
             {
                 Employee newRec = new Employee();
-                newRec = _mapper.Map<EmployeeDto, Employee>(user);
 
-                Employee _newRec = _db.Employees.SingleOrDefault(u => u.Id == user.Id);
+                newRec = _mapper.Map<EmployeeDto, Employee>(employee);
+
+                Employee _newRec = _db.Employees.SingleOrDefault(u => u.Id == employee.Id);
                 if (_newRec == null)
-                    throw new KeyNotFoundException("User Not Found In Database");
+                    throw new KeyNotFoundException("employee Not Found In Database");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
@@ -67,12 +73,26 @@ namespace RealEstate.DataAccess
         }
 
 
-        public EmployeeDto GetUser(int UserId)
+        public string Getemployee(EmployeeInfo employee)
         {
-            Employee user = _db.Employees.Find(UserId);
-            var mappedUser = _mapper.Map<Employee, EmployeeDto>(user);
-          
-            return mappedUser;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            employee.PassWord = ClsStringEncryptionDecryption.Encrypt(employee.PassWord, false);
+            BaseSpecifications<Employee> specification = new BaseSpecifications<Employee>(a => a.Name.Equals(employee.Name) && a.PassWord.Equals(employee.PassWord));
+
+            Employee emp = _db.Employees.Where(specification.FilterCondition).FirstOrDefault();
+            var _employee = _mapper.Map<Employee, EmployeeDto>(emp); 
+            if (_employee == null) return null;
+            _employee.PassWord = ClsStringEncryptionDecryption.Decrypt(employee.PassWord, false);
+            var token = clsToken.GenerateToken(_employee.Id.ToString(), _employee.Department.ToString(), employee.Name);
+           
+            // employees employee = _db.employees.Where(a => a.employeeName.Equals(employee.employeeName, StringComparison.OrdinalIgnoreCase) && a.Password.Equals(employee.Password, StringComparison.Ordinal)).FirstOrDefault();
+            // return _mapper.Map<employees, employeesDTO>(employee);
+            
+            sw.Stop();
+            Console.WriteLine("Elapsed={0}", sw.Elapsed);
+            return token;
         }
     }
 }

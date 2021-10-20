@@ -17,7 +17,7 @@ namespace RealEstate.Data.Models
         public string Department { get; set; }
         public DateTime WorkSince { get; set; }
         public string Phone { get; set; }
-
+        public string PassWord { get; set; }
         public virtual ICollection<EmployeeSalary> EmployeeSalaries { get; set; }
     }
 }
