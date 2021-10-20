@@ -79,17 +79,14 @@ namespace RealEstate.DataAccess
             sw.Start();
 
             employee.PassWord = ClsStringEncryptionDecryption.Encrypt(employee.PassWord, false);
-            BaseSpecifications<Employee> specification = new BaseSpecifications<Employee>(a => a.Name.Equals(employee.Name) && a.PassWord.Equals(employee.PassWord));
+            //BaseSpecifications<Employee> specification = new BaseSpecifications<Employee>();
 
-            Employee emp = _db.Employees.Where(specification.FilterCondition).FirstOrDefault();
+            Employee emp = _db.Employees.Where(a => a.Name.Equals(employee.Name) && a.PassWord.Equals(employee.PassWord)).FirstOrDefault();
             var _employee = _mapper.Map<Employee, EmployeeDto>(emp); 
             if (_employee == null) return null;
             _employee.PassWord = ClsStringEncryptionDecryption.Decrypt(employee.PassWord, false);
             var token = clsToken.GenerateToken(_employee.Id.ToString(), _employee.Department.ToString(), employee.Name);
-           
-            // employees employee = _db.employees.Where(a => a.employeeName.Equals(employee.employeeName, StringComparison.OrdinalIgnoreCase) && a.Password.Equals(employee.Password, StringComparison.Ordinal)).FirstOrDefault();
-            // return _mapper.Map<employees, employeesDTO>(employee);
-            
+                    
             sw.Stop();
             Console.WriteLine("Elapsed={0}", sw.Elapsed);
             return token;

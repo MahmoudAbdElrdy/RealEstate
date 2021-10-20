@@ -104,10 +104,46 @@ namespace RealEstate.Api
             .AddHttpClient();
             #endregion
             services.AddControllers();
+         
+            #region Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RealEstate.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Version = "v1",
+                    Title = "CRM API",
+                    Description = "RealEstate CRM ASP.NET Core Web API"
+                });
+
+                c.AddSecurityDefinition("Bearer",
+                  new OpenApiSecurityScheme()
+                  {
+                      In = ParameterLocation.Header,
+                      Description = "Please enter the word 'Bearer' followed by space and JWT",
+                      Name = "Authorization",
+                      Type = SecuritySchemeType.ApiKey,
+                      Scheme = "Bearer"
+                  });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme()
+                        {
+                            Reference = new OpenApiReference()
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    },
+                });
             });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

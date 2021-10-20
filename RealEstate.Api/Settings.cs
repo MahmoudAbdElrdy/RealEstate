@@ -12,7 +12,8 @@ namespace RealEstate.Api
         SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET_KEY));
 
         public static Int64 Id { get; set; }
-        public static Int64 Department { get; set; } 
+        public static string Department { get; set; } 
+        public static string Name { get; set; }  
       
         public static string GetMonthName(byte Month)
         {

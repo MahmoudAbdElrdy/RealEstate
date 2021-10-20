@@ -20,6 +20,7 @@ namespace RealEstate.Api.Controllers
             _service = EmployeeService;
         }
         [HttpPost]
+        [RealEstate.Service.Classes.Authorize]
         [Route("CreateUpdateemployee")]
         public ActionResult<ResponseData> CreateUpdateemployee(EmployeeDto employee)
         {
