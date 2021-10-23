@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     [ApiController]
-   // [Authorize]
+  //  [RealEstate.Service.Classes.Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly EmployeeService _service;
@@ -19,25 +19,39 @@ namespace RealEstate.Api.Controllers
         {
             _service = EmployeeService;
         }
+        [HttpPost("GetAll")]
+        public async Task<ActionResult<ResponseData>> GetAll(EmployeeSearch model)
+        {
+            return await _service.GetAll(model);
+        }
+        [HttpGet("GetAllDepartments")]
+        public async Task<ActionResult<ResponseData>> GetAllDepartments()
+        {
+            return await _service.GetAllDepartments();
+        }
+        [HttpGet("GetById")]
+        public async Task<ActionResult<ResponseData>> GetById(int id)
+        {
+            return await _service.GetById(id);
+        }
+        [HttpGet("Delete")]
+        public async Task<ActionResult<ResponseData>> Delete(int id)
+        {
+            return await _service.Delete(id);
+        }
         [HttpPost]
-        [RealEstate.Service.Classes.Authorize]
-        [Route("CreateUpdateemployee")]
-        public ActionResult<ResponseData> CreateUpdateemployee(EmployeeDto employee)
+        
+        [Route("CreateUpdatEemployee")]
+        public ActionResult<ResponseData> CreateUpdatEemployee(EmployeeDto employee) 
         {
 
-            try
-            {
-                var result = _service.Saveemployee(employee);
+              var result = _service.SaveEmployee(employee);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                throw new NotSupportedException(ex.Message);
-            }
+           
         }
 
 
-        [Route("/login")]
+        [Route("login")]
         [AllowAnonymous]
         [HttpPost]
         public ActionResult employeeInfo(EmployeeInfo employee)

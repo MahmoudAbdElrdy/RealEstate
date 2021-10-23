@@ -7,10 +7,10 @@
         public string Message { get; set; }
         public string[] Errors { get; set; }
         public dynamic Data { get; set; }
-        public int? TotalItems { get; set; }
+        public int? TotalRecordsCount { get; set; }
         public int? CurrentPage { get; set; }
         public int? PageSize { get; set; }
-        public int? TotalPages { get; set; }
+        public int? PageCount { get; set; }
      
     }
 

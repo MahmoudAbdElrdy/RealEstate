@@ -14,10 +14,12 @@ namespace RealEstate.Data.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Department { get; set; }
         public DateTime WorkSince { get; set; }
         public string Phone { get; set; }
         public string PassWord { get; set; }
+        public int? DepartmentId { get; set; }
+
+        public virtual Department Department { get; set; }
         public virtual ICollection<EmployeeSalary> EmployeeSalaries { get; set; }
     }
 }

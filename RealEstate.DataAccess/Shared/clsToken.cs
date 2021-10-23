@@ -17,9 +17,9 @@ namespace RealEstate.DataAccess.Shared
 
         public static string GenerateToken(string Id, string Department, string Name)
         {
-            Claim id = new Claim("Id", Id);
-            Claim name = new Claim("Name", Name);
-            Claim department = new Claim("Department", Department);
+            Claim id = new Claim("Id", Id??"");
+            Claim name = new Claim("Name", Name??"");
+            Claim department = new Claim("Department", Department??"");
             var claims = new[] {
                 id,
                 name,department,

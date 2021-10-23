@@ -190,8 +190,6 @@ namespace RealEstate.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name).IsRequired();
-
-                entity.Property(e => e.Password).IsRequired();
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -200,11 +198,14 @@ namespace RealEstate.Data.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Department).IsRequired();
-
                 entity.Property(e => e.Name).IsRequired();
 
                 entity.Property(e => e.WorkSince).HasColumnType("date");
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .HasConstraintName("FK_Employee_Department");
             });
 
             modelBuilder.Entity<EmployeePenalty>(entity =>

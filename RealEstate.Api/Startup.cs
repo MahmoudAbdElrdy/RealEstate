@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -35,30 +37,37 @@ namespace RealEstate.Api
         {
             #region MVC Settings
 
-           // services.AddCors();
+            services.AddCors();
 
-            //services.AddControllers(options => options.EnableEndpointRouting = false);
-            //services.AddControllers().AddNewtonsoftJson(options =>
-            //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            //);
-            //services.AddControllers().AddJsonOptions(op => op.JsonSerializerOptions.PropertyNamingPolicy = null);
-            //services.AddCors(options => {
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowAnyOrigin()
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader());
-            //});
+            services.AddControllers(options => options.EnableEndpointRouting = false);
+           
+            services.AddControllers().AddJsonOptions(op => op.JsonSerializerOptions.PropertyNamingPolicy = null);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
-          
+           
 
-           // services.AddDistributedMemoryCache();
+            // services.AddDistributedMemoryCache();
 
             #endregion
             #region DbContext
 
-            services.AddEntityFrameworkSqlServer().AddDbContext<RealEstateContext>(options =>
-             options.UseLazyLoadingProxies(false).UseSqlServer(Configuration["ConnectionStrings:RealEstateConnection"]));
-
+            //services.AddEntityFrameworkSqlServer().AddDbContext<RealEstateContext>(options =>
+            // options.UseLazyLoadingProxies(false).UseSqlServer(Configuration["ConnectionStrings:RealEstateConnection"]));
+           #region Context
+            services.AddDbContext<RealEstateContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration.GetConnectionString("RealEstateConnection"), sqlOptions =>
+                {
+                    //sqlOptions.MigrationsAssembly("RealEstate.Data");
+                });
+            });
+            #endregion
             #endregion
             #region 
             services.AddAuthentication(options =>
@@ -103,7 +112,14 @@ namespace RealEstate.Api
             .AddHttpContextAccessor()
             .AddHttpClient();
             #endregion
-            services.AddControllers();
+            #region AddNewtonsoftJson
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+            #endregion
+           
          
             #region Swagger
             services.AddSwaggerGen(c =>
@@ -155,7 +171,10 @@ namespace RealEstate.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RealEstate.Api v1"));
             }
-
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
             app.UseRouting();
 
             app.UseAuthorization();

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using RealEstate.Specifications;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace RealEstate.Specifications
 {
@@ -78,4 +82,82 @@ namespace RealEstate.Specifications
         /// <inheritdoc/>
         public bool isPagingEnabled  = false;
     }
+}
+public static class QuerySpecificationExtensions
+{
+    public static T SpecifyFirstOrDefault<T>(this IQueryable<T> query, BaseSpecifications<T> spec) where T : class 
+    {
+        // fetch a Queryable that includes all expression-based includes
+        var queryableResultWithIncludes = spec.Includes
+            .Aggregate(query,
+                (current, include) => current.Include(include));
+
+        // modify the IQueryable to include any string-based include statements
+      
+        // return the result of the query using the specification's criteria expression
+        return queryableResultWithIncludes.Where(spec.FilterCondition).FirstOrDefault();
+    }
+    public static IQueryable<T> Specify<T>(this IQueryable<T> query, BaseSpecifications<T> spec) where T : class
+    {
+        // fetch a Queryable that includes all expression-based includes
+        var queryableResultWithIncludes = spec.Includes
+            .Aggregate(query,
+                (current, include) => current.Include(include));
+
+        // modify the IQueryable to include any string-based include statements
+        var secondaryResult = spec.Includes
+            .Aggregate(queryableResultWithIncludes,
+                (current, include) => current.Include(include));
+
+        // return the result of the query using the specification's criteria expression
+        return secondaryResult.Where(spec.FilterCondition);
+    }
+    public static async Task<IQueryable<T>>  Pagtion<T>(this IQueryable<T> query, BaseSpecifications<T> specifications) where T : class
+    {
+        if (specifications == null)
+        {
+           
+            return query;
+        }
+
+        // Modify the IQueryable
+        // Apply filter conditions
+        if (specifications.FilterCondition != null)
+        {
+            query = query.Where(specifications.FilterCondition);
+        }
+
+        // Includes
+        if (specifications.Includes != null)
+        {
+            query = specifications.Includes
+                      .Aggregate(query, (current, include) => current.Include(include));
+
+
+        }
+        // Apply ordering
+        if (specifications.OrderBy != null)
+        {
+            query = query.OrderBy(specifications.OrderBy);
+        }
+        else if (specifications.OrderByDescending != null)
+        {
+            query = query.OrderByDescending(specifications.OrderByDescending);
+        }
+
+        // Apply GroupBy
+        if (specifications.GroupBy != null)
+        {
+            query = query.GroupBy(specifications.GroupBy).SelectMany(x => x);
+        }
+
+        if (specifications.isPagingEnabled && specifications.page != 0 && specifications.pageSize != 0)
+        {
+            query = query.Skip((specifications.page - 1) * specifications.pageSize).Take(specifications.pageSize);
+        }
+
+        return query;
+    }
+
+
 }

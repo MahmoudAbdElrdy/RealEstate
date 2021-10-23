@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using Mapper;
+using RealEstate.Data.Models;
 
 namespace RealEstate.DataAccess
 {
     public class DropDownListDto : ICustomMapping
     {
-        public string Key { get; set; }
-        public string Value { get; set; }
-
+        public int Value { get; set; }
+         public string Text { get; set; }
+     
         public void CreateMappings(Profile configuration)
         {
            
-            configuration.CreateMap<EmployeeDto, DropDownListDto>()
-                .ForMember(x => x.Key, opt => opt.MapFrom(x => x.Id))
-                .ForMember(x => x.Value, opt => opt.MapFrom(x => x.Name)).ReverseMap();
+            configuration.CreateMap<Department, DropDownListDto>()
+                .ForMember(x => x.Value, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.Text, opt => opt.MapFrom(x => x.NameAr)).ReverseMap();
            
 
         }
