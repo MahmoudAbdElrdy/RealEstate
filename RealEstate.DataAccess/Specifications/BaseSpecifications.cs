@@ -80,8 +80,10 @@ namespace RealEstate.Specifications
       public  int pageSize = 10;
 
         /// <inheritdoc/>
-        public bool isPagingEnabled  = false;
+     public bool isPagingEnabled  = false;
+       
     }
+
 }
 public static class QuerySpecificationExtensions
 {
@@ -112,11 +114,11 @@ public static class QuerySpecificationExtensions
         // return the result of the query using the specification's criteria expression
         return secondaryResult.Where(spec.FilterCondition);
     }
-    public static async Task<IQueryable<T>>  Pagtion<T>(this IQueryable<T> query, BaseSpecifications<T> specifications) where T : class
+    public static  IQueryable<T>  Pagtion<T>(this IQueryable<T> query, BaseSpecifications<T> specifications, out int Count) where T : class
     {
         if (specifications == null)
         {
-           
+            Count = 0;
             return query;
         }
 
@@ -124,9 +126,14 @@ public static class QuerySpecificationExtensions
         // Apply filter conditions
         if (specifications.FilterCondition != null)
         {
+            Count = query.AsQueryable().Where(specifications.FilterCondition).Count();
             query = query.Where(specifications.FilterCondition);
         }
-
+       
+        else
+        {
+            Count = query.AsQueryable().Count();
+        }
         // Includes
         if (specifications.Includes != null)
         {

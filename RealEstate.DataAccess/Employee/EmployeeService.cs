@@ -36,12 +36,12 @@ namespace RealEstate.DataAccess
             }
             if (!string.IsNullOrEmpty(search.Name))
             {
-                var name = new BaseSpecifications<Employee>(x => x.Name == search.Name);
+                var name = new BaseSpecifications<Employee>(x => x.Name.Contains(search.Name));
                 specification = specification?.And(name) ?? name;
             }
             if (!string.IsNullOrEmpty(search.Phone))
             {
-                var phone = new BaseSpecifications<Employee>(x => x.Phone == search.Phone);
+                var phone = new BaseSpecifications<Employee>(x => x.Phone.Contains(search.Phone));
                 specification = specification?.And(phone) ?? phone;
             }
             if ((search.WorkSince)!=null)
@@ -65,12 +65,14 @@ namespace RealEstate.DataAccess
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
                 IQueryable<Employee> filter;
+                
                 var specification = Specifications(search);
               
-                filter =await _db.Employees.Pagtion(specification);
+                filter = _db.Employees.Pagtion(specification, out int count);
+
               //  var entity = _db.Employees.Include(x => x.Department);
                 var entity = _mapper.Map<List<EmployeeDto>>(filter);
-                int count = _db.Employees.Count();
+               
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -232,6 +234,7 @@ namespace RealEstate.DataAccess
                     }
                     Employee newRec = new Employee();
                     newRec = _mapper.Map<EmployeeDto, Employee>(employee);
+                    newRec.Department = null;
                     _db.Employees.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };

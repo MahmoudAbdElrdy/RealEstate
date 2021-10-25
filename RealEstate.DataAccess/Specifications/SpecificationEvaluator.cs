@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 
 using Microsoft.EntityFrameworkCore;
+using RealEstate.Data.Models;
 
 namespace RealEstate.Specifications
 {
     public class SpecificationEvaluator<TEntity> where TEntity : class
     {
+        RealEstateContext _dbContext; 
+        public SpecificationEvaluator(RealEstateContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> query, BaseSpecifications<TEntity> specifications)
         {
             // Do not apply anything if specifications is null
@@ -76,6 +82,17 @@ namespace RealEstate.Specifications
             return entity;
         }
 
-
+        public IQueryable<TEntity> GetAllSpecification(out int count, BaseSpecifications<TEntity> specification = null)
+        {
+            if (specification.FilterCondition != null)
+            {
+                count = _dbContext.Set<TEntity>().AsQueryable().Where(specification.FilterCondition).Count();
+            }
+            else
+            {
+                count = _dbContext.Set<TEntity>().AsQueryable().Count();
+            }
+            return SpecificationEvaluator<TEntity>.GetQuery(_dbContext.Set<TEntity>().AsQueryable(), specification);
+        }
     }
 }
