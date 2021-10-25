@@ -126,13 +126,13 @@ public static class QuerySpecificationExtensions
         // Apply filter conditions
         if (specifications.FilterCondition != null)
         {
-            Count = query.AsQueryable().Where(specifications.FilterCondition).Count();
+
             query = query.Where(specifications.FilterCondition);
+            Count = query.Count();
         }
-       
         else
         {
-            Count = query.AsQueryable().Count();
+            Count = query.Count();
         }
         // Includes
         if (specifications.Includes != null)
