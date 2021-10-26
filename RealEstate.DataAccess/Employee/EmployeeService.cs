@@ -46,7 +46,7 @@ namespace RealEstate.DataAccess
             }
             if ((search.WorkSince)!=null)
             {
-                var workSince = new BaseSpecifications<Employee>(x => x.WorkSince.Equals(search.WorkSince));
+                var workSince = new BaseSpecifications<Employee>(x => x.WorkSince.Date.Equals(search.WorkSince.Value.Date));
                 specification = specification?.And(workSince) ?? workSince;
             }
             

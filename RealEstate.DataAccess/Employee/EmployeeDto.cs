@@ -18,7 +18,7 @@ namespace RealEstate.DataAccess
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Employee, EmployeeDto>().
-            ForMember(x => x.Department, opt => opt.MapFrom(x => x.Department.Name)).ReverseMap();
+            ForMember(x => x.Department, opt => opt.MapFrom(x => x.Department.NameAr)).ReverseMap();
         }
     }
     public class EmployeeInfo 
