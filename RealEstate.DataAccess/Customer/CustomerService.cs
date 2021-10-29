@@ -15,64 +15,60 @@ using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 namespace RealEstate.DataAccess
 {
     [ScopedService]
-    public  class EmployeeService
+    public  class CustomerService
     {
        RealEstateContext _db;
         readonly IMapper _mapper;
-        public EmployeeService(RealEstateContext db, IMapper mapper)
+        public CustomerService(RealEstateContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
 
         }
-        private BaseSpecifications<Employee> Specifications(EmployeeSearch search)
+        private BaseSpecifications<Customer> Specifications(CustomerSearch search)
         {
-            BaseSpecifications<Employee> specification = null;
+            BaseSpecifications<Customer> specification = null;
 
-            if ((search.DepartmentId!=null&&search.DepartmentId!=0))
-            {
-                var departmentId = new BaseSpecifications<Employee>(x => x.Department.Id == search.DepartmentId);
-                specification = specification?.And(departmentId) ?? departmentId;
-            }
+         
             if (!string.IsNullOrEmpty(search.Name))
             {
-                var name = new BaseSpecifications<Employee>(x => x.Name.Contains(search.Name));
+                var name = new BaseSpecifications<Customer>(x => x.Name.Contains(search.Name));
                 specification = specification?.And(name) ?? name;
             }
             if (!string.IsNullOrEmpty(search.Phone))
             {
-                var phone = new BaseSpecifications<Employee>(x => x.Phone.Contains(search.Phone));
+                var phone = new BaseSpecifications<Customer>(x => x.Phone.Contains(search.Phone));
                 specification = specification?.And(phone) ?? phone;
             }
-            if ((search.WorkSince)!=null)
+            if (!string.IsNullOrEmpty(search.Referrer))
             {
-                var workSince = new BaseSpecifications<Employee>(x => x.WorkSince.Date.Equals(search.WorkSince.Value.Date));
-                specification = specification?.And(workSince) ?? workSince;
+                var referrer = new BaseSpecifications<Customer>(x => x.Referrer.Contains(search.Referrer));
+                specification = specification?.And(referrer) ?? referrer;
             }
-            
+
             if (specification == null)
-                specification = new BaseSpecifications<Employee>();
-            specification?.AddInclude(x => x.Department);
+                specification = new BaseSpecifications<Customer>();
+            
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
             return specification;
         }
-        public async Task<ResponseData> GetAll(EmployeeSearch search) 
+        public async Task<ResponseData> GetAll(CustomerSearch search)
         {
             try
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                IQueryable<Employee> filter;
-                
-                var specification = Specifications(search);
-              
-                filter = _db.Employees.Pagtion(specification, out int count);
+                IQueryable<Customer> filter;
 
-              //  var entity = _db.Employees.Include(x => x.Department);
-                var entity = _mapper.Map<List<EmployeeDto>>(filter);
-               
+                var specification = Specifications(search);
+
+                filter = _db.Customers.Pagtion(specification, out int count);
+
+                //  var entity = _db.Customers.Include(x => x.Department);
+                var entity = _mapper.Map<List<CustomerDto>>(filter);
+
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -84,37 +80,6 @@ namespace RealEstate.DataAccess
                     PageCount = (int)Math.Ceiling(count / (double)search?.PageSize),
                     CurrentPage = search?.PageNumber,
                     PageSize = search?.PageSize
-                };
-            }
-            catch (Exception ex)
-            {
-            
-                return new ResponseData
-                {
-                    IsSuccess = false,
-                    Code = EResponse.OK,
-                    Message = ex.Message,
-                };
-            }
-        }
-        public async Task<ResponseData> GetAllDepartments() 
-        {
-            try
-            {
-                Stopwatch sw = new Stopwatch();
-                sw.Start(); 
-                var departments = _db.Departments;
-              
-                var entity = _mapper.Map<List<DropDownListDto>>(departments);
-             
-                sw.Stop();
-                Console.WriteLine("Elapsed={0}", sw.Elapsed);
-                return new ResponseData
-                {
-                    IsSuccess = true,
-                    Code = EResponse.OK,
-                    Data = entity,
-                  
                 };
             }
             catch (Exception ex)
@@ -134,16 +99,16 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Employee emp =await _db.Employees.Where(a => a.Id == id).FirstOrDefaultAsync();
-                var _employee = _mapper.Map<Employee, EmployeeDto>(emp);
-                _employee.PassWord = ClsStringEncryptionDecryption.Decrypt(_employee.PassWord, false);
+                Customer emp =await _db.Customers.Where(a => a.Id == id).FirstOrDefaultAsync();
+                var _Customer = _mapper.Map<Customer, CustomerDto>(emp);
+               
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Data = _employee
+                    Data = _Customer
                 };
             }
             catch (Exception ex)
@@ -167,8 +132,8 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Employee emp = await _db.Employees.Where(a => a.Id == id).FirstOrDefaultAsync();
-                _db.Employees.Remove(emp);
+                Customer emp = await _db.Customers.Where(a => a.Id == id).FirstOrDefaultAsync();
+                _db.Customers.Remove(emp);
                 _db.SaveChanges();
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -219,23 +184,20 @@ namespace RealEstate.DataAccess
 
 
         }
-        public ResponseData SaveEmployee(EmployeeDto employee)
+        public ResponseData SaveCustomer(CustomerDto Customer)
         {
-            if(!string.IsNullOrEmpty(employee.PassWord))
-            employee.PassWord = ClsStringEncryptionDecryption.Encrypt(employee.PassWord, false);
-
-            if (employee.Id == 0)
+           if (Customer.Id == 0|| Customer.Id==null)
             {
                 try
                 {
-                    if (_db.Employees.Any(x => x.Name.Equals(employee.Name)&& x.Phone.Equals(employee.Phone)))
+                    if (_db.Customers.Any(x => x.Name.Equals(Customer.Name)&& x.Phone.Equals(Customer.Phone)))
                     {
                         return new ResponseData { Message = "إسم المستخدم موجود بالفعل", IsSuccess = false };
                     }
-                    Employee newRec = new Employee();
-                    newRec = _mapper.Map<EmployeeDto, Employee>(employee);
-                    newRec.Department = null;
-                    _db.Employees.Add(newRec);
+                    Customer newRec = new Customer();
+                    newRec = _mapper.Map<CustomerDto, Customer>(Customer);
+
+                    _db.Customers.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
                 }
@@ -244,20 +206,20 @@ namespace RealEstate.DataAccess
                     throw new NotSupportedException(ex.Message);
                 }
             }
-            else if (employee.Id != 0)
+            else if (Customer.Id != 0)
             {
-                Employee newRec = new Employee();
+                Customer newRec = new Customer();
 
-                newRec = _mapper.Map<EmployeeDto, Employee>(employee);
+                newRec = _mapper.Map<CustomerDto, Customer>(Customer);
 
-                Employee _newRec = _db.Employees.SingleOrDefault(u => u.Id == employee.Id);
+                Customer _newRec = _db.Customers.SingleOrDefault(u => u.Id == Customer.Id);
                 if (_newRec == null)
-                    throw new KeyNotFoundException("employee Not Found In Database");
+                    throw new KeyNotFoundException("Customer Not Found In Database");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
-                    _db.Employees.Attach(_newRec);
+                    _db.Customers.Attach(_newRec);
                     _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -270,24 +232,6 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
-        public string Getemployee(EmployeeInfo employee)
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            employee.PassWord = ClsStringEncryptionDecryption.Encrypt(employee.PassWord, false);
-            //BaseSpecifications<Employee> specification = new BaseSpecifications<Employee>(a => a.Name.Equals(employee.Name) && a.PassWord.Equals(employee.PassWord));
-            //specification.AddInclude(x => x.Department);
-            //Employee emp = _db.Employees.SpecifyFirstOrDefault(specification);
-            Employee emp = _db.Employees.Where(a => a.Name.Equals(employee.Name) && a.PassWord.Equals(employee.PassWord)).Include(s=>s.Department).FirstOrDefault();
-            var _employee = _mapper.Map<Employee, EmployeeDto>(emp); 
-            if (_employee == null) return null;
-            _employee.PassWord = ClsStringEncryptionDecryption.Decrypt(employee.PassWord, false);
-            var token = clsToken.GenerateToken(_employee.Id.ToString(), emp.Department.Name.ToString(), employee.Name);
-                    
-            sw.Stop();
-            Console.WriteLine("Elapsed={0}", sw.Elapsed);
-            return token;
-        }
+      
     }
 }
