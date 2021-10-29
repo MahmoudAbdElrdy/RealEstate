@@ -11,7 +11,7 @@ namespace RealEstate.DataAccess
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public int? Fixed { get; set; }
         public int? ProductionIncentive { get; set; }
         public int? Rewards { get; set; }
@@ -21,9 +21,15 @@ namespace RealEstate.DataAccess
         public int? SocialInsurance { get; set; }
         public int? Holidays { get; set; }
         public int? Buffet { get; set; }
+        public int? Commission { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<EmployeeSalary, EmployeeSalaryDto>().ReverseMap();
         }
+    }
+    public class EmployeeSalarySearch : PaginationDto
+    {
+        public int? EmployeeId { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

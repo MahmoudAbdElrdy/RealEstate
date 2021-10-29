@@ -25,6 +25,7 @@ namespace RealEstate.Data.Models
         public int? SocialInsurance { get; set; }
         public int? Holidays { get; set; }
         public int? Buffet { get; set; }
+        public int? Commission { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual ICollection<EmployeePenalty> EmployeePenalties { get; set; }

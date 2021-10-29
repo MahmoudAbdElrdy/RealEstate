@@ -11,7 +11,7 @@ namespace RealEstate.Api.Controllers
 {
     [Route("api/[controller]")] 
     [ApiController]
-  //  [RealEstate.Service.Classes.Authorize]
+    [RealEstate.Service.Classes.Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly EmployeeService _service;
