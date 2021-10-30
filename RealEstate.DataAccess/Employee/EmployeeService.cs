@@ -252,7 +252,7 @@ namespace RealEstate.DataAccess
 
                 Employee _newRec = _db.Employees.SingleOrDefault(u => u.Id == employee.Id);
                 if (_newRec == null)
-                    throw new KeyNotFoundException("employee Not Found In Database");
+                    throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {

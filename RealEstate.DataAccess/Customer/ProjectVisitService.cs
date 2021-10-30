@@ -15,59 +15,54 @@ using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 namespace RealEstate.DataAccess
 {
     [ScopedService]
-    public  class CustomerService
+    public  class ProjectVisitService
     {
        RealEstateContext _db;
         readonly IMapper _mapper;
-        public CustomerService(RealEstateContext db, IMapper mapper)
+        public ProjectVisitService(RealEstateContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
 
         }
-        private BaseSpecifications<Customer> Specifications(CustomerSearch search)
+        private BaseSpecifications<ProjectVisit> Specifications(ProjectVisitSearch search)
         {
-            BaseSpecifications<Customer> specification = null;
+            BaseSpecifications<ProjectVisit> specification = null;
 
          
-            if (!string.IsNullOrEmpty(search.Name))
+            if ((search.CustomerId!=0))
             {
-                var name = new BaseSpecifications<Customer>(x => x.Name.Contains(search.Name));
+                var name = new BaseSpecifications<ProjectVisit>(x => x.CustomerId==search.CustomerId);
                 specification = specification?.And(name) ?? name;
             }
-            if (!string.IsNullOrEmpty(search.Phone))
-            {
-                var phone = new BaseSpecifications<Customer>(x => x.Phone.Contains(search.Phone));
-                specification = specification?.And(phone) ?? phone;
-            }
-            if (!string.IsNullOrEmpty(search.Referrer))
-            {
-                var referrer = new BaseSpecifications<Customer>(x => x.Referrer.Contains(search.Referrer));
-                specification = specification?.And(referrer) ?? referrer;
-            }
 
+            if ((search.Date) != null)
+            {
+                var dateSalary = new BaseSpecifications<ProjectVisit>(x => x.Date.Date.Month.Equals(search.Date.Value.Date.Month) && x.Date.Date.Year.Equals(search.Date.Value.Date.Year));
+                specification = specification?.And(dateSalary) ?? dateSalary;
+            }
             if (specification == null)
-                specification = new BaseSpecifications<Customer>();
+                specification = new BaseSpecifications<ProjectVisit>();
             
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
             return specification;
         }
-        public async Task<ResponseData> GetAll(CustomerSearch search)
+        public async Task<ResponseData> GetAll(ProjectVisitSearch search)
         {
             try
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                IQueryable<Customer> filter;
+                IQueryable<ProjectVisit> filter;
 
                 var specification = Specifications(search);
 
-                filter = _db.Customers.Pagtion(specification, out int count);
+                filter = _db.ProjectVisits.Pagtion(specification, out int count);
 
-                //  var entity = _db.Customers.Include(x => x.Department);
-                var entity = _mapper.Map<List<CustomerDto>>(filter);
+                //  var entity = _db.ProjectVisits.Include(x => x.Department);
+                var entity = _mapper.Map<List<ProjectVisitDto>>(filter);
 
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -99,8 +94,8 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Customer emp =await _db.Customers.Where(a => a.Id == id).FirstOrDefaultAsync();
-                var _Customer = _mapper.Map<Customer, CustomerDto>(emp);
+                ProjectVisit emp =await _db.ProjectVisits.Where(a => a.Id == id).FirstOrDefaultAsync();
+                var _ProjectVisit = _mapper.Map<ProjectVisit, ProjectVisitDto>(emp);
                
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -108,7 +103,7 @@ namespace RealEstate.DataAccess
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Data = _Customer
+                    Data = _ProjectVisit
                 };
             }
             catch (Exception ex)
@@ -132,8 +127,8 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Customer emp = await _db.Customers.Where(a => a.Id == id).FirstOrDefaultAsync();
-                _db.Customers.Remove(emp);
+                ProjectVisit emp = await _db.ProjectVisits.Where(a => a.Id == id).FirstOrDefaultAsync();
+                _db.ProjectVisits.Remove(emp);
                 _db.SaveChanges();
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -184,20 +179,17 @@ namespace RealEstate.DataAccess
 
 
         }
-        public ResponseData SaveCustomer(CustomerDto Customer)
+        public ResponseData SaveProjectVisit(ProjectVisitDto ProjectVisit)
         {
-           if (Customer.Id == 0|| Customer.Id==null)
+           if (ProjectVisit.Id == 0|| ProjectVisit.Id==null)
             {
                 try
                 {
-                    if (_db.Customers.Any(x => x.Name.Equals(Customer.Name)&& x.Phone.Equals(Customer.Phone)))
-                    {
-                        return new ResponseData { Message = "إسم المستخدم موجود بالفعل", IsSuccess = false };
-                    }
-                    Customer newRec = new Customer();
-                    newRec = _mapper.Map<CustomerDto, Customer>(Customer);
+                    
+                    ProjectVisit newRec = new ProjectVisit();
+                    newRec = _mapper.Map<ProjectVisitDto, ProjectVisit>(ProjectVisit);
 
-                    _db.Customers.Add(newRec);
+                    _db.ProjectVisits.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
                 }
@@ -206,20 +198,20 @@ namespace RealEstate.DataAccess
                     throw new NotSupportedException(ex.Message);
                 }
             }
-            else if (Customer.Id != 0)
+            else if (ProjectVisit.Id != 0)
             {
-                Customer newRec = new Customer();
+                ProjectVisit newRec = new ProjectVisit();
 
-                newRec = _mapper.Map<CustomerDto, Customer>(Customer);
+                newRec = _mapper.Map<ProjectVisitDto, ProjectVisit>(ProjectVisit);
 
-                Customer _newRec = _db.Customers.SingleOrDefault(u => u.Id == Customer.Id);
+                ProjectVisit _newRec = _db.ProjectVisits.SingleOrDefault(u => u.Id == ProjectVisit.Id);
                 if (_newRec == null)
                     throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
-                    _db.Customers.Attach(_newRec);
+                    _db.ProjectVisits.Attach(_newRec);
                     _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };

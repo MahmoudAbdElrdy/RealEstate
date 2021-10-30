@@ -192,7 +192,7 @@ namespace RealEstate.DataAccess
 
                 EmployeeSalary _newRec = _db.EmployeeSalaries.SingleOrDefault(u => u.Id == EmployeeSalary.Id);
                 if (_newRec == null)
-                    throw new KeyNotFoundException("EmployeeSalary Not Found In Database");
+                    throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
