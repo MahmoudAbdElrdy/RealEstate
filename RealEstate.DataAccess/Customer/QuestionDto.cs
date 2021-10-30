@@ -23,8 +23,10 @@ namespace RealEstate.DataAccess
 
         }
     }
-    public class Questionsearch:PaginationDto
+    public class QuestionSearch:PaginationDto
     {
+        public int? CustomerId { get; set; }
+        public DateTime? Date { get; set; }
 
     }
 }
