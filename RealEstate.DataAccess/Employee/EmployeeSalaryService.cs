@@ -167,7 +167,7 @@ namespace RealEstate.DataAccess
         public ResponseData SaveEmployeeSalary(EmployeeSalaryDto EmployeeSalary)
         {
          
-            if (EmployeeSalary.Id == 0)
+            if (EmployeeSalary.Id == 0|| EmployeeSalary.Id == null)
             {
                 try
                 {

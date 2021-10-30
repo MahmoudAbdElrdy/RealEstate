@@ -9,8 +9,8 @@ namespace RealEstate.DataAccess
 {
     public class EmployeeSalaryDto : ICustomMapping
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
+        public int? Id { get; set; }
+        public int? EmployeeId { get; set; }
         public DateTime? Date { get; set; }
         public int? Fixed { get; set; }
         public int? ProductionIncentive { get; set; }

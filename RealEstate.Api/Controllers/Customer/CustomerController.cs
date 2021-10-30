@@ -35,7 +35,6 @@ namespace RealEstate.Api.Controllers.Customer
             return await _service.Delete(id);
         }
         [HttpPost]
-
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdatECustomer(CustomerDto Customer)
         {

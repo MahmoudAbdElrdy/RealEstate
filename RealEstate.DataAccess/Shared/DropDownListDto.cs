@@ -15,7 +15,11 @@ namespace RealEstate.DataAccess
             configuration.CreateMap<Department, DropDownListDto>()
                 .ForMember(x => x.Value, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.Text, opt => opt.MapFrom(x => x.NameAr)).ReverseMap();
-           
+
+            configuration.CreateMap<Project, DropDownListDto>()
+               .ForMember(x => x.Value, opt => opt.MapFrom(x => x.Id))
+               .ForMember(x => x.Text, opt => opt.MapFrom(x => x.Name)).ReverseMap();
+
 
         }
     }

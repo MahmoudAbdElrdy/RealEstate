@@ -43,7 +43,7 @@ namespace RealEstate.DataAccess
             }
             if (specification == null)
                 specification = new BaseSpecifications<ProjectVisit>();
-            
+            specification.AddInclude(x => x.Project);
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
@@ -188,7 +188,7 @@ namespace RealEstate.DataAccess
                     
                     ProjectVisit newRec = new ProjectVisit();
                     newRec = _mapper.Map<ProjectVisitDto, ProjectVisit>(ProjectVisit);
-
+                    newRec.Project = null;
                     _db.ProjectVisits.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -211,6 +211,7 @@ namespace RealEstate.DataAccess
                 try
                 {
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
+                    newRec.Project = null;
                     _db.ProjectVisits.Attach(_newRec);
                     _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _db.SaveChanges();
@@ -224,6 +225,36 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
-      
+        public async Task<ResponseData> GetDropDownList()    
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var dropDownList = _db.Projects;
+
+                var entity = _mapper.Map<List<DropDownListDto>>(dropDownList);
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }

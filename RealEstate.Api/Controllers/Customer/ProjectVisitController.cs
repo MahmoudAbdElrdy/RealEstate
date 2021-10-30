@@ -22,6 +22,11 @@ namespace RealEstate.Api.Controllers.ProjectVisit
         public async Task<ActionResult<ResponseData>> GetAll(ProjectVisitSearch model)
         {
             return await _service.GetAll(model);
+        }  
+        [HttpGet("GetDropDownList")]
+        public async Task<ActionResult<ResponseData>> GetDropDownList()
+        {
+            return await _service.GetDropDownList();
         }
 
         [HttpGet("GetById")]
@@ -34,10 +39,10 @@ namespace RealEstate.Api.Controllers.ProjectVisit
         {
             return await _service.Delete(id);
         }
-        [HttpPost]
 
+        [HttpPost]
         [Route("CreateUpdate")]
-        public ActionResult<ResponseData> CreateUpdatEProjectVisit(ProjectVisitDto ProjectVisit)
+        public ActionResult<ResponseData> CreateUpdate(ProjectVisitDto ProjectVisit) 
         {
           
 
