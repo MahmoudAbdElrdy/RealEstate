@@ -11,7 +11,7 @@ namespace RealEstate.Api
         public static readonly SymmetricSecurityKey SIGNING_KEY = new
         SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET_KEY));
 
-        public static Int64 Id { get; set; }
+        public static int Id { get; set; }
         public static string Department { get; set; } 
         public static string Name { get; set; }  
       

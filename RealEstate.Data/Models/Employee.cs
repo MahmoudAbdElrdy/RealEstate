@@ -10,6 +10,7 @@ namespace RealEstate.Data.Models
         public Employee()
         {
             EmployeeSalaries = new HashSet<EmployeeSalary>();
+            Questions = new HashSet<Question>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,6 @@ namespace RealEstate.Data.Models
 
         public virtual Department Department { get; set; }
         public virtual ICollection<EmployeeSalary> EmployeeSalaries { get; set; }
+        public virtual ICollection<Question> Questions { get; set; }
     }
 }

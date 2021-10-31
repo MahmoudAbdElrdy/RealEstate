@@ -465,6 +465,11 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.Questions)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Questions_Customer");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.Questions)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("FK_Questions_Employee");
             });
 
             modelBuilder.Entity<Setting>(entity =>

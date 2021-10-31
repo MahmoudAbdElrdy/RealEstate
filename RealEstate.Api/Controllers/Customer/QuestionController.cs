@@ -38,11 +38,11 @@ namespace RealEstate.Api.Controllers.Question
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdatEQuestion(QuestionDto Question)
         {
-            //if (Question.Id == null || Question.Id == 0)
-            //{
-            //    Question.Referrer = Settings.Name ?? Settings.Name;
-            //}
-          
+            if (Question.Id == null || Question.Id == 0)
+            {
+                Question.EmployeeId =Settings.Id ;
+            }
+
             var result = _service.SaveQuestion(Question);
             return Ok(result);
 

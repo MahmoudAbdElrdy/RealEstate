@@ -43,7 +43,7 @@ namespace RealEstate.DataAccess
             }
             if (specification == null)
                 specification = new BaseSpecifications<Question>();
-          
+            specification.AddInclude(x => x.Employee);
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
@@ -189,6 +189,7 @@ namespace RealEstate.DataAccess
                     Question newRec = new Question();
                     newRec = _mapper.Map<QuestionDto, Question>(Question);
                     newRec.Customer = null;
+                    newRec.Employee = null;
                     _db.Questions.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
