@@ -176,7 +176,33 @@ namespace RealEstate.DataAccess
 
 
         }
-        public ResponseData SaveProject(ProjectDto Project)
+        public ResponseData SaveApartmentNumber(ProjectDto Project) 
+        {
+         
+          
+          if (Project.Id != 0)
+            {
+              
+                Project _newRec = _db.Projects.SingleOrDefault(u => u.Id == Project.Id);
+                if (_newRec == null)
+                    throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
+                //Mapper.Map(ServicesProvider, servicesProvider);
+                try
+                {
+                    _newRec.ApartmentNumber = Project.ApartmentNumber;
+                    _db.Projects.Attach(_newRec);
+                    _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _db.SaveChanges();
+                    return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
+
+                }
+                catch (Exception ex)
+                {
+                    throw new NotSupportedException(ex.Message);
+                }
+            }
+            return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
+        } public ResponseData SaveProject(ProjectDto Project)
         {
          
             if (Project.Id == 0|| Project.Id == null)

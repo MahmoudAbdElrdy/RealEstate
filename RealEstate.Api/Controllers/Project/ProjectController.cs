@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Api.Controllers
 {
-    [Route("api/[controller]")] 
+    [Route("api/[controller]")]
     [ApiController]
     [RealEstate.Service.Classes.Authorize]
     public class ProjectController : ControllerBase
@@ -24,7 +24,7 @@ namespace RealEstate.Api.Controllers
         {
             return await _service.GetAll(model);
         }
-        
+
         [HttpGet("GetById")]
         public async Task<ActionResult<ResponseData>> GetById(int id)
         {
@@ -35,18 +35,24 @@ namespace RealEstate.Api.Controllers
         {
             return await _service.Delete(id);
         }
-        [HttpPost]
+       
         
+        [HttpPost]
         [Route("CreateUpdate")]
-        public ActionResult<ResponseData> CreateUpdatEProject(ProjectDto Project) 
+        public ActionResult<ResponseData> CreateUpdatEProject(ProjectDto Project)
         {
-
-              var result = _service.SaveProject(Project);
-                return Ok(result);
-           
+            var result = _service.SaveProject(Project);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("SaveApartmentNumber")]
+        public ActionResult<ResponseData> SaveApartmentNumber(ProjectDto Project)
+        {
+            var result = _service.SaveApartmentNumber(Project);
+            return Ok(result);
         }
 
 
-      
+
     }
 }

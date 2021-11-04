@@ -13,6 +13,7 @@ namespace RealEstate.DataAccess
         public string Name { get; set; }
         public string Address { get; set; }
         public int? Floors { get; set; }
+        public int? ApartmentNumber { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Project, ProjectDto>().ReverseMap();

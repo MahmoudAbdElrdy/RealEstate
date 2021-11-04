@@ -19,7 +19,7 @@ namespace RealEstate.Data.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public int Floors { get; set; }
-
+        public int? ApartmentNumber { get; set; }
         public virtual ICollection<MaterialsAllocation> MaterialsAllocations { get; set; }
         public virtual ICollection<ProjectExpense> ProjectExpenses { get; set; }
         public virtual ICollection<ProjectUnitDescription> ProjectUnitDescriptions { get; set; }
