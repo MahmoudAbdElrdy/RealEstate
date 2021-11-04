@@ -35,8 +35,7 @@ namespace RealEstate.Api.Controllers
         {
             return await _service.Delete(id);
         }
-       
-        
+         
         [HttpPost]
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdatEProject(ProjectDto Project)
@@ -52,7 +51,17 @@ namespace RealEstate.Api.Controllers
             return Ok(result);
         }
 
-
-
+        [HttpGet("GetProjectUnitDescriptionById")]
+        public async Task<ActionResult<ResponseData>> GetProjectUnitDescriptionById(int flatId,int projectId)
+        {
+            return await _service.GetProjectUnitDescriptionById(flatId, projectId);
+        }
+        [HttpPost]
+        [Route("SaveProjectUnitDescription")]
+        public ActionResult<ResponseData> SaveProjectUnitDescription(ProjectUnitDescriptionDto Project)
+        {
+            var result = _service.SaveProjectUnitDescription(Project);
+            return Ok(result);
+        }
     }
 }

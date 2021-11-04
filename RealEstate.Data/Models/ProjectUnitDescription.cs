@@ -20,6 +20,8 @@ namespace RealEstate.Data.Models
         public int Kitchen { get; set; }
         public int Bath { get; set; }
         public int Room { get; set; }
+        public int FlatID { get; set; } 
+        public bool? IsBooked { get; set; }  
 
         public virtual Project Project { get; set; }
         public virtual ICollection<Program> Programs { get; set; }

@@ -202,7 +202,8 @@ namespace RealEstate.DataAccess
                 }
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
-        } public ResponseData SaveProject(ProjectDto Project)
+        } 
+        public ResponseData SaveProject(ProjectDto Project)
         {
          
             if (Project.Id == 0|| Project.Id == null)
@@ -248,6 +249,83 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
-      
+        public async Task<ResponseData> GetProjectUnitDescriptionById(int FlatID, int projectId) 
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                ProjectUnitDescription emp = await _db.ProjectUnitDescriptions.Where(a => a.FlatID == FlatID && a.ProjectId==projectId).FirstOrDefaultAsync();
+                var _Project = _mapper.Map<ProjectUnitDescription, ProjectUnitDescriptionDto>(emp);
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = _Project
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+
+
+
+
+        }
+        public ResponseData SaveProjectUnitDescription(ProjectUnitDescriptionDto projectUnitDescription) 
+        {
+
+            if (projectUnitDescription.Id == 0 || projectUnitDescription.Id == null)
+            {
+                try
+                {
+
+                    ProjectUnitDescription newRec = new ProjectUnitDescription();
+                    newRec = _mapper.Map<ProjectUnitDescriptionDto, ProjectUnitDescription>(projectUnitDescription);
+
+                    _db.ProjectUnitDescriptions.Add(newRec);
+                    _db.SaveChanges();
+                    return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
+                }
+                catch (Exception ex)
+                {
+                    throw new NotSupportedException(ex.Message);
+                }
+            }
+            else if (projectUnitDescription.Id != 0)
+            {
+                ProjectUnitDescription newRec = new ProjectUnitDescription();
+
+                newRec = _mapper.Map<ProjectUnitDescriptionDto, ProjectUnitDescription>(projectUnitDescription);
+
+                ProjectUnitDescription _newRec = _db.ProjectUnitDescriptions.SingleOrDefault(u => u.Id == projectUnitDescription.Id);
+                if (_newRec == null)
+                    throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
+                //Mapper.Map(ServicesProvider, servicesProvider);
+                try
+                {
+                    _db.Entry(_newRec).CurrentValues.SetValues(newRec);
+                    _db.ProjectUnitDescriptions.Attach(_newRec);
+                    _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _db.SaveChanges();
+                    return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
+
+                }
+                catch (Exception ex)
+                {
+                    throw new NotSupportedException(ex.Message);
+                }
+            }
+            return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
+        }
     }
 }

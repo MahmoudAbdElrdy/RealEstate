@@ -1,0 +1,28 @@
+﻿using AutoMapper;
+using Mapper;
+using RealEstate.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace RealEstate.DataAccess
+{
+    public class ProjectUnitDescriptionDto : ICustomMapping
+    {
+        public int? Id { get; set; }
+        public int? ProjectId { get; set; }
+        public string Name { get; set; }
+        public double? Area { get; set; }
+        public int? Kitchen { get; set; }
+        public int? Bath { get; set; }
+        public int? Room { get; set; }
+        public bool? IsBooked { get; set; }
+        public int? FlatID { get; set; }
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<ProjectUnitDescription, ProjectUnitDescriptionDto>().ReverseMap();
+
+        }
+
+    }
+}
