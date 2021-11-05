@@ -42,11 +42,11 @@ namespace RealEstate.Data.Models
         public virtual DbSet<ProjectUnitDescription> ProjectUnitDescriptions { get; set; }
         public virtual DbSet<ProjectVisit> ProjectVisits { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<SiteRep> SiteReps { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
-        public virtual DbSet<Reservation> Reservations { get; set; } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -417,6 +417,8 @@ namespace RealEstate.Data.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.FlatID).HasColumnName("FlatID");
+
                 entity.Property(e => e.Name).IsRequired();
 
                 entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
@@ -466,11 +468,25 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.Questions)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Questions_Customer");
+            });
 
-                entity.HasOne(d => d.Employee)
-                    .WithMany(p => p.Questions)
-                    .HasForeignKey(d => d.EmployeeId)
-                    .HasConstraintName("FK_Questions_Employee");
+            modelBuilder.Entity<Reservation>(entity =>
+            {
+                entity.ToTable("Reservation");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Reservation_Customer");
+
+                entity.HasOne(d => d.ProjectUnitDescription)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.ProjectUnitDescriptionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Reservation_ProjectUnitDescription");
             });
 
             modelBuilder.Entity<Setting>(entity =>

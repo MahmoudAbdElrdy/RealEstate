@@ -438,5 +438,39 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
+        public async Task<ResponseData> GetProjectUnitList(int ProjectId)
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                IQueryable<ProjectUnitDescription> filter;
+
+                filter = _db.ProjectUnitDescriptions.Where(s=>s.ProjectId==ProjectId);
+
+                //  var entity = _db.EmployeeSalaries.Include(x => x.Department);
+                var entity = _mapper.Map<List<ProjectUnitDescriptionDto>>(filter);
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }

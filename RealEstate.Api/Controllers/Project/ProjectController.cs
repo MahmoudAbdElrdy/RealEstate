@@ -74,5 +74,10 @@ namespace RealEstate.Api.Controllers
             var result = _service.SaveReservation(Project);
             return Ok(result);
         }
+        [HttpGet("GetProjectUnitList")]
+        public async Task<ActionResult<ResponseData>> GetProjectUnitList(int projectId)
+        {
+            return await _service.GetProjectUnitList(projectId);
+        }
     }
 }

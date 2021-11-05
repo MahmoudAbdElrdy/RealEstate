@@ -11,6 +11,7 @@ namespace RealEstate.Data.Models
         {
             Programs = new HashSet<Program>();
             ProjectUnits = new HashSet<ProjectUnit>();
+            Reservations = new HashSet<Reservation>();
         }
 
         public int Id { get; set; }
@@ -26,5 +27,6 @@ namespace RealEstate.Data.Models
         public virtual Project Project { get; set; }
         public virtual ICollection<Program> Programs { get; set; }
         public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }
