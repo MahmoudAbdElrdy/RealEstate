@@ -253,7 +253,7 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                ProjectUnitDescription emp = await _db.ProjectUnitDescriptions.Where(a => a.FlatID == FlatID && a.ProjectId==projectId).FirstOrDefaultAsync();
+                ProjectUnitDescription emp = await _db.ProjectUnitDescriptions.Where(a => a.FlatId == FlatID && a.ProjectId==projectId).FirstOrDefaultAsync();
                 var _Project = _mapper.Map<ProjectUnitDescription, ProjectUnitDescriptionDto>(emp);
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);

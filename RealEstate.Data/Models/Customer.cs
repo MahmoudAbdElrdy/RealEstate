@@ -21,6 +21,6 @@ namespace RealEstate.Data.Models
 
         public virtual ICollection<ProjectVisit> ProjectVisits { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; } 
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }
