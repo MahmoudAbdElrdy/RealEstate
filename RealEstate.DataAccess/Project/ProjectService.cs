@@ -25,7 +25,6 @@ namespace RealEstate.DataAccess
             _mapper = mapper;
 
         }
-     
         public async Task<ResponseData> GetAll(ProjectSearch search) 
         {
             try
@@ -85,7 +84,6 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-      
         public async Task<ResponseData> GetById(int id)
         {
             try
@@ -326,6 +324,40 @@ namespace RealEstate.DataAccess
                 }
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
+        }
+        public async Task<ResponseData> GetDropDownList()
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                IQueryable<Project> filter;
+
+                filter = _db.Projects;
+
+                //  var entity = _db.EmployeeSalaries.Include(x => x.Department);
+                var entity = _mapper.Map<List<ProjectDto>>(filter);
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+                  
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
         }
     }
 }

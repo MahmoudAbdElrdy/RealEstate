@@ -24,7 +24,11 @@ namespace RealEstate.Api.Controllers
         {
             return await _service.GetAll(model);
         }
-
+        [HttpGet("GetDropDownList")]
+        public async Task<ActionResult<ResponseData>> GetDropDownList()
+        {
+            return await _service.GetDropDownList();
+        }
         [HttpGet("GetById")]
         public async Task<ActionResult<ResponseData>> GetById(int id)
         {
