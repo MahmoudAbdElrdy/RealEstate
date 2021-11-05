@@ -46,6 +46,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<SiteRep> SiteReps { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

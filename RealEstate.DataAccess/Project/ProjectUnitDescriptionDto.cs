@@ -25,4 +25,15 @@ namespace RealEstate.DataAccess
         }
 
     }
+    public class ReservationDto : ICustomMapping
+    {
+        public int Id { get; set; }
+        public int ProjectUnitDescriptionId { get; set; }
+        public int CustomerId { get; set; }
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<Reservation, ReservationDto>().ReverseMap();
+
+        }
+    }
 }

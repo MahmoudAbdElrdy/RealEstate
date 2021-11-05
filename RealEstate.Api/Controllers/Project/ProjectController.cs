@@ -67,5 +67,12 @@ namespace RealEstate.Api.Controllers
             var result = _service.SaveProjectUnitDescription(Project);
             return Ok(result);
         }
+        [HttpPost]
+        [Route("SaveReservation")]
+        public ActionResult<ResponseData> SaveReservation(ReservationDto Project)
+        {
+            var result = _service.SaveReservation(Project);
+            return Ok(result);
+        }
     }
 }

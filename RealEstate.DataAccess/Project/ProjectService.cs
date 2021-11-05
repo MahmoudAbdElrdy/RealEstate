@@ -359,5 +359,84 @@ namespace RealEstate.DataAccess
                 };
             }
         }
+        public ResponseData SaveReservation(ReservationDto reservation)
+        {
+
+            if (reservation.Id == 0 || reservation.Id == null)
+            {
+                try
+                {
+
+                    Reservation newRec = new Reservation();
+                    newRec = _mapper.Map<ReservationDto, Reservation>(reservation);
+                 
+                   
+                    var unit = _db.ProjectUnitDescriptions.FirstOrDefault(x => x.Id == reservation.ProjectUnitDescriptionId);
+                    if (unit == null)
+                    {
+                        return new ResponseData { Message = "يجب املاء تفاصيل الشقة", IsSuccess = false };
+                    }
+                    else if (unit.IsBooked == true)
+                    {
+                        return new ResponseData { Message = "الشقة محجوزة من قبل", IsSuccess = false };
+                    }
+                    else
+                    {
+                        unit.IsBooked = true;
+                        _db.ProjectUnitDescriptions.Attach(unit);
+                        _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        _db.Reservations.Add(newRec);
+
+                    }
+                    _db.SaveChanges();
+                    return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
+                }
+                catch (Exception ex)
+                {
+                    throw new NotSupportedException(ex.Message);
+                }
+            }
+            else if (reservation.Id != 0)
+            {
+                Reservation newRec = new Reservation();
+
+                newRec = _mapper.Map<ReservationDto, Reservation>(reservation);
+
+                Reservation _newRec = _db.Reservations.SingleOrDefault(u => u.Id == reservation.Id);
+                if (_newRec == null)
+                    throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
+                //Mapper.Map(ServicesProvider, servicesProvider);
+                try
+                {
+                    _db.Entry(_newRec).CurrentValues.SetValues(newRec);
+                    _db.Reservations.Attach(_newRec);
+                    _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    var unit = _db.ProjectUnitDescriptions.FirstOrDefault(x => x.Id == reservation.ProjectUnitDescriptionId);
+                    if (unit == null)
+                    {
+                        return new ResponseData { Message = "يجب املاء تفاصيل الشقة", IsSuccess = false };
+                    }
+                    else if (unit.IsBooked == true)
+                    {
+                        return new ResponseData { Message = "الشقة محجوزة من قبل", IsSuccess = false };
+                    }
+                    else
+                    {
+                        unit.IsBooked = true;
+                        _db.ProjectUnitDescriptions.Attach(unit);
+                        _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                    }
+                    _db.SaveChanges();
+                    return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
+
+                }
+                catch (Exception ex)
+                {
+                    throw new NotSupportedException(ex.Message);
+                }
+            }
+            return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
+        }
     }
 }
