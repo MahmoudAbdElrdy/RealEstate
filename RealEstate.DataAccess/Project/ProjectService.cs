@@ -15,9 +15,9 @@ using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 namespace RealEstate.DataAccess
 {
     [ScopedService]
-    public  class ProjectService
+    public class ProjectService
     {
-       RealEstateContext _db;
+        RealEstateContext _db;
         readonly IMapper _mapper;
         public ProjectService(RealEstateContext db, IMapper mapper)
         {
@@ -25,7 +25,7 @@ namespace RealEstate.DataAccess
             _mapper = mapper;
 
         }
-        public async Task<ResponseData> GetAll(ProjectSearch search) 
+        public async Task<ResponseData> GetAll(ProjectSearch search)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace RealEstate.DataAccess
                 IQueryable<Project> filter;
 
                 BaseSpecifications<Project> specification = null;
-               
+
                 if ((search.Address) != null)
                 {
                     var addrees = new BaseSpecifications<Project>(x => x.Address.Contains(search.Address));
@@ -45,21 +45,21 @@ namespace RealEstate.DataAccess
                     var filed = new BaseSpecifications<Project>(x => x.Name.Contains(search.Name));
                     specification = specification?.And(filed) ?? filed;
                 }
-                if ((search.Floors) != null&&search.Floors!=0)
+                if ((search.Floors) != null && search.Floors != 0)
                 {
-                    var filed = new BaseSpecifications<Project>(x => x.Floors==(search.Floors));
+                    var filed = new BaseSpecifications<Project>(x => x.Floors == (search.Floors));
                     specification = specification?.And(filed) ?? filed;
                 }
                 if (specification == null)
-                    specification= new BaseSpecifications<Project>();
+                    specification = new BaseSpecifications<Project>();
                 specification.isPagingEnabled = true;
                 specification.page = search.PageNumber;
                 specification.pageSize = search.PageSize;
                 filter = _db.Projects.Pagtion(specification, out int count);
 
-              //  var entity = _db.EmployeeSalaries.Include(x => x.Department);
+                //  var entity = _db.EmployeeSalaries.Include(x => x.Department);
                 var entity = _mapper.Map<List<ProjectDto>>(filter);
-               
+
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -75,7 +75,7 @@ namespace RealEstate.DataAccess
             }
             catch (Exception ex)
             {
-            
+
                 return new ResponseData
                 {
                     IsSuccess = false,
@@ -90,9 +90,9 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Project emp =await _db.Projects.Where(a => a.Id == id).FirstOrDefaultAsync();
+                Project emp = await _db.Projects.Where(a => a.Id == id).FirstOrDefaultAsync();
                 var _Project = _mapper.Map<Project, ProjectDto>(emp);
-                        sw.Stop();
+                sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
                 {
@@ -111,12 +111,12 @@ namespace RealEstate.DataAccess
                     Message = ex.Message,
                 };
             }
-          
-           
-          
-           
+
+
+
+
         }
-        public async Task<ResponseData> Delete(int id) 
+        public async Task<ResponseData> Delete(int id)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace RealEstate.DataAccess
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Message="تم الحذف بنجاح"
+                    Message = "تم الحذف بنجاح"
                 };
             }
             catch (DbUpdateException ex)
@@ -174,13 +174,13 @@ namespace RealEstate.DataAccess
 
 
         }
-        public ResponseData SaveApartmentNumber(ProjectDto Project) 
+        public ResponseData SaveApartmentNumber(ProjectDto Project)
         {
-         
-          
-          if (Project.Id != 0)
+
+
+            if (Project.Id != 0)
             {
-              
+
                 Project _newRec = _db.Projects.SingleOrDefault(u => u.Id == Project.Id);
                 if (_newRec == null)
                     throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
@@ -200,18 +200,18 @@ namespace RealEstate.DataAccess
                 }
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
-        } 
+        }
         public ResponseData SaveProject(ProjectDto Project)
         {
-         
-            if (Project.Id == 0|| Project.Id == null)
+
+            if (Project.Id == 0 || Project.Id == null)
             {
                 try
                 {
-                   
+
                     Project newRec = new Project();
                     newRec = _mapper.Map<ProjectDto, Project>(Project);
-                  
+
                     _db.Projects.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -247,13 +247,13 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
-        public async Task<ResponseData> GetProjectUnitDescriptionById(int FlatID, int projectId) 
+        public async Task<ResponseData> GetProjectUnitDescriptionById(int FlatID, int projectId)
         {
             try
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                ProjectUnitDescription emp = await _db.ProjectUnitDescriptions.Where(a => a.FlatId == FlatID && a.ProjectId==projectId).FirstOrDefaultAsync();
+                ProjectUnitDescription emp = await _db.ProjectUnitDescriptions.Where(a => a.FlatId == FlatID && a.ProjectId == projectId).FirstOrDefaultAsync();
                 var _Project = _mapper.Map<ProjectUnitDescription, ProjectUnitDescriptionDto>(emp);
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -279,7 +279,7 @@ namespace RealEstate.DataAccess
 
 
         }
-        public ResponseData SaveProjectUnitDescription(ProjectUnitDescriptionDto projectUnitDescription) 
+        public ResponseData SaveProjectUnitDescription(ProjectUnitDescriptionDto projectUnitDescription)
         {
 
             if (projectUnitDescription.Id == 0 || projectUnitDescription.Id == null)
@@ -345,7 +345,7 @@ namespace RealEstate.DataAccess
                     IsSuccess = true,
                     Code = EResponse.OK,
                     Data = entity,
-                  
+
                 };
             }
             catch (Exception ex)
@@ -369,8 +369,8 @@ namespace RealEstate.DataAccess
 
                     Reservation newRec = new Reservation();
                     newRec = _mapper.Map<ReservationDto, Reservation>(reservation);
-                 
-                   
+
+
                     var unit = _db.ProjectUnitDescriptions.FirstOrDefault(x => x.Id == reservation.ProjectUnitDescriptionId);
                     if (unit == null)
                     {
@@ -385,7 +385,10 @@ namespace RealEstate.DataAccess
                         unit.IsBooked = true;
                         _db.ProjectUnitDescriptions.Attach(unit);
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);
+                       
                         _db.Reservations.Add(newRec);
+                        _db.Programs.Add(newRecProgram);
 
                     }
                     _db.SaveChanges();
@@ -408,9 +411,7 @@ namespace RealEstate.DataAccess
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
-                    _db.Entry(_newRec).CurrentValues.SetValues(newRec);
-                    _db.Reservations.Attach(_newRec);
-                    _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
                     var unit = _db.ProjectUnitDescriptions.FirstOrDefault(x => x.Id == reservation.ProjectUnitDescriptionId);
                     if (unit == null)
                     {
@@ -422,10 +423,15 @@ namespace RealEstate.DataAccess
                     }
                     else
                     {
-                        unit.IsBooked = true;
+                         unit.IsBooked = true;
                         _db.ProjectUnitDescriptions.Attach(unit);
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
+                        var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);
+                        
+                        _db.Entry(_newRec).CurrentValues.SetValues(newRec);
+                        _db.Reservations.Attach(_newRec);
+                        _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        _db.Programs.Add(newRecProgram);
                     }
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -446,7 +452,7 @@ namespace RealEstate.DataAccess
                 sw.Start();
                 IQueryable<ProjectUnitDescription> filter;
 
-                filter = _db.ProjectUnitDescriptions.Where(s=>s.ProjectId==ProjectId);
+                filter = _db.ProjectUnitDescriptions.Where(s => s.ProjectId == ProjectId);
 
                 //  var entity = _db.EmployeeSalaries.Include(x => x.Department);
                 var entity = _mapper.Map<List<ProjectUnitDescriptionDto>>(filter);
