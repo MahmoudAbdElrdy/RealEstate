@@ -18,7 +18,8 @@ namespace RealEstate.DataAccess
         public string Notes { get; set; }
         public void CreateMappings(Profile configuration)
         {
-            configuration.CreateMap<ProjectVisit, ProjectVisitDto>().ForMember(x => x.ProjectName, opt => opt.MapFrom(x => x.Project.Name)).ReverseMap();
+            configuration.CreateMap<ProjectVisit, ProjectVisitDto>()
+                .ForMember(x => x.ProjectName, opt => opt.MapFrom(x => x.Project.Name)).ReverseMap();
                 
         }
     }

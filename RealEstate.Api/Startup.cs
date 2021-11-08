@@ -20,6 +20,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using TanvirArjel.Extensions.Microsoft.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace RealEstate.Api
 {
@@ -178,7 +180,11 @@ namespace RealEstate.Api
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadFiles")),
+                RequestPath = "/wwwroot/UploadFiles"
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

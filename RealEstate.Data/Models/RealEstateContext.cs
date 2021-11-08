@@ -30,6 +30,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<EmployeePenalty> EmployeePenalties { get; set; }
         public virtual DbSet<EmployeeReward> EmployeeRewards { get; set; }
         public virtual DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
+        public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<GoodsType> GoodsTypes { get; set; }
         public virtual DbSet<Mail> Mail { get; set; }
         public virtual DbSet<MaterialsAllocation> MaterialsAllocations { get; set; }
@@ -53,7 +54,7 @@ namespace RealEstate.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-LRTAREA;Database=RealEstate;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=RealEstate;Trusted_Connection=True;");
             }
         }
 
@@ -255,6 +256,16 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.EmployeeSalaries)
                     .HasForeignKey(d => d.EmployeeId)
                     .HasConstraintName("FK_EmployeeSalary_Employee");
+            });
+
+            modelBuilder.Entity<File>(entity =>
+            {
+                entity.ToTable("File");
+
+                entity.HasOne(d => d.Contract)
+                    .WithMany(p => p.Files)
+                    .HasForeignKey(d => d.ContractId)
+                    .HasConstraintName("FK_File_Contract");
             });
 
             modelBuilder.Entity<GoodsType>(entity =>

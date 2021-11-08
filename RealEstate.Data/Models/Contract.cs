@@ -10,6 +10,7 @@ namespace RealEstate.Data.Models
         public Contract()
         {
             ContractDetails = new HashSet<ContractDetail>();
+            Files = new HashSet<File>();
         }
 
         public int Id { get; set; }
@@ -30,5 +31,6 @@ namespace RealEstate.Data.Models
 
         public virtual ProjectUnit ProjectUnit { get; set; }
         public virtual ICollection<ContractDetail> ContractDetails { get; set; }
+        public virtual ICollection<File> Files { get; set; }
     }
 }
