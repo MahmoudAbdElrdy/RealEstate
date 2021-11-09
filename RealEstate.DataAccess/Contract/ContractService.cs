@@ -34,13 +34,47 @@ namespace RealEstate.DataAccess
                 var name = new BaseSpecifications<Contract>(x => x.Name.Contains(search.Name));
                 specification = specification?.And(name) ?? name;
             }
+            if (!string.IsNullOrEmpty(search.Notes))
+            {
+                var note = new BaseSpecifications<Contract>(x => x.Notes.Contains(search.Notes));
+                specification = specification?.And(note) ?? note;
+            }
             if (!string.IsNullOrEmpty(search.Phone))
             {
                 var phone = new BaseSpecifications<Contract>(x => x.Phone.Contains(search.Phone));
                 specification = specification?.And(phone) ?? phone;
             }
+            if (!string.IsNullOrEmpty(search.Address))
+            {
+                var Address = new BaseSpecifications<Contract>(x => x.Address.Contains(search.Address));
+                specification = specification?.And(Address) ?? Address;
+            }
+            if (!string.IsNullOrEmpty(search.Program))
+            {
+                var program = new BaseSpecifications<Contract>(x => x.Program.Contains(search.Program));
+                specification = specification?.And(program) ?? program;
+            }
+            if (!string.IsNullOrEmpty(search.NationalNumber))
+            {
+                var nationalNumber = new BaseSpecifications<Contract>(x => x.NationalNumber.Contains(search.NationalNumber));
+                specification = specification?.And(nationalNumber) ?? nationalNumber;
+            }
+            if (search.ProjectId!=null&& search.ProjectId>0)
+            {
+                var projectId = new BaseSpecifications<Contract>(x => x.ProjectId==search.ProjectId);
+                specification = specification?.And(projectId) ?? projectId;
+            }
+            if (search.IsStock != null)
+            {
+                var isStock = new BaseSpecifications<Contract>(x => x.IsStock == search.IsStock);
+                specification = specification?.And(isStock) ?? isStock;
+            }
+            if ((search.Date) != null)
+            {
+                var date = new BaseSpecifications<Contract>(x => x.Date.Date.Month.Equals(search.Date.Value.Date.Month) && x.Date.Date.Year.Equals(search.Date.Value.Date.Year));
+                specification = specification?.And(date) ?? date;
+            }
            
-
             if (specification == null)
                 specification = new BaseSpecifications<Contract>();
 

@@ -41,5 +41,8 @@ namespace RealEstate.DataAccess
         public DateTime? Date { get; set; }
         public string Program { get; set; }
         public string Address { get; set; }
+        public int? ProjectId { get; set; }
+        public bool? IsStock { get; set; }
+        public string Notes { get; set; }
     }
 }
