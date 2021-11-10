@@ -289,8 +289,11 @@ namespace RealEstate.DataAccess
 
                     ProjectUnitDescription newRec = new ProjectUnitDescription();
                     newRec = _mapper.Map<ProjectUnitDescriptionDto, ProjectUnitDescription>(projectUnitDescription);
-
-                    _db.ProjectUnitDescriptions.Add(newRec);
+                    ProjectUnit projectUnit = new ProjectUnit();
+                    projectUnit.FloorNumber =(int)projectUnitDescription.FloorNumber;
+                    projectUnit.Number =(int)projectUnitDescription.FlatID;
+                    projectUnit.ProjectUnitDescription = newRec;
+                    _db.ProjectUnits.Add(projectUnit);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
                 }
@@ -314,6 +317,7 @@ namespace RealEstate.DataAccess
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
                     _db.ProjectUnitDescriptions.Attach(_newRec);
                     _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
 
