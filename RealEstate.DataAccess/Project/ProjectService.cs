@@ -290,8 +290,8 @@ namespace RealEstate.DataAccess
                     ProjectUnitDescription newRec = new ProjectUnitDescription();
                     newRec = _mapper.Map<ProjectUnitDescriptionDto, ProjectUnitDescription>(projectUnitDescription);
                     ProjectUnit projectUnit = new ProjectUnit();
-                    projectUnit.FloorNumber =(int)projectUnitDescription.FloorNumber;
-                    projectUnit.Number =(int)projectUnitDescription.FlatID;
+                    projectUnit.FloorNumber = (int)projectUnitDescription.FloorNumber;
+                    projectUnit.Number = (int)projectUnitDescription.FlatID;
                     projectUnit.ProjectUnitDescription = newRec;
                     _db.ProjectUnits.Add(projectUnit);
                     _db.SaveChanges();
@@ -390,7 +390,7 @@ namespace RealEstate.DataAccess
                         _db.ProjectUnitDescriptions.Attach(unit);
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);
-                       
+
                         _db.Reservations.Add(newRec);
                         _db.Programs.Add(newRecProgram);
 
@@ -427,11 +427,11 @@ namespace RealEstate.DataAccess
                     }
                     else
                     {
-                         unit.IsBooked = true;
+                        unit.IsBooked = true;
                         _db.ProjectUnitDescriptions.Attach(unit);
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);
-                        
+
                         _db.Entry(_newRec).CurrentValues.SetValues(newRec);
                         _db.Reservations.Attach(_newRec);
                         _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -448,7 +448,7 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
-        public async Task<ResponseData> GetProjectUnitList(int ProjectId)
+        public async Task<ResponseData> GetProjectUnitDescriptionsList(int ProjectId)
         {
             try
             {
@@ -482,5 +482,69 @@ namespace RealEstate.DataAccess
                 };
             }
         }
+        public async Task<ResponseData> GetProjectUnitList(int ProjectId)
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
+                var filterItems = _db.ProjectUnitDescriptions.Include(x=>x.ProjectUnits).Where(x => x.ProjectId == ProjectId);
+                var filter = filterItems?.SelectMany(x => x.ProjectUnits);
+                var entity = _mapper.Map<List<ProjectUnitDto>>(filter);
+                var DistinctItems = entity.GroupBy(x => x.FloorNumber).Select(y => y.First()).ToList();
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = DistinctItems,
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetUnitDescriptionsByUnti(int ProjectId, int FloorNumber)
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var filterItems = _db.ProjectUnitDescriptions.Include(x => x.ProjectUnits).Where(x => x.ProjectId == ProjectId);
+                var filter = filterItems?.SelectMany(x => x.ProjectUnits).Where(x=>x.FloorNumber==FloorNumber);
+                var entity = _mapper.Map<List<ProjectUnitDto>>(filter);
+                
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+
     }
 }

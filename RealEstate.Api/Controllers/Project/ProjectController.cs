@@ -78,6 +78,11 @@ namespace RealEstate.Api.Controllers
         public async Task<ActionResult<ResponseData>> GetProjectUnitList(int projectId)
         {
             return await _service.GetProjectUnitList(projectId);
+        } 
+        [HttpGet("GetUnitDescriptionsByUnti")]
+        public async Task<ActionResult<ResponseData>> GetUnitDescriptionsByUnti(int projectId, int floorNumber)
+        {
+            return await _service.GetUnitDescriptionsByUnti(projectId, floorNumber);
         }
     }
 }

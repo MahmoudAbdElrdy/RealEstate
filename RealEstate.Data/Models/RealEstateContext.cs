@@ -30,7 +30,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<EmployeePenalty> EmployeePenalties { get; set; }
         public virtual DbSet<EmployeeReward> EmployeeRewards { get; set; }
         public virtual DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
-        public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<FileContract> FileContracts { get; set; }
         public virtual DbSet<GoodsType> GoodsTypes { get; set; }
         public virtual DbSet<Mail> Mail { get; set; }
         public virtual DbSet<MaterialsAllocation> MaterialsAllocations { get; set; }
@@ -258,12 +258,12 @@ namespace RealEstate.Data.Models
                     .HasConstraintName("FK_EmployeeSalary_Employee");
             });
 
-            modelBuilder.Entity<File>(entity =>
+            modelBuilder.Entity<FileContract>(entity =>
             {
-                entity.ToTable("File");
+                entity.ToTable("FileContract");
 
                 entity.HasOne(d => d.Contract)
-                    .WithMany(p => p.Files)
+                    .WithMany(p => p.FileContracts)
                     .HasForeignKey(d => d.ContractId)
                     .HasConstraintName("FK_File_Contract");
             });

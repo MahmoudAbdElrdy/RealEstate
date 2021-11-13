@@ -25,6 +25,7 @@ namespace RealEstate.DataAccess
         public double? MetersCount { get; set; }
         public string Notes { get; set; }
         public int ProjectId { get; set; }
+        public List<string> ContractFile { get; set; } 
         //    public string[] Files { get; set; }
         public void CreateMappings(Profile configuration)
         {

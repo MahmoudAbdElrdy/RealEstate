@@ -51,4 +51,16 @@ namespace RealEstate.DataAccess
 
         }
     }
+    public class ProjectUnitDto : ICustomMapping 
+    {
+        public int? Id { get; set; }
+        public int? ProjectUnitDescriptionId { get; set; }
+        public int? Number { get; set; }
+        public int? FloorNumber { get; set; }
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<ProjectUnit, ProjectUnitDto>().ReverseMap();
+
+        }
+    }
 }

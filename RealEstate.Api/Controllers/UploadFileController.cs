@@ -13,7 +13,7 @@ namespace RealEstate.API.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-    [RealEstate.Service.Classes.Authorize]
+   // [RealEstate.Service.Classes.Authorize]
     public class UploadFileController :Controller
     {
         private readonly IWebHostEnvironment _env;
@@ -61,6 +61,12 @@ namespace RealEstate.API.Controllers
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
             return Ok(new { count = files.Count, size, filePaths });
+        }
+        [HttpGet("Base")]
+        public string ServerRootPath()
+        {
+
+            return $"{Request.Scheme}://{Request.Host}{Request.PathBase}" + "/wwwroot/UploadFiles/";
         }
     }
 }
