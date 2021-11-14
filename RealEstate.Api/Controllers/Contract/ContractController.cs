@@ -36,7 +36,7 @@ namespace RealEstate.Api.Controllers.Contract
         }
         [HttpPost]
         [Route("CreateUpdate")]
-        public ActionResult<ResponseData> CreateUpdatEContract(ContractDto Contract)
+        public ActionResult<ResponseData> CreateUpdatEContract( ContractDto Contract)
         {
             
           

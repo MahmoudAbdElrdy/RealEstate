@@ -217,6 +217,7 @@ namespace RealEstate.DataAccess
 
 
         }
+       
         public ResponseData SaveContract(ContractDto Contract)
         {
             if (Contract.Id == 0 || Contract.Id == null)
@@ -229,7 +230,10 @@ namespace RealEstate.DataAccess
                     }
                     Contract newRec = new Contract();
                     newRec = _mapper.Map<ContractDto, Contract>(Contract);
+                    var files = new List<FileContract>();
 
+                    Contract.ContractFile.ForEach(x => files.Add(new FileContract {  FilePath = x }));
+                    newRec.FileContracts = files;
                     _db.Contracts.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
