@@ -18,10 +18,13 @@ namespace RealEstate.DataAccess
     {
         RealEstateContext _db;
         readonly IMapper _mapper;
-        public ContractService(RealEstateContext db, IMapper mapper)
+        ProjectService ProjectService;
+        public ContractService(RealEstateContext db, IMapper mapper, ProjectService projectService)
         {
             _db = db;
             _mapper = mapper;
+            ProjectService = projectService;
+
 
         }
         private BaseSpecifications<Contract> Specifications(ContractSearch search)
@@ -132,9 +135,13 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Where(a => a.Id == id).FirstOrDefaultAsync();
+                Contract emp = await _db.Contracts.Include(c=>c.FileContracts).Include(x=>x.ProjectUnit).Where(a => a.Id == id).FirstOrDefaultAsync();
+             
                 var _Contract = _mapper.Map<Contract, ContractDto>(emp);
-
+                _Contract.ContractFile = emp?.FileContracts?.Select(x => x.FilePath).ToList();
+                _Contract.UnitListDLL =(await ProjectService.GetProjectUnitList(_Contract.ProjectId)).Data;
+                if(_Contract.NumberFloor!=null|| _Contract.NumberFloor>0)
+                _Contract.UnitDescriptionsDLL =(await ProjectService.GetUnitDescriptionsByUnti(_Contract.ProjectId,(int)_Contract.NumberFloor)).Data;
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -165,7 +172,9 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Where(a => a.Id == id).FirstOrDefaultAsync();
+                Contract emp = await _db.Contracts.Include(c=>c.FileContracts).Where(a => a.Id == id).FirstOrDefaultAsync();
+                if (emp.FileContracts != null)
+                    _db.FileContracts.RemoveRange(emp.FileContracts);
                 _db.Contracts.Remove(emp);
                 _db.SaveChanges();
                 sw.Stop();
@@ -175,6 +184,74 @@ namespace RealEstate.DataAccess
                     IsSuccess = true,
                     Code = EResponse.OK,
                     Message = "تم الحذف بنجاح"
+                };
+            }
+            catch (DbUpdateException ex)
+            {
+                var sqlException = ex.GetBaseException() as SqlException;
+
+                if (sqlException != null && sqlException.Number == 547)
+                {
+
+                    return new ResponseData
+                    {
+                        IsSuccess = false,
+                        Code = EResponse.UnSuccess,
+                        Message = " حدث خطأ لايمكنك الحذف لانه مرتبط ببيانات اخري"
+                    };
+                }
+                else
+                {
+
+                    return new ResponseData
+                    {
+                        IsSuccess = false,
+                        Code = EResponse.UnexpectedError,
+                        Message = "حدث خطأ لايمكنك الحذف"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = "حدث خطأ  "
+                };
+            }
+
+
+
+
+        }
+        public async Task<ResponseData> CancellContract(CancelledContractDto cancelledContract)  
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                Contract emp = await _db.Contracts.Include(c=>c.FileContracts).Where(a => a.Id == cancelledContract.ContractId).FirstOrDefaultAsync();
+                var projectName = _db.Projects.Where(c => c.Id == emp.ProjectId).FirstOrDefault();
+                CancelledContract cancelled = new CancelledContract();
+                cancelled.Customer = emp.Name;
+                cancelled.Project = projectName.Name;
+                cancelled.Paid =(double)cancelledContract.Paid;
+                cancelled.Back =(double)cancelledContract.Back;
+                cancelled.Date=DateTime.Now;
+                if (emp.FileContracts != null)
+                    _db.FileContracts.RemoveRange(emp.FileContracts);
+                _db.Contracts.Remove(emp);
+                _db.CancelledContracts.Add(cancelled);
+                _db.SaveChanges();
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Message = "تم الغاء العقد بنجاح"
                 };
             }
             catch (DbUpdateException ex)
@@ -232,8 +309,9 @@ namespace RealEstate.DataAccess
                     newRec = _mapper.Map<ContractDto, Contract>(Contract);
                     var files = new List<FileContract>();
 
-                    Contract.ContractFile.ForEach(x => files.Add(new FileContract {  FilePath = x }));
+                    Contract?.ContractFile?.ForEach(x => files.Add(new FileContract { FilePath = x }));
                     newRec.FileContracts = files;
+                    newRec.ProjectUnit = null;
                     _db.Contracts.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -249,12 +327,18 @@ namespace RealEstate.DataAccess
 
                 newRec = _mapper.Map<ContractDto, Contract>(Contract);
 
-                Contract _newRec = _db.Contracts.SingleOrDefault(u => u.Id == Contract.Id);
+                Contract _newRec = _db.Contracts.Include(x=>x.FileContracts).Include(x=>x.ProjectUnit).SingleOrDefault(u => u.Id == Contract.Id);
                 if (_newRec == null)
                     throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
+                    if(_newRec.FileContracts!=null)
+                    _db.FileContracts.RemoveRange(_newRec.FileContracts);
+                    var files = new List<FileContract>();
+
+                    Contract?.ContractFile?.ForEach(x => files.Add(new FileContract { FilePath = x,ContractId=Contract.Id }));
+                    _newRec.FileContracts = files;
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
                     _db.Contracts.Attach(_newRec);
                     _db.Entry(_newRec).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

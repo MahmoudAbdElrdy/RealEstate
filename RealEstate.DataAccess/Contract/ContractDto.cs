@@ -26,10 +26,15 @@ namespace RealEstate.DataAccess
         public string Notes { get; set; }
         public int ProjectId { get; set; }
         public List<string> ContractFile { get; set; } 
+        public int? NumberFloor { get; set; }
+        public List<ProjectUnitDto> UnitDescriptionsDLL { get; set; } 
+        public List<ProjectUnitDto> UnitListDLL { get; set; }  
+
         //    public string[] Files { get; set; }
         public void CreateMappings(Profile configuration)
         {
-            configuration.CreateMap<Contract, ContractDto>()
+            configuration.CreateMap<Contract, ContractDto>().
+                   ForMember(x => x.NumberFloor, opt => opt.MapFrom(x => x.ProjectUnit.FloorNumber))
 
               .ReverseMap();
         }
@@ -45,5 +50,20 @@ namespace RealEstate.DataAccess
         public int? ProjectId { get; set; }
         public bool? IsStock { get; set; }
         public string Notes { get; set; }
+    }
+    public class CancelledContractDto : PaginationDto, ICustomMapping
+    {
+        public int? Id { get; set; }
+        public DateTime? Date { get; set; }
+        public string Project { get; set; }
+        public string Customer { get; set; }
+        public double? Paid { get; set; }
+        public double Back { get; set; }
+        public int? ContractId { get; set; }
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<CancelledContract, CancelledContractDto>().
+                     ReverseMap();
+        }
     }
 }
