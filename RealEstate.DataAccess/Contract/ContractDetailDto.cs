@@ -20,4 +20,8 @@ namespace RealEstate.DataAccess
             configuration.CreateMap<ContractDetail, ContractDetailDto>().ReverseMap();
         }
     }
+    public class ContractDetailDtoList
+    {
+        public List<ContractDetailDto> ContractDetailDtos { get; set; }
+    }
 }

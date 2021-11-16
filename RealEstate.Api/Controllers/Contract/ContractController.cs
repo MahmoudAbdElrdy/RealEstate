@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.DataAccess;
-using RealEstate.DataAccess.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RealEstate.Api.Controllers.Contract
@@ -75,6 +70,13 @@ namespace RealEstate.Api.Controllers.Contract
         public ActionResult<ResponseData> SaveContractDetail(ContractDetailDto Contract)
         {
             var result = _contractDetailservice.SaveContractDetail(Contract);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("SaveListContractDetail")]
+        public ActionResult<ResponseData> SaveListContractDetail(ContractDetailDtoList Contract)
+        {
+            var result = _contractDetailservice.SaveListContractDetail(Contract?.ContractDetailDtos);
             return Ok(result);
         }
 

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 
-namespace RealEstate.DataAccess.Contract
+namespace RealEstate.DataAccess
 {
     [ScopedService]
     public class ContractDetailService
