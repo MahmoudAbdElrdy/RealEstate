@@ -11,10 +11,14 @@ namespace RealEstate.Api.Controllers.Contract
     {
         private readonly ContractService _service;
         private readonly ContractDetailService _contractDetailservice;
-        public ContractController(ContractService ContractService, ContractDetailService contractDetailservice)
+        private readonly ContractDetailBillService _contractDetailBillservice; 
+        public ContractController(ContractService ContractService,
+            ContractDetailBillService  contractDetailBillservice,
+            ContractDetailService contractDetailservice)
         {
             _service = ContractService;
             _contractDetailservice = contractDetailservice;
+            _contractDetailBillservice = contractDetailBillservice;
         }
         [HttpPost("GetAll")]
         public async Task<ActionResult<ResponseData>> GetAll(ContractSearch model)
@@ -80,5 +84,41 @@ namespace RealEstate.Api.Controllers.Contract
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("GetAllInstallmentOverdue")]
+        public ActionResult<ResponseData> GetAllInstallmentOverdue(ContractDetailDate Contract)
+        {
+            var result = _contractDetailservice.GetAllInstallmentOverdue(Contract);
+            return Ok(result);
+        }
+        [HttpGet("GetAllInstallmentAlert")]
+        public async Task<ActionResult<ResponseData>> GetAllInstallmentAlert(int id)
+        {
+            return await _contractDetailservice.GetAllInstallmentAlert(id);
+        }
+        // ContractDetailBill
+        [HttpGet("GetAllContractDetailBill")]
+        public async Task<ActionResult<ResponseData>> GetAllContractDetailBill(int contractId)
+        {
+            return await _contractDetailBillservice.GetAllContractDetailBill(contractId);
+        }
+
+        [HttpGet("GetByIdContractDetailBill")]
+        public async Task<ActionResult<ResponseData>> GetByIdContractDetailBill(int id)
+        {
+            return await _contractDetailBillservice.GetByIdContractDetailBill(id);
+        }
+        [HttpGet("DeleteContractDetailBill")]
+        public async Task<ActionResult<ResponseData>> DeleteContractDetailBill(int id)
+        {
+            return await _contractDetailBillservice.DeleteContractDetailBill(id);
+        }
+        [HttpPost]
+        [Route("SaveContractDetailBill")]
+        public ActionResult<ResponseData> SaveContractDetailBill(ContractDetailBillDto Contract)
+        {
+            var result = _contractDetailBillservice.SaveContractDetailBill(Contract);
+            return Ok(result);
+        }
     }
 }

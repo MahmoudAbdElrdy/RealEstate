@@ -24,4 +24,11 @@ namespace RealEstate.DataAccess
     {
         public List<ContractDetailDto> ContractDetailDtos { get; set; }
     }
+    public class ContractDetailDate
+    {
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+        public int? ContractId { get; set; }
+        public int? Id { get; set; }
+    }
 }

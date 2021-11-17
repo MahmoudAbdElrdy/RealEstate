@@ -48,6 +48,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<SiteRep> SiteReps { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
+        public virtual DbSet<ViewPayInstallment> ViewPayInstallments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -548,6 +549,21 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.SupplierPayments)
                     .HasForeignKey(d => d.SupplierId)
                     .HasConstraintName("FK_DealerPayment_Dealer1");
+            });
+
+            modelBuilder.Entity<ViewPayInstallment>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ViewPayInstallments");
+
+                entity.Property(e => e.ContractDetailBillDate).HasColumnType("date");
+
+                entity.Property(e => e.ContractDetailDate).HasColumnType("date");
+
+                entity.Property(e => e.ContractId).HasColumnName("ContractID");
+
+                entity.Property(e => e.Name).IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

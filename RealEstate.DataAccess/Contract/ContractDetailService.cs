@@ -214,5 +214,115 @@ namespace RealEstate.DataAccess
 
            
         }
+        //
+        public async Task<ResponseData> GetAllInstallmentAlert(int ContractId)
+        {
+            try
+            {
+                DateTime now = DateTime.Now;
+                var startDate = new DateTime(now.Year, now.Month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var filterDate = _db.ContractDetailBills.Include(c=>c.ContractDetail).Where(c=>c.ContractDetail.ContractId==ContractId);
+                var contractDetailsId = filterDate.Select(c => c.ContractDetailId);
+                IQueryable<ContractDetail> filter;
+
+                filter = _db.ContractDetails.Include(c=>c.ContractDetailBills).Where(x => x.ContractId == ContractId&&x.Date>=now&& x.Date <= endDate&&!contractDetailsId.Contains(x.Id));
+              
+                var entity = _mapper.Map<List<ContractDetailDto>>(filter);
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetAllViewPayInstallments(int ContractId) 
+        {
+            try
+            {
+                DateTime now = DateTime.Now;
+                var startDate = new DateTime(now.Year, now.Month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                 IQueryable<ViewPayInstallment> filter;
+
+                filter = _db.ViewPayInstallments.Where(x => x.ContractId == ContractId).OrderBy(c=>c.ContractDetailDate);
+
+                var entity = filter;
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetAllInstallmentOverdue(ContractDetailDate contract) 
+        {
+            try
+            {
+                DateTime now = DateTime.Now;
+                var startDate = new DateTime(now.Year, now.Month, 1);
+                var endDate = startDate.AddMonths(1).AddDays(-1);
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail).Where(c => c.ContractDetail.ContractId == contract.ContractId);
+                var contractDetailsId = filterDate.Select(c => c.ContractDetailId);
+                IQueryable<ContractDetail> filter;
+
+                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == contract.ContractId && x.Date >= contract.FromDate && x.Date <= contract.ToDate && !contractDetailsId.Contains(x.Id));
+
+                var entity = _mapper.Map<List<ContractDetailDto>>(filter);
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }
