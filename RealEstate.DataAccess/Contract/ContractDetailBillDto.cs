@@ -20,4 +20,23 @@ namespace RealEstate.DataAccess
             configuration.CreateMap<ContractDetailBill, ContractDetailBillDto>().ReverseMap();
         }
     }
+    public class ViewPayInstallmentDto : ICustomMapping
+    {
+        public int? ContractDetailId { get; set; }
+        public string Name { get; set; }
+        public DateTime? ContractDetailDate { get; set; }
+        public double? Amount { get; set; }
+        public int? ContractId { get; set; }
+        public bool? IsExtra { get; set; }
+        public int? ContractDetailBillId { get; set; }
+        public int? Number { get; set; }
+        public double? Paid { get; set; }
+        public DateTime? ContractDetailBillDate { get; set; }
+        public double? Remainder { get; set; }
+        public double? PreviousPaid { get; set; }  
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<ViewPayInstallment, ViewPayInstallmentDto>().ReverseMap();
+        }
+    }
 }

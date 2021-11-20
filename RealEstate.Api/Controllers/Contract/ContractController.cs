@@ -51,8 +51,13 @@ namespace RealEstate.Api.Controllers.Contract
             return Ok(result);
 
         }
+        [HttpPost("GetAllCancelledContracts")]
+        public async Task<ActionResult<ResponseData>> GetAllCancelledContracts(CancelledContractDto search)
+        {
+            return await _service.GetAllCancelledContracts(search);
+        }
 
-        // ContractDetail
+        // ContractDetail 
         [HttpGet("GetAllContractDetail")]
         public async Task<ActionResult<ResponseData>> GetAllContractDetail(int contractId)
         {
@@ -84,25 +89,34 @@ namespace RealEstate.Api.Controllers.Contract
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetAllInstallmentOverdue")]
-        public ActionResult<ResponseData> GetAllInstallmentOverdue(ContractDetailDate Contract)
+        public async Task<ActionResult<ResponseData>> GetAllInstallmentOverdueAsync(int contractId)
         {
-            var result = _contractDetailservice.GetAllInstallmentOverdue(Contract);
+            var result =await _contractDetailservice.GetAllInstallmentOverdue(contractId);
             return Ok(result);
         }
-        [HttpGet("GetAllInstallmentAlert")]
-        public async Task<ActionResult<ResponseData>> GetAllInstallmentAlert(int id)
+        [HttpPost("GetAllInstallmentAlert")]
+        public async Task<ActionResult<ResponseData>> GetAllInstallmentAlert(ContractDetailDate date)
         {
-            return await _contractDetailservice.GetAllInstallmentAlert(id);
+            return await _contractDetailservice.GetAllInstallmentAlert(date);
         }
         // ContractDetailBill
         [HttpGet("GetAllContractDetailBill")]
-        public async Task<ActionResult<ResponseData>> GetAllContractDetailBill(int contractId)
+        public async Task<ActionResult<ResponseData>> GetAllContractDetailBill(int ContractDetailId)
         {
-            return await _contractDetailBillservice.GetAllContractDetailBill(contractId);
+            return await _contractDetailBillservice.GetAllContractDetailBill(ContractDetailId);
         }
-
+         [HttpGet("GetAllInstallmentNotPaid")]
+        public async Task<ActionResult<ResponseData>> GetAllInstallmentNotPaid(int contractId)
+        {
+            return await _contractDetailservice.GetAllInstallmentNotPaid(contractId);
+        }
+        [HttpGet("GetAllViewPayInstallments")]
+        public async Task<ActionResult<ResponseData>> GetAllViewPayInstallments(int contractId)
+        {
+            return await _contractDetailservice.GetAllViewPayInstallments(contractId);
+        }
         [HttpGet("GetByIdContractDetailBill")]
         public async Task<ActionResult<ResponseData>> GetByIdContractDetailBill(int id)
         {

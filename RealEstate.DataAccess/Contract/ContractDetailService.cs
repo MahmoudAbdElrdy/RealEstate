@@ -201,7 +201,7 @@ namespace RealEstate.DataAccess
 
                 List<ContractDetail> newRec = new List<ContractDetail>();
                 newRec = _mapper.Map<List<ContractDetailDto>, List<ContractDetail>>(ContractDetail);
-              
+
                 _db.ContractDetails.AddRange(newRec);
                 _db.SaveChanges();
                 return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -212,10 +212,10 @@ namespace RealEstate.DataAccess
             }
 
 
-           
+
         }
         //
-        public async Task<ResponseData> GetAllInstallmentAlert(int ContractId)
+        public async Task<ResponseData> GetAllInstallmentAlert(ContractDetailDate Contract)
         {
             try
             {
@@ -224,12 +224,12 @@ namespace RealEstate.DataAccess
                 var endDate = startDate.AddMonths(1).AddDays(-1);
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                var filterDate = _db.ContractDetailBills.Include(c=>c.ContractDetail).Where(c=>c.ContractDetail.ContractId==ContractId);
+                var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail).Where(c => c.ContractDetail.ContractId == Contract.ContractId);
                 var contractDetailsId = filterDate.Select(c => c.ContractDetailId);
                 IQueryable<ContractDetail> filter;
 
-                filter = _db.ContractDetails.Include(c=>c.ContractDetailBills).Where(x => x.ContractId == ContractId&&x.Date>=now&& x.Date <= endDate&&!contractDetailsId.Contains(x.Id));
-              
+                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == Contract.ContractId && x.Date >= Contract.FromDate && x.Date <= Contract.ToDate && !contractDetailsId.Contains(x.Id));
+
                 var entity = _mapper.Map<List<ContractDetailDto>>(filter);
 
                 sw.Stop();
@@ -252,7 +252,7 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-        public async Task<ResponseData> GetAllViewPayInstallments(int ContractId) 
+        public async Task<ResponseData> GetAllViewPayInstallments(int ContractId)
         {
             try
             {
@@ -261,11 +261,16 @@ namespace RealEstate.DataAccess
                 var endDate = startDate.AddMonths(1).AddDays(-1);
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                 IQueryable<ViewPayInstallment> filter;
+                var data = _db.ViewPayInstallments.ToList().Where(x => x.ContractId == ContractId);
+                var entity = _mapper.Map<List<ViewPayInstallmentDto>>(data);
+                for (int i = 1; i < entity.Count(); i++)
+                {
+                    entity[i].PreviousPaid = entity[i-1].Paid;
+                  
+                }
 
-                filter = _db.ViewPayInstallments.Where(x => x.ContractId == ContractId).OrderBy(c=>c.ContractDetailDate);
 
-                var entity = filter;
+               
 
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -287,7 +292,7 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-        public async Task<ResponseData> GetAllInstallmentOverdue(ContractDetailDate contract) 
+        public async Task<ResponseData> GetAllInstallmentOverdue(int ContractId)
         {
             try
             {
@@ -296,14 +301,49 @@ namespace RealEstate.DataAccess
                 var endDate = startDate.AddMonths(1).AddDays(-1);
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail).Where(c => c.ContractDetail.ContractId == contract.ContractId);
+                var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail).Where(c => c.ContractDetail.ContractId == ContractId);
                 var contractDetailsId = filterDate.Select(c => c.ContractDetailId);
                 IQueryable<ContractDetail> filter;
 
-                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == contract.ContractId && x.Date >= contract.FromDate && x.Date <= contract.ToDate && !contractDetailsId.Contains(x.Id));
+                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == ContractId && x.Date <= startDate  && !contractDetailsId.Contains(x.Id));
 
                 var entity = _mapper.Map<List<ContractDetailDto>>(filter);
 
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetAllInstallmentNotPaid(int ContractId)
+        {
+            try
+            {
+               
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+              //  var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail).Where(c => c.ContractDetail.ContractId == ContractId);
+              //  var contractDetailsId = filterDate.Select(c => c.ContractDetailId);
+                IQueryable<ContractDetail> filter;
+
+                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == ContractId/*&& !contractDetailsId.Contains(x.Id)*/);
+
+                var entity = _mapper.Map<List<ContractDetailDto>>(filter);
+                entity=entity.Distinct().GroupBy(x => x.Id).Select(y => y.First()).ToList();
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData

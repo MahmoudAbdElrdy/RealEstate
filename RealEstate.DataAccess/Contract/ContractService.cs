@@ -353,5 +353,88 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
+        //CancelledContractDto
+        private BaseSpecifications<CancelledContract> SpecificationsCancell(CancelledContractDto search)
+        {
+            BaseSpecifications<CancelledContract> specification = null;
+
+
+            if (!string.IsNullOrEmpty(search.Customer))
+            {
+                var name = new BaseSpecifications<CancelledContract>(x => x.Customer.Contains(search.Customer));
+                specification = specification?.And(name) ?? name;
+            }
+            if (!string.IsNullOrEmpty(search.Project))
+            {
+                var Project = new BaseSpecifications<CancelledContract>(x => x.Project.Contains(search.Project));
+                specification = specification?.And(Project) ?? Project;
+            }
+            if (search.Paid!=null)
+            {
+                var Paid = new BaseSpecifications<CancelledContract>(x => x.Paid==(search.Paid));
+                specification = specification?.And(Paid) ?? Paid;
+            }
+            if (search.Back != null)
+            {
+                var Back = new BaseSpecifications<CancelledContract>(x => x.Back == (search.Back));
+                specification = specification?.And(Back) ?? Back;
+            }
+
+            if ((search.Date) != null)
+            {
+                var date = new BaseSpecifications<CancelledContract>(x => x.Date.Date.Month.Equals(search.Date.Value.Date.Month) && x.Date.Date.Year.Equals(search.Date.Value.Date.Year));
+                specification = specification?.And(date) ?? date;
+            }
+
+            if (specification == null)
+                specification = new BaseSpecifications<CancelledContract>();
+
+            specification.isPagingEnabled = true;
+            specification.page = search.PageNumber;
+            specification.pageSize = search.PageSize;
+            return specification;
+        }
+        public async Task<ResponseData> GetAllCancelledContracts(CancelledContractDto search)
+        {
+            try
+            {
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+             
+
+           //   var  filter = _db.CancelledContracts;
+                IQueryable<CancelledContract> filter;
+
+                var specification = SpecificationsCancell(search);
+
+                filter = _db.CancelledContracts.Pagtion(specification, out int count);
+
+                var entity = _mapper.Map<List<CancelledContractDto>>(filter);
+             
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+                    TotalRecordsCount = count,
+                    PageCount = (int)Math.Ceiling(count / (double)search?.PageSize),
+                    CurrentPage = search?.PageNumber,
+                    PageSize = search?.PageSize
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace RealEstate.DataAccess
             _mapper = mapper;
 
         }
-        public async Task<ResponseData> GetAllContractDetailBill(int ContractId)
+        public async Task<ResponseData> GetAllContractDetailBill(int ContractDetailId)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace RealEstate.DataAccess
 
 
 
-                filter = _db.ContractDetailBills.Include(x=>x.ContractDetail).Where(x => x.ContractDetail.ContractId == ContractId);
+                filter = _db.ContractDetailBills.Where(x => x.ContractDetailId == ContractDetailId);
                 var entity = _mapper.Map<List<ContractDetailBillDto>>(filter);
 
                 sw.Stop();

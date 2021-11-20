@@ -58,7 +58,7 @@ namespace RealEstate.DataAccess
         public string Project { get; set; }
         public string Customer { get; set; }
         public double? Paid { get; set; }
-        public double Back { get; set; }
+        public double? Back { get; set; }
         public int? ContractId { get; set; }
         public void CreateMappings(Profile configuration)
         {

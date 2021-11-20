@@ -24,6 +24,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<ContractDetail> ContractDetails { get; set; }
         public virtual DbSet<ContractDetailBill> ContractDetailBills { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<DailyReport> DailyReports { get; set; }
         public virtual DbSet<Dblog> Dblogs { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
@@ -46,6 +47,8 @@ namespace RealEstate.Data.Models
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<SiteRep> SiteReps { get; set; }
+        public virtual DbSet<Supervisor> Supervisors { get; set; }
+        public virtual DbSet<SupervisorDetail> SupervisorDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
         public virtual DbSet<ViewPayInstallment> ViewPayInstallments { get; set; }
@@ -169,6 +172,25 @@ namespace RealEstate.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name).IsRequired();
+            });
+
+            modelBuilder.Entity<DailyReport>(entity =>
+            {
+                entity.ToTable("DailyReport");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.DailyReports)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DailyReport_Employee");
+
+                entity.HasOne(d => d.Supervisor)
+                    .WithMany(p => p.DailyReports)
+                    .HasForeignKey(d => d.SupervisorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DailyReport_Supervisor");
             });
 
             modelBuilder.Entity<Dblog>(entity =>
@@ -522,6 +544,19 @@ namespace RealEstate.Data.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name).IsRequired();
+            });
+
+            modelBuilder.Entity<Supervisor>(entity =>
+            {
+                entity.ToTable("Supervisor");
+            });
+
+            modelBuilder.Entity<SupervisorDetail>(entity =>
+            {
+                entity.HasOne(d => d.Supervisor)
+                    .WithMany(p => p.SupervisorDetails)
+                    .HasForeignKey(d => d.SupervisorId)
+                    .HasConstraintName("FK_SupervisorDetails_Supervisor");
             });
 
             modelBuilder.Entity<Supplier>(entity =>
