@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace RealEstate.Data.Models
 {
-    public partial class RealEstateContext : DbContext
+    public partial class RealEstateNewContext : DbContext
     {
-        public RealEstateContext()
+        public RealEstateNewContext()
         {
         }
 
-        public RealEstateContext(DbContextOptions<RealEstateContext> options)
+        public RealEstateNewContext(DbContextOptions<RealEstateNewContext> options)
             : base(options)
         {
         }

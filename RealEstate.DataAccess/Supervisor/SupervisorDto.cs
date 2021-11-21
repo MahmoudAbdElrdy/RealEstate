@@ -10,7 +10,7 @@ namespace RealEstate.DataAccess
 {
     public class SupervisorDto : ICustomMapping
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string NationalNumber { get; set; }
@@ -21,10 +21,9 @@ namespace RealEstate.DataAccess
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Supervisor, SupervisorDto>()
-                .ForMember(x => x.Credit, opt => opt.MapFrom(x => x.SupervisorDetails.Where(c=>c.SupervisorId==Id).Sum(x=>x.Credit)))
-                .ForMember(x => x.Debt, opt => opt.MapFrom(x => x.SupervisorDetails.Where(c => c.SupervisorId == Id).Sum(x=>x.Debt)))
-                .ForMember(x => x.Net, opt => opt.MapFrom(x => x.SupervisorDetails.Where(c => c.SupervisorId == Id).Sum(x=>x.Net)))
-                .ReverseMap();
+                           .ReverseMap();
+            configuration.CreateMap<ViewSupervisor, SupervisorDto>()
+                          .ReverseMap();
 
         }
     }

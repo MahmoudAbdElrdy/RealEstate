@@ -37,11 +37,17 @@ namespace RealEstate.Api.Controllers.Supervisor
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdateSupervisor(SupervisorDto Supervisor)
         {
-           
-
             var result = _service.SaveSupervisor(Supervisor);
             return Ok(result);
              
+        }
+        [HttpPost]
+        [Route("SaveSupervisorDetail")]
+        public ActionResult<ResponseData> SaveSupervisorDetail(SupervisorDetailDto supervisorDetail) 
+        {
+            var result = _service.SaveSupervisorDetail(supervisorDetail);
+            return Ok(result);
+
         }
 
     }
