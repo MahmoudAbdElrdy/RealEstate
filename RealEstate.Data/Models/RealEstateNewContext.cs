@@ -51,6 +51,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<SupervisorDetail> SupervisorDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
+        public virtual DbSet<ViewDailyReport> ViewDailyReports { get; set; }
         public virtual DbSet<ViewPayInstallment> ViewPayInstallments { get; set; }
         public virtual DbSet<ViewSupervisor> ViewSupervisors { get; set; }
 
@@ -585,6 +586,17 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.SupplierPayments)
                     .HasForeignKey(d => d.SupplierId)
                     .HasConstraintName("FK_DealerPayment_Dealer1");
+            });
+
+            modelBuilder.Entity<ViewDailyReport>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ViewDailyReport");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.EmployeeName).IsRequired();
             });
 
             modelBuilder.Entity<ViewPayInstallment>(entity =>
