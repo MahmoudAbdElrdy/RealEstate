@@ -16,6 +16,8 @@ namespace RealEstate.DataAccess
         public string EmployeeSubmitted { get; set; }
         public DateTime? Date { get; set; }
         public string Notes { get; set; }
+        public string SupervisorName { get; set; }
+        public string EmployeeName { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<DailyReport, DailyReportDto>()

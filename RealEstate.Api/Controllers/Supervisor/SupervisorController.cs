@@ -28,6 +28,11 @@ namespace RealEstate.Api.Controllers.Supervisor
         {
             return await _service.GetById(id);
         }
+        [HttpGet("GetDropDownList")]
+        public async Task<ActionResult<ResponseData>> GetDropDownList()
+        {
+            return await _service.GetDropDownList();
+        }
         [HttpGet("Delete")]
         public async Task<ActionResult<ResponseData>> Delete(int id)
         {

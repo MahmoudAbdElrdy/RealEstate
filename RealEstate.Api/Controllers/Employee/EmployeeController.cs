@@ -80,5 +80,10 @@ namespace RealEstate.Api.Controllers
             }
             return BadRequest(response);
         }
+        [HttpGet("GetDropDownList")]
+        public async Task<ActionResult<ResponseData>> GetDropDownList()
+        {
+            return await _service.GetDropDownList();
+        }
     }
 }

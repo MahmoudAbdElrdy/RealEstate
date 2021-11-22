@@ -29,15 +29,26 @@ namespace RealEstate.DataAccess
         {
             BaseSpecifications<ViewDailyReport> specification = null;
 
-            if (!string.IsNullOrEmpty(search.SupervisorName))
+            if (!string.IsNullOrEmpty(search.EmployeeSubmitted))
             {
-                var name = new BaseSpecifications<ViewDailyReport>(x => x.SupervisorName.Contains(search.SupervisorName));
+                var name = new BaseSpecifications<ViewDailyReport>(x => x.EmployeeSubmitted.Contains(search.EmployeeSubmitted));
                 specification = specification?.And(name) ?? name;
             }
-            if (!string.IsNullOrEmpty(search.EmployeeName))
+
+            if (search.EmployeeId!=null)
             {
-                var phone = new BaseSpecifications<ViewDailyReport>(x => x.EmployeeName.Contains(search.EmployeeName));
-                specification = specification?.And(phone) ?? phone;
+                var name = new BaseSpecifications<ViewDailyReport>(x => x.EmployeeId==(search.EmployeeId));
+                specification = specification?.And(name) ?? name;
+            }
+            if (search.SupervisorId != null)
+            {
+                var name = new BaseSpecifications<ViewDailyReport>(x => x.SupervisorId == (search.SupervisorId));
+                specification = specification?.And(name) ?? name;
+            }
+            if (search.Value != null)
+            {
+                var name = new BaseSpecifications<ViewDailyReport>(x => x.Value == (search.Value));
+                specification = specification?.And(name) ?? name;
             }
             if (search.Date!=null)
             {

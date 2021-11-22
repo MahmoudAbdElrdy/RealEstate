@@ -289,5 +289,36 @@ namespace RealEstate.DataAccess
             Console.WriteLine("Elapsed={0}", sw.Elapsed);
             return token;
         }
+        public async Task<ResponseData> GetDropDownList()
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var dropDownList = _db.Employees;
+
+                var entity = _mapper.Map<List<DropDownListDto>>(dropDownList);
+
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }

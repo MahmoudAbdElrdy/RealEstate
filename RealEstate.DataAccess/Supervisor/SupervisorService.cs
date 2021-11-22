@@ -237,7 +237,7 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                var dropDownList = _db.Projects;
+                var dropDownList = _db.Supervisors;
 
                 var entity = _mapper.Map<List<DropDownListDto>>(dropDownList);
 
