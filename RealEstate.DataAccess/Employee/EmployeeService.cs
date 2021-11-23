@@ -27,7 +27,7 @@ namespace RealEstate.DataAccess
         }
         private BaseSpecifications<Employee> Specifications(EmployeeSearch search)
         {
-            BaseSpecifications<Employee> specification = null;
+            BaseSpecifications<Employee> specification = new BaseSpecifications<Employee>(c=>c.DepartmentId!=null);
 
             if ((search.DepartmentId!=null&&search.DepartmentId!=0))
             {
