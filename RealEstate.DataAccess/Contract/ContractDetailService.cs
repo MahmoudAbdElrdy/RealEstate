@@ -261,7 +261,7 @@ namespace RealEstate.DataAccess
                 var endDate = startDate.AddMonths(1).AddDays(-1);
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                var data = _db.ViewPayInstallments.ToList().Where(x => x.ContractId == ContractId);
+                var data =await _db.ViewPayInstallments.Where(x => x.ContractId == ContractId).ToListAsync();
                 var entity = _mapper.Map<List<ViewPayInstallmentDto>>(data);
                 for (int i = 1; i < entity.Count(); i++)
                 {
