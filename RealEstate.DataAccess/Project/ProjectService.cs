@@ -545,6 +545,39 @@ namespace RealEstate.DataAccess
                 };
             }
         }
+        public async Task<ResponseData> GetName(int id)
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var emp = await _db.Projects.Where(a => a.Id == id).FirstOrDefaultAsync();
+
+                var projectName = emp?.Name;
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = projectName
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+
+
+
+
+        }
 
     }
 }
