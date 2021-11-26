@@ -7,7 +7,7 @@ namespace RealEstate.Data.StoredProc
    public class ExtraContrcat
     {
         public int? ContractId { get; set; }
-        public string ContractName { get; set; }
+        public string CustomerName { get; set; } 
         public string NationalNumber { get; set; }
         public int? ProjectId { get; set; }
         public int? ContractDetailBillId { get; set; }
@@ -21,5 +21,6 @@ namespace RealEstate.Data.StoredProc
         public double? ContractDetailAmount { get; set; }
         public bool? IsExtra { get; set; }
         public string ProjectName { get; set; }
+        public string ContractExtraName { get; set; } 
     }
 }

@@ -19,11 +19,11 @@ namespace RealEstate.DataAccess
             _mapper = mapper;
 
         }
-        public async Task<ResponseData> GetContractAccessories(int id)
+        public async Task<ResponseData> GetContractAccessories(int id, string contractExtraName)
         {
             try
             {
-                var result = SqlProcedures.GetContractAccessories(_db,id);
+                var result = SqlProcedures.GetContractAccessories(_db,id, contractExtraName);
 
                 return new ResponseData
                 {

@@ -29,16 +29,18 @@ namespace RealEstate.Api.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> ReportExtraContrcatAsync() 
+        public async Task<IActionResult> ReportExtraContrcat(ExtraContrcatDto dto)  
         {
             string mym = "";
             int ext = 1;
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc";
             Dictionary<string, string> parmarters =new Dictionary<string, string>();
-            parmarters.Add("P1", "ssss");
+          
             LocalReport localReport = new LocalReport(path);
-            var data =  (await _serviceReport.GetContractAccessories(14)).Data;
-            localReport.AddDataSource("DataSet1", data);
+            var data =  (await _serviceReport.GetContractAccessories((int)dto.ProjectID,dto.ContractExtraName)).Data;
+            parmarters.Add("ProjectName",data[0].ProjectName??"");
+            parmarters.Add("ExtraName", dto.ContractExtraName??"");
+            localReport.AddDataSource("ContractExtraDataSet", data);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");

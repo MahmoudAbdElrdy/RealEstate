@@ -20,17 +20,17 @@ namespace ReportRdlc {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("RealEstateNewDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("ContractExtraDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class RealEstateNewDataSet : global::System.Data.DataSet {
+    public partial class ContractExtraDataSet : global::System.Data.DataSet {
         
-        private ViewPayInstallmentsDataTable tableViewPayInstallments;
+        private ExtraContrcatDataTable tableExtraContrcat;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public RealEstateNewDataSet() {
+        public ContractExtraDataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ReportRdlc {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        protected RealEstateNewDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected ContractExtraDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace ReportRdlc {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["ViewPayInstallments"] != null)) {
-                    base.Tables.Add(new ViewPayInstallmentsDataTable(ds.Tables["ViewPayInstallments"]));
+                if ((ds.Tables["ExtraContrcat"] != null)) {
+                    base.Tables.Add(new ExtraContrcatDataTable(ds.Tables["ExtraContrcat"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace ReportRdlc {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ViewPayInstallmentsDataTable ViewPayInstallments {
+        public ExtraContrcatDataTable ExtraContrcat {
             get {
-                return this.tableViewPayInstallments;
+                return this.tableExtraContrcat;
             }
         }
         
@@ -127,7 +127,7 @@ namespace ReportRdlc {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            RealEstateNewDataSet cln = ((RealEstateNewDataSet)(base.Clone()));
+            ContractExtraDataSet cln = ((ContractExtraDataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace ReportRdlc {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["ViewPayInstallments"] != null)) {
-                    base.Tables.Add(new ViewPayInstallmentsDataTable(ds.Tables["ViewPayInstallments"]));
+                if ((ds.Tables["ExtraContrcat"] != null)) {
+                    base.Tables.Add(new ExtraContrcatDataTable(ds.Tables["ExtraContrcat"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace ReportRdlc {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableViewPayInstallments = ((ViewPayInstallmentsDataTable)(base.Tables["ViewPayInstallments"]));
+            this.tableExtraContrcat = ((ExtraContrcatDataTable)(base.Tables["ExtraContrcat"]));
             if ((initTable == true)) {
-                if ((this.tableViewPayInstallments != null)) {
-                    this.tableViewPayInstallments.InitVars();
+                if ((this.tableExtraContrcat != null)) {
+                    this.tableExtraContrcat.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace ReportRdlc {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "RealEstateNewDataSet";
+            this.DataSetName = "ContractExtraDataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/RealEstateNewDataSet.xsd";
+            this.Namespace = "http://tempuri.org/ContractExtraDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableViewPayInstallments = new ViewPayInstallmentsDataTable();
-            base.Tables.Add(this.tableViewPayInstallments);
+            this.tableExtraContrcat = new ExtraContrcatDataTable();
+            base.Tables.Add(this.tableExtraContrcat);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private bool ShouldSerializeViewPayInstallments() {
+        private bool ShouldSerializeExtraContrcat() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace ReportRdlc {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            RealEstateNewDataSet ds = new RealEstateNewDataSet();
+            ContractExtraDataSet ds = new ContractExtraDataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,28 +270,26 @@ namespace ReportRdlc {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public delegate void ViewPayInstallmentsRowChangeEventHandler(object sender, ViewPayInstallmentsRowChangeEvent e);
+        public delegate void ExtraContrcatRowChangeEventHandler(object sender, ExtraContrcatRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ViewPayInstallmentsDataTable : global::System.Data.TypedTableBase<ViewPayInstallmentsRow> {
+        public partial class ExtraContrcatDataTable : global::System.Data.TypedTableBase<ExtraContrcatRow> {
             
-            private global::System.Data.DataColumn columnContractDetailId;
+            private global::System.Data.DataColumn columnContractId;
             
-            private global::System.Data.DataColumn columnName;
+            private global::System.Data.DataColumn columnCustomerName;
             
-            private global::System.Data.DataColumn columnContractDetailDate;
+            private global::System.Data.DataColumn columnNationalNumber;
             
-            private global::System.Data.DataColumn columnAmount;
-            
-            private global::System.Data.DataColumn columnContractID;
-            
-            private global::System.Data.DataColumn columnIsExtra;
+            private global::System.Data.DataColumn columnProjectID;
             
             private global::System.Data.DataColumn columnContractDetailBillId;
+            
+            private global::System.Data.DataColumn columnContractDetailID;
             
             private global::System.Data.DataColumn columnNumber;
             
@@ -299,12 +297,22 @@ namespace ReportRdlc {
             
             private global::System.Data.DataColumn columnContractDetailBillDate;
             
-            private global::System.Data.DataColumn columnRemainder;
+            private global::System.Data.DataColumn columnID;
+            
+            private global::System.Data.DataColumn columnContractExtraName;
+            
+            private global::System.Data.DataColumn columnContractDetailDate;
+            
+            private global::System.Data.DataColumn columnContractDetailAmount;
+            
+            private global::System.Data.DataColumn columnIsExtra;
+            
+            private global::System.Data.DataColumn columnProjectName;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ViewPayInstallmentsDataTable() {
-                this.TableName = "ViewPayInstallments";
+            public ExtraContrcatDataTable() {
+                this.TableName = "ExtraContrcat";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -312,7 +320,7 @@ namespace ReportRdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal ViewPayInstallmentsDataTable(global::System.Data.DataTable table) {
+            internal ExtraContrcatDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -329,56 +337,40 @@ namespace ReportRdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected ViewPayInstallmentsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected ExtraContrcatDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ContractDetailIdColumn {
+            public global::System.Data.DataColumn ContractIdColumn {
                 get {
-                    return this.columnContractDetailId;
+                    return this.columnContractId;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn NameColumn {
+            public global::System.Data.DataColumn CustomerNameColumn {
                 get {
-                    return this.columnName;
+                    return this.columnCustomerName;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ContractDetailDateColumn {
+            public global::System.Data.DataColumn NationalNumberColumn {
                 get {
-                    return this.columnContractDetailDate;
+                    return this.columnNationalNumber;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn AmountColumn {
+            public global::System.Data.DataColumn ProjectIDColumn {
                 get {
-                    return this.columnAmount;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ContractIDColumn {
-                get {
-                    return this.columnContractID;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn IsExtraColumn {
-                get {
-                    return this.columnIsExtra;
+                    return this.columnProjectID;
                 }
             }
             
@@ -387,6 +379,14 @@ namespace ReportRdlc {
             public global::System.Data.DataColumn ContractDetailBillIdColumn {
                 get {
                     return this.columnContractDetailBillId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ContractDetailIDColumn {
+                get {
+                    return this.columnContractDetailID;
                 }
             }
             
@@ -416,9 +416,49 @@ namespace ReportRdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn RemainderColumn {
+            public global::System.Data.DataColumn IDColumn {
                 get {
-                    return this.columnRemainder;
+                    return this.columnID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ContractExtraNameColumn {
+                get {
+                    return this.columnContractExtraName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ContractDetailDateColumn {
+                get {
+                    return this.columnContractDetailDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ContractDetailAmountColumn {
+                get {
+                    return this.columnContractDetailAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IsExtraColumn {
+                get {
+                    return this.columnIsExtra;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ProjectNameColumn {
+                get {
+                    return this.columnProjectName;
                 }
             }
             
@@ -433,55 +473,59 @@ namespace ReportRdlc {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ViewPayInstallmentsRow this[int index] {
+            public ExtraContrcatRow this[int index] {
                 get {
-                    return ((ViewPayInstallmentsRow)(this.Rows[index]));
+                    return ((ExtraContrcatRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event ViewPayInstallmentsRowChangeEventHandler ViewPayInstallmentsRowChanging;
+            public event ExtraContrcatRowChangeEventHandler ExtraContrcatRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event ViewPayInstallmentsRowChangeEventHandler ViewPayInstallmentsRowChanged;
+            public event ExtraContrcatRowChangeEventHandler ExtraContrcatRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event ViewPayInstallmentsRowChangeEventHandler ViewPayInstallmentsRowDeleting;
+            public event ExtraContrcatRowChangeEventHandler ExtraContrcatRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event ViewPayInstallmentsRowChangeEventHandler ViewPayInstallmentsRowDeleted;
+            public event ExtraContrcatRowChangeEventHandler ExtraContrcatRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void AddViewPayInstallmentsRow(ViewPayInstallmentsRow row) {
+            public void AddExtraContrcatRow(ExtraContrcatRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ViewPayInstallmentsRow AddViewPayInstallmentsRow(int ContractDetailId, string Name, System.DateTime ContractDetailDate, double Amount, int ContractID, bool IsExtra, int ContractDetailBillId, int Number, double Paid, System.DateTime ContractDetailBillDate, double Remainder) {
-                ViewPayInstallmentsRow rowViewPayInstallmentsRow = ((ViewPayInstallmentsRow)(this.NewRow()));
+            public ExtraContrcatRow AddExtraContrcatRow(string CustomerName, string NationalNumber, int ProjectID, int ContractDetailID, int Number, double Paid, System.DateTime ContractDetailBillDate, string ContractExtraName, System.DateTime ContractDetailDate, double ContractDetailAmount, bool IsExtra, string ProjectName) {
+                ExtraContrcatRow rowExtraContrcatRow = ((ExtraContrcatRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ContractDetailId,
-                        Name,
-                        ContractDetailDate,
-                        Amount,
-                        ContractID,
-                        IsExtra,
-                        ContractDetailBillId,
+                        null,
+                        CustomerName,
+                        NationalNumber,
+                        ProjectID,
+                        null,
+                        ContractDetailID,
                         Number,
                         Paid,
                         ContractDetailBillDate,
-                        Remainder};
-                rowViewPayInstallmentsRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowViewPayInstallmentsRow);
-                return rowViewPayInstallmentsRow;
+                        null,
+                        ContractExtraName,
+                        ContractDetailDate,
+                        ContractDetailAmount,
+                        IsExtra,
+                        ProjectName};
+                rowExtraContrcatRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowExtraContrcatRow);
+                return rowExtraContrcatRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                ViewPayInstallmentsDataTable cln = ((ViewPayInstallmentsDataTable)(base.Clone()));
+                ExtraContrcatDataTable cln = ((ExtraContrcatDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -489,87 +533,113 @@ namespace ReportRdlc {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new ViewPayInstallmentsDataTable();
+                return new ExtraContrcatDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
-                this.columnContractDetailId = base.Columns["ContractDetailId"];
-                this.columnName = base.Columns["Name"];
-                this.columnContractDetailDate = base.Columns["ContractDetailDate"];
-                this.columnAmount = base.Columns["Amount"];
-                this.columnContractID = base.Columns["ContractID"];
-                this.columnIsExtra = base.Columns["IsExtra"];
+                this.columnContractId = base.Columns["ContractId"];
+                this.columnCustomerName = base.Columns["CustomerName"];
+                this.columnNationalNumber = base.Columns["NationalNumber"];
+                this.columnProjectID = base.Columns["ProjectID"];
                 this.columnContractDetailBillId = base.Columns["ContractDetailBillId"];
+                this.columnContractDetailID = base.Columns["ContractDetailID"];
                 this.columnNumber = base.Columns["Number"];
                 this.columnPaid = base.Columns["Paid"];
                 this.columnContractDetailBillDate = base.Columns["ContractDetailBillDate"];
-                this.columnRemainder = base.Columns["Remainder"];
+                this.columnID = base.Columns["ID"];
+                this.columnContractExtraName = base.Columns["ContractExtraName"];
+                this.columnContractDetailDate = base.Columns["ContractDetailDate"];
+                this.columnContractDetailAmount = base.Columns["ContractDetailAmount"];
+                this.columnIsExtra = base.Columns["IsExtra"];
+                this.columnProjectName = base.Columns["ProjectName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             private void InitClass() {
-                this.columnContractDetailId = new global::System.Data.DataColumn("ContractDetailId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnContractDetailId);
-                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnName);
-                this.columnContractDetailDate = new global::System.Data.DataColumn("ContractDetailDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnContractDetailDate);
-                this.columnAmount = new global::System.Data.DataColumn("Amount", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAmount);
-                this.columnContractID = new global::System.Data.DataColumn("ContractID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnContractID);
-                this.columnIsExtra = new global::System.Data.DataColumn("IsExtra", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIsExtra);
+                this.columnContractId = new global::System.Data.DataColumn("ContractId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContractId);
+                this.columnCustomerName = new global::System.Data.DataColumn("CustomerName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCustomerName);
+                this.columnNationalNumber = new global::System.Data.DataColumn("NationalNumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNationalNumber);
+                this.columnProjectID = new global::System.Data.DataColumn("ProjectID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProjectID);
                 this.columnContractDetailBillId = new global::System.Data.DataColumn("ContractDetailBillId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContractDetailBillId);
+                this.columnContractDetailID = new global::System.Data.DataColumn("ContractDetailID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContractDetailID);
                 this.columnNumber = new global::System.Data.DataColumn("Number", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNumber);
                 this.columnPaid = new global::System.Data.DataColumn("Paid", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPaid);
                 this.columnContractDetailBillDate = new global::System.Data.DataColumn("ContractDetailBillDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContractDetailBillDate);
-                this.columnRemainder = new global::System.Data.DataColumn("Remainder", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRemainder);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnContractDetailId,
-                                this.columnContractDetailBillId}, false));
-                this.columnContractDetailId.AllowDBNull = false;
-                this.columnName.AllowDBNull = false;
-                this.columnName.MaxLength = 2147483647;
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.columnContractExtraName = new global::System.Data.DataColumn("ContractExtraName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContractExtraName);
+                this.columnContractDetailDate = new global::System.Data.DataColumn("ContractDetailDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContractDetailDate);
+                this.columnContractDetailAmount = new global::System.Data.DataColumn("ContractDetailAmount", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContractDetailAmount);
+                this.columnIsExtra = new global::System.Data.DataColumn("IsExtra", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsExtra);
+                this.columnProjectName = new global::System.Data.DataColumn("ProjectName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProjectName);
+                this.columnContractId.AutoIncrement = true;
+                this.columnContractId.AllowDBNull = false;
+                this.columnContractId.ReadOnly = true;
+                this.columnCustomerName.AllowDBNull = false;
+                this.columnCustomerName.MaxLength = 2147483647;
+                this.columnNationalNumber.AllowDBNull = false;
+                this.columnNationalNumber.MaxLength = 2147483647;
+                this.columnProjectID.AllowDBNull = false;
+                this.columnContractDetailBillId.AutoIncrement = true;
+                this.columnContractDetailBillId.AllowDBNull = false;
+                this.columnContractDetailBillId.ReadOnly = true;
+                this.columnContractDetailID.AllowDBNull = false;
+                this.columnNumber.AllowDBNull = false;
+                this.columnPaid.AllowDBNull = false;
+                this.columnContractDetailBillDate.AllowDBNull = false;
+                this.columnID.AutoIncrement = true;
+                this.columnID.AllowDBNull = false;
+                this.columnID.ReadOnly = true;
+                this.columnContractExtraName.AllowDBNull = false;
+                this.columnContractExtraName.MaxLength = 2147483647;
                 this.columnContractDetailDate.AllowDBNull = false;
-                this.columnAmount.AllowDBNull = false;
-                this.columnContractID.AllowDBNull = false;
+                this.columnContractDetailAmount.AllowDBNull = false;
                 this.columnIsExtra.AllowDBNull = false;
-                this.columnRemainder.ReadOnly = true;
+                this.columnProjectName.AllowDBNull = false;
+                this.columnProjectName.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ViewPayInstallmentsRow NewViewPayInstallmentsRow() {
-                return ((ViewPayInstallmentsRow)(this.NewRow()));
+            public ExtraContrcatRow NewExtraContrcatRow() {
+                return ((ExtraContrcatRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new ViewPayInstallmentsRow(builder);
+                return new ExtraContrcatRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(ViewPayInstallmentsRow);
+                return typeof(ExtraContrcatRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.ViewPayInstallmentsRowChanged != null)) {
-                    this.ViewPayInstallmentsRowChanged(this, new ViewPayInstallmentsRowChangeEvent(((ViewPayInstallmentsRow)(e.Row)), e.Action));
+                if ((this.ExtraContrcatRowChanged != null)) {
+                    this.ExtraContrcatRowChanged(this, new ExtraContrcatRowChangeEvent(((ExtraContrcatRow)(e.Row)), e.Action));
                 }
             }
             
@@ -577,8 +647,8 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.ViewPayInstallmentsRowChanging != null)) {
-                    this.ViewPayInstallmentsRowChanging(this, new ViewPayInstallmentsRowChangeEvent(((ViewPayInstallmentsRow)(e.Row)), e.Action));
+                if ((this.ExtraContrcatRowChanging != null)) {
+                    this.ExtraContrcatRowChanging(this, new ExtraContrcatRowChangeEvent(((ExtraContrcatRow)(e.Row)), e.Action));
                 }
             }
             
@@ -586,8 +656,8 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.ViewPayInstallmentsRowDeleted != null)) {
-                    this.ViewPayInstallmentsRowDeleted(this, new ViewPayInstallmentsRowChangeEvent(((ViewPayInstallmentsRow)(e.Row)), e.Action));
+                if ((this.ExtraContrcatRowDeleted != null)) {
+                    this.ExtraContrcatRowDeleted(this, new ExtraContrcatRowChangeEvent(((ExtraContrcatRow)(e.Row)), e.Action));
                 }
             }
             
@@ -595,14 +665,14 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.ViewPayInstallmentsRowDeleting != null)) {
-                    this.ViewPayInstallmentsRowDeleting(this, new ViewPayInstallmentsRowChangeEvent(((ViewPayInstallmentsRow)(e.Row)), e.Action));
+                if ((this.ExtraContrcatRowDeleting != null)) {
+                    this.ExtraContrcatRowDeleting(this, new ExtraContrcatRowChangeEvent(((ExtraContrcatRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void RemoveViewPayInstallmentsRow(ViewPayInstallmentsRow row) {
+            public void RemoveExtraContrcatRow(ExtraContrcatRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -611,7 +681,7 @@ namespace ReportRdlc {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                RealEstateNewDataSet ds = new RealEstateNewDataSet();
+                ContractExtraDataSet ds = new ContractExtraDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -629,7 +699,7 @@ namespace ReportRdlc {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "ViewPayInstallmentsDataTable";
+                attribute2.FixedValue = "ExtraContrcatDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -673,80 +743,58 @@ namespace ReportRdlc {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class ViewPayInstallmentsRow : global::System.Data.DataRow {
+        public partial class ExtraContrcatRow : global::System.Data.DataRow {
             
-            private ViewPayInstallmentsDataTable tableViewPayInstallments;
+            private ExtraContrcatDataTable tableExtraContrcat;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal ViewPayInstallmentsRow(global::System.Data.DataRowBuilder rb) : 
+            internal ExtraContrcatRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableViewPayInstallments = ((ViewPayInstallmentsDataTable)(this.Table));
+                this.tableExtraContrcat = ((ExtraContrcatDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int ContractDetailId {
+            public int ContractId {
                 get {
-                    return ((int)(this[this.tableViewPayInstallments.ContractDetailIdColumn]));
+                    return ((int)(this[this.tableExtraContrcat.ContractIdColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.ContractDetailIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Name {
-                get {
-                    return ((string)(this[this.tableViewPayInstallments.NameColumn]));
-                }
-                set {
-                    this[this.tableViewPayInstallments.NameColumn] = value;
+                    this[this.tableExtraContrcat.ContractIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public System.DateTime ContractDetailDate {
+            public string CustomerName {
                 get {
-                    return ((global::System.DateTime)(this[this.tableViewPayInstallments.ContractDetailDateColumn]));
+                    return ((string)(this[this.tableExtraContrcat.CustomerNameColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.ContractDetailDateColumn] = value;
+                    this[this.tableExtraContrcat.CustomerNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Amount {
+            public string NationalNumber {
                 get {
-                    return ((double)(this[this.tableViewPayInstallments.AmountColumn]));
+                    return ((string)(this[this.tableExtraContrcat.NationalNumberColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.AmountColumn] = value;
+                    this[this.tableExtraContrcat.NationalNumberColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int ContractID {
+            public int ProjectID {
                 get {
-                    return ((int)(this[this.tableViewPayInstallments.ContractIDColumn]));
+                    return ((int)(this[this.tableExtraContrcat.ProjectIDColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.ContractIDColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsExtra {
-                get {
-                    return ((bool)(this[this.tableViewPayInstallments.IsExtraColumn]));
-                }
-                set {
-                    this[this.tableViewPayInstallments.IsExtraColumn] = value;
+                    this[this.tableExtraContrcat.ProjectIDColumn] = value;
                 }
             }
             
@@ -754,16 +802,21 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public int ContractDetailBillId {
                 get {
-                    try {
-                        return ((int)(this[this.tableViewPayInstallments.ContractDetailBillIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ContractDetailBillId\' in table \'ViewPayInstallments\' is DBN" +
-                                "ull.", e);
-                    }
+                    return ((int)(this[this.tableExtraContrcat.ContractDetailBillIdColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.ContractDetailBillIdColumn] = value;
+                    this[this.tableExtraContrcat.ContractDetailBillIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int ContractDetailID {
+                get {
+                    return ((int)(this[this.tableExtraContrcat.ContractDetailIDColumn]));
+                }
+                set {
+                    this[this.tableExtraContrcat.ContractDetailIDColumn] = value;
                 }
             }
             
@@ -771,15 +824,10 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public int Number {
                 get {
-                    try {
-                        return ((int)(this[this.tableViewPayInstallments.NumberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Number\' in table \'ViewPayInstallments\' is DBNull.", e);
-                    }
+                    return ((int)(this[this.tableExtraContrcat.NumberColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.NumberColumn] = value;
+                    this[this.tableExtraContrcat.NumberColumn] = value;
                 }
             }
             
@@ -787,15 +835,10 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public double Paid {
                 get {
-                    try {
-                        return ((double)(this[this.tableViewPayInstallments.PaidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Paid\' in table \'ViewPayInstallments\' is DBNull.", e);
-                    }
+                    return ((double)(this[this.tableExtraContrcat.PaidColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.PaidColumn] = value;
+                    this[this.tableExtraContrcat.PaidColumn] = value;
                 }
             }
             
@@ -803,93 +846,77 @@ namespace ReportRdlc {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public System.DateTime ContractDetailBillDate {
                 get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableViewPayInstallments.ContractDetailBillDateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ContractDetailBillDate\' in table \'ViewPayInstallments\' is D" +
-                                "BNull.", e);
-                    }
+                    return ((global::System.DateTime)(this[this.tableExtraContrcat.ContractDetailBillDateColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.ContractDetailBillDateColumn] = value;
+                    this[this.tableExtraContrcat.ContractDetailBillDateColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Remainder {
+            public int ID {
                 get {
-                    try {
-                        return ((double)(this[this.tableViewPayInstallments.RemainderColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Remainder\' in table \'ViewPayInstallments\' is DBNull.", e);
-                    }
+                    return ((int)(this[this.tableExtraContrcat.IDColumn]));
                 }
                 set {
-                    this[this.tableViewPayInstallments.RemainderColumn] = value;
+                    this[this.tableExtraContrcat.IDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsContractDetailBillIdNull() {
-                return this.IsNull(this.tableViewPayInstallments.ContractDetailBillIdColumn);
+            public string ContractExtraName {
+                get {
+                    return ((string)(this[this.tableExtraContrcat.ContractExtraNameColumn]));
+                }
+                set {
+                    this[this.tableExtraContrcat.ContractExtraNameColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetContractDetailBillIdNull() {
-                this[this.tableViewPayInstallments.ContractDetailBillIdColumn] = global::System.Convert.DBNull;
+            public System.DateTime ContractDetailDate {
+                get {
+                    return ((global::System.DateTime)(this[this.tableExtraContrcat.ContractDetailDateColumn]));
+                }
+                set {
+                    this[this.tableExtraContrcat.ContractDetailDateColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsNumberNull() {
-                return this.IsNull(this.tableViewPayInstallments.NumberColumn);
+            public double ContractDetailAmount {
+                get {
+                    return ((double)(this[this.tableExtraContrcat.ContractDetailAmountColumn]));
+                }
+                set {
+                    this[this.tableExtraContrcat.ContractDetailAmountColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetNumberNull() {
-                this[this.tableViewPayInstallments.NumberColumn] = global::System.Convert.DBNull;
+            public bool IsExtra {
+                get {
+                    return ((bool)(this[this.tableExtraContrcat.IsExtraColumn]));
+                }
+                set {
+                    this[this.tableExtraContrcat.IsExtraColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsPaidNull() {
-                return this.IsNull(this.tableViewPayInstallments.PaidColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetPaidNull() {
-                this[this.tableViewPayInstallments.PaidColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsContractDetailBillDateNull() {
-                return this.IsNull(this.tableViewPayInstallments.ContractDetailBillDateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetContractDetailBillDateNull() {
-                this[this.tableViewPayInstallments.ContractDetailBillDateColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsRemainderNull() {
-                return this.IsNull(this.tableViewPayInstallments.RemainderColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetRemainderNull() {
-                this[this.tableViewPayInstallments.RemainderColumn] = global::System.Convert.DBNull;
+            public string ProjectName {
+                get {
+                    return ((string)(this[this.tableExtraContrcat.ProjectNameColumn]));
+                }
+                set {
+                    this[this.tableExtraContrcat.ProjectNameColumn] = value;
+                }
             }
         }
         
@@ -897,22 +924,22 @@ namespace ReportRdlc {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public class ViewPayInstallmentsRowChangeEvent : global::System.EventArgs {
+        public class ExtraContrcatRowChangeEvent : global::System.EventArgs {
             
-            private ViewPayInstallmentsRow eventRow;
+            private ExtraContrcatRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ViewPayInstallmentsRowChangeEvent(ViewPayInstallmentsRow row, global::System.Data.DataRowAction action) {
+            public ExtraContrcatRowChangeEvent(ExtraContrcatRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ViewPayInstallmentsRow Row {
+            public ExtraContrcatRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -928,7 +955,7 @@ namespace ReportRdlc {
         }
     }
 }
-namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
+namespace ReportRdlc.ContractExtraDataSetTableAdapters {
     
     
     /// <summary>
@@ -940,7 +967,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class ViewPayInstallmentsTableAdapter : global::System.ComponentModel.Component {
+    public partial class ExtraContrcatTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -954,7 +981,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public ViewPayInstallmentsTableAdapter() {
+        public ExtraContrcatTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1051,18 +1078,22 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "ViewPayInstallments";
-            tableMapping.ColumnMappings.Add("ContractDetailId", "ContractDetailId");
-            tableMapping.ColumnMappings.Add("Name", "Name");
-            tableMapping.ColumnMappings.Add("ContractDetailDate", "ContractDetailDate");
-            tableMapping.ColumnMappings.Add("Amount", "Amount");
-            tableMapping.ColumnMappings.Add("ContractID", "ContractID");
-            tableMapping.ColumnMappings.Add("IsExtra", "IsExtra");
+            tableMapping.DataSetTable = "ExtraContrcat";
+            tableMapping.ColumnMappings.Add("ContractId", "ContractId");
+            tableMapping.ColumnMappings.Add("CustomerName", "CustomerName");
+            tableMapping.ColumnMappings.Add("NationalNumber", "NationalNumber");
+            tableMapping.ColumnMappings.Add("ProjectID", "ProjectID");
             tableMapping.ColumnMappings.Add("ContractDetailBillId", "ContractDetailBillId");
+            tableMapping.ColumnMappings.Add("ContractDetailID", "ContractDetailID");
             tableMapping.ColumnMappings.Add("Number", "Number");
             tableMapping.ColumnMappings.Add("Paid", "Paid");
             tableMapping.ColumnMappings.Add("ContractDetailBillDate", "ContractDetailBillDate");
-            tableMapping.ColumnMappings.Add("Remainder", "Remainder");
+            tableMapping.ColumnMappings.Add("ID", "ID");
+            tableMapping.ColumnMappings.Add("ContractExtraName", "ContractExtraName");
+            tableMapping.ColumnMappings.Add("ContractDetailDate", "ContractDetailDate");
+            tableMapping.ColumnMappings.Add("ContractDetailAmount", "ContractDetailAmount");
+            tableMapping.ColumnMappings.Add("IsExtra", "IsExtra");
+            tableMapping.ColumnMappings.Add("ProjectName", "ProjectName");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1070,7 +1101,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ReportRdlc.Properties.Settings.Default.RealEstateNewConnectionString;
+            this._connection.ConnectionString = global::ReportRdlc.Properties.Settings.Default.RealEstateConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1079,18 +1110,31 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT ContractDetailId, Name, ContractDetailDate, Amount, ContractID, IsExtra, C" +
-                "ontractDetailBillId, Number, Paid, ContractDetailBillDate, Remainder FROM dbo.Vi" +
-                "ewPayInstallments";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].CommandText = "dbo.ExtraContrcat";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProjectID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ContractExtraName", global::System.Data.SqlDbType.NVarChar, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(RealEstateNewDataSet.ViewPayInstallmentsDataTable dataTable) {
+        public virtual int Fill(ContractExtraDataSet.ExtraContrcatDataTable dataTable, global::System.Nullable<int> ProjectID, string ContractExtraName) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((ProjectID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(ProjectID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((ContractExtraName == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(ContractExtraName));
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -1102,9 +1146,21 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual RealEstateNewDataSet.ViewPayInstallmentsDataTable GetData() {
+        public virtual ContractExtraDataSet.ExtraContrcatDataTable GetData(global::System.Nullable<int> ProjectID, string ContractExtraName) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            RealEstateNewDataSet.ViewPayInstallmentsDataTable dataTable = new RealEstateNewDataSet.ViewPayInstallmentsDataTable();
+            if ((ProjectID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(ProjectID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((ContractExtraName == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(ContractExtraName));
+            }
+            ContractExtraDataSet.ExtraContrcatDataTable dataTable = new ContractExtraDataSet.ExtraContrcatDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1178,7 +1234,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateUpdatedRows(RealEstateNewDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(ContractExtraDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1188,7 +1244,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateInsertedRows(RealEstateNewDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(ContractExtraDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1198,7 +1254,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateDeletedRows(RealEstateNewDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(ContractExtraDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1232,7 +1288,7 @@ namespace ReportRdlc.RealEstateNewDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public virtual int UpdateAll(RealEstateNewDataSet dataSet) {
+        public virtual int UpdateAll(ContractExtraDataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

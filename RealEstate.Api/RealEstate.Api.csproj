@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Reports\ExtraContrcat.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Reports\ExtraContrcat.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Dapper" Version="2.0.123" />
@@ -34,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Reports\" />
     <Folder Include="wwwroot\UploadFiles\" />
   </ItemGroup>
 
