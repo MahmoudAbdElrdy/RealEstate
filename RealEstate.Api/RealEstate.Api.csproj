@@ -34,17 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RealEstate.DataAccess\RealEstate.DataAccess.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="wwwroot\Reports\" />
     <Folder Include="wwwroot\UploadFiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="wwwroot\Reports\ExtraContrcat.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>
