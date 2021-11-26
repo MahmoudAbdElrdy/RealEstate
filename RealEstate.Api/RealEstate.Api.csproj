@@ -38,4 +38,8 @@
     <Folder Include="wwwroot\UploadFiles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RealEstate.DataAccess\RealEstate.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
