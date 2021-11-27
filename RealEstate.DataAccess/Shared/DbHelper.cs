@@ -67,9 +67,13 @@ namespace RealEstate.DataAccess
     }
     public static class SqlProcedures
     { 
-        public static List<ExtraContrcat> GetContractAccessories(RealEstateContext context, int ProjectID,string contractExtraName)
+        public static List<ExtraContrcat> GetExtraContrcat(RealEstateContext context, int ProjectID,string contractExtraName)
         {
             return DbHelper.ExecuteQuery<ExtraContrcat>(context, $"EXEC dbo.ExtraContrcat @ProjectID = '{ProjectID}' ,@ContractExtraName=N'{contractExtraName}'");
+        }
+        public static List<CustomerCard> GetCustomerCard(RealEstateContext context, int ContractID, bool IsExtra)
+        {
+            return DbHelper.ExecuteQuery<CustomerCard>(context, $"EXEC dbo.CustomerCard @ContractID = '{ContractID}'");
         }
 
     }

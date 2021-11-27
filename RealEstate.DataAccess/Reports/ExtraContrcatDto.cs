@@ -8,5 +8,10 @@ namespace RealEstate.DataAccess
     {
         public int? ProjectID { get; set; }
         public string  ContractExtraName { get; set; }
+    } 
+    public class CustomerCardDto 
+    {
+        public int? ContractID { get; set; } 
+        public bool? IsExtra { get; set; }
     }
 }

@@ -25,6 +25,11 @@ namespace RealEstate.Api.Controllers.Contract
         {
             return await _service.GetAll(model);
         }
+        [HttpGet("GetAllName")]
+        public async Task<ActionResult<ResponseData>> GetAllName()
+        {
+            return await _service.GetAllName();
+        }
 
         [HttpGet("GetById")]
         public async Task<ActionResult<ResponseData>> GetById(int id)

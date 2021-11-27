@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Reports\CustomerCardStock.rdlc" />
     <Content Remove="wwwroot\Reports\ExtraContrcat.rdlc" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Reports\CustomerCardStock.rdlc" />
     <EmbeddedResource Include="wwwroot\Reports\ExtraContrcat.rdlc" />
   </ItemGroup>
 
@@ -42,11 +44,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\UploadFiles\" />
+    <ProjectReference Include="..\RealEstate.DataAccess\RealEstate.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RealEstate.DataAccess\RealEstate.DataAccess.csproj" />
+    <Content Update="wwwroot\UploadFiles\CustomerCardStock.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

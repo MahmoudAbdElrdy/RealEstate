@@ -23,7 +23,31 @@ namespace RealEstate.DataAccess
         {
             try
             {
-                var result = SqlProcedures.GetContractAccessories(_db,id, contractExtraName);
+                var result = SqlProcedures.GetExtraContrcat(_db,id, contractExtraName);
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        } 
+        public async Task<ResponseData> GetCustomerCard(int id, bool IsExtra)
+        {
+            try
+            {
+                var result = SqlProcedures.GetCustomerCard(_db,id, IsExtra);
 
                 return new ResponseData
                 {

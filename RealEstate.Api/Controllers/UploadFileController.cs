@@ -13,7 +13,7 @@ namespace RealEstate.API.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-   // [RealEstate.Service.Classes.Authorize]
+    [RealEstate.Service.Classes.Authorize]
     public class UploadFileController :Controller
     {
         private readonly IWebHostEnvironment _env;

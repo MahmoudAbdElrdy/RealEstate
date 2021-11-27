@@ -14,7 +14,7 @@ using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 namespace RealEstate.DataAccess
 {
     [ScopedService]
-    public  class ContractService
+    public class ContractService
     {
         RealEstateContext _db;
         readonly IMapper _mapper;
@@ -62,9 +62,9 @@ namespace RealEstate.DataAccess
                 var nationalNumber = new BaseSpecifications<Contract>(x => x.NationalNumber.Contains(search.NationalNumber));
                 specification = specification?.And(nationalNumber) ?? nationalNumber;
             }
-            if (search.ProjectId!=null&& search.ProjectId>0)
+            if (search.ProjectId != null && search.ProjectId > 0)
             {
-                var projectId = new BaseSpecifications<Contract>(x => x.ProjectId==search.ProjectId);
+                var projectId = new BaseSpecifications<Contract>(x => x.ProjectId == search.ProjectId);
                 specification = specification?.And(projectId) ?? projectId;
             }
             if (search.IsStock != null)
@@ -77,7 +77,7 @@ namespace RealEstate.DataAccess
                 var date = new BaseSpecifications<Contract>(x => x.Date.Date.Month.Equals(search.Date.Value.Date.Month) && x.Date.Date.Year.Equals(search.Date.Value.Date.Year));
                 specification = specification?.And(date) ?? date;
             }
-           
+
             if (specification == null)
                 specification = new BaseSpecifications<Contract>();
 
@@ -100,10 +100,10 @@ namespace RealEstate.DataAccess
 
                 //  var entity = _db.Contracts.Include(x => x.Department);
                 var entity = _mapper.Map<List<ContractDto>>(filter);
-                foreach(var project in entity)
+                foreach (var project in entity)
                 {
-                    if(project.ProjectId>0)
-                    project.ProjectName = _db.Projects.Find(project.ProjectId).Name;
+                    if (project.ProjectId > 0)
+                        project.ProjectName = _db.Projects.Find(project.ProjectId).Name;
                 }
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -135,13 +135,13 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Include(c=>c.FileContracts).Include(x=>x.ProjectUnit).Where(a => a.Id == id).FirstOrDefaultAsync();
-             
+                Contract emp = await _db.Contracts.Include(c => c.FileContracts).Include(x => x.ProjectUnit).Where(a => a.Id == id).FirstOrDefaultAsync();
+
                 var _Contract = _mapper.Map<Contract, ContractDto>(emp);
                 _Contract.ContractFile = emp?.FileContracts?.Select(x => x.FilePath).ToList();
-                _Contract.UnitListDLL =(await ProjectService.GetProjectUnitList(_Contract.ProjectId)).Data;
-                if(_Contract.NumberFloor!=null|| _Contract.NumberFloor>0)
-                _Contract.UnitDescriptionsDLL =(await ProjectService.GetUnitDescriptionsByUnti(_Contract.ProjectId,(int)_Contract.NumberFloor)).Data;
+                _Contract.UnitListDLL = (await ProjectService.GetProjectUnitList(_Contract.ProjectId)).Data;
+                if (_Contract.NumberFloor != null || _Contract.NumberFloor > 0)
+                    _Contract.UnitDescriptionsDLL = (await ProjectService.GetUnitDescriptionsByUnti(_Contract.ProjectId, (int)_Contract.NumberFloor)).Data;
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -172,7 +172,7 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Include(c=>c.FileContracts).Where(a => a.Id == id).FirstOrDefaultAsync();
+                Contract emp = await _db.Contracts.Include(c => c.FileContracts).Where(a => a.Id == id).FirstOrDefaultAsync();
                 if (emp.FileContracts != null)
                     _db.FileContracts.RemoveRange(emp.FileContracts);
                 _db.Contracts.Remove(emp);
@@ -226,20 +226,20 @@ namespace RealEstate.DataAccess
 
 
         }
-        public async Task<ResponseData> CancellContract(CancelledContractDto cancelledContract)  
+        public async Task<ResponseData> CancellContract(CancelledContractDto cancelledContract)
         {
             try
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Include(c=>c.FileContracts).Where(a => a.Id == cancelledContract.ContractId).FirstOrDefaultAsync();
+                Contract emp = await _db.Contracts.Include(c => c.FileContracts).Where(a => a.Id == cancelledContract.ContractId).FirstOrDefaultAsync();
                 var projectName = _db.Projects.Where(c => c.Id == emp.ProjectId).FirstOrDefault();
                 CancelledContract cancelled = new CancelledContract();
                 cancelled.Customer = emp.Name;
                 cancelled.Project = projectName.Name;
-                cancelled.Paid =(double)cancelledContract.Paid;
-                cancelled.Back =(double)cancelledContract.Back;
-                cancelled.Date=DateTime.Now;
+                cancelled.Paid = (double)cancelledContract.Paid;
+                cancelled.Back = (double)cancelledContract.Back;
+                cancelled.Date = DateTime.Now;
                 if (emp.FileContracts != null)
                     _db.FileContracts.RemoveRange(emp.FileContracts);
                 _db.Contracts.Remove(emp);
@@ -294,7 +294,7 @@ namespace RealEstate.DataAccess
 
 
         }
-       
+
         public ResponseData SaveContract(ContractDto Contract)
         {
             if (Contract.Id == 0 || Contract.Id == null)
@@ -327,17 +327,17 @@ namespace RealEstate.DataAccess
 
                 newRec = _mapper.Map<ContractDto, Contract>(Contract);
 
-                Contract _newRec = _db.Contracts.Include(x=>x.FileContracts).Include(x=>x.ProjectUnit).SingleOrDefault(u => u.Id == Contract.Id);
+                Contract _newRec = _db.Contracts.Include(x => x.FileContracts).Include(x => x.ProjectUnit).SingleOrDefault(u => u.Id == Contract.Id);
                 if (_newRec == null)
                     throw new KeyNotFoundException("غير موجود في قاعدة البيانات");
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
-                    if(_newRec.FileContracts!=null)
-                    _db.FileContracts.RemoveRange(_newRec.FileContracts);
+                    if (_newRec.FileContracts != null)
+                        _db.FileContracts.RemoveRange(_newRec.FileContracts);
                     var files = new List<FileContract>();
 
-                    Contract?.ContractFile?.ForEach(x => files.Add(new FileContract { FilePath = x,ContractId=Contract.Id }));
+                    Contract?.ContractFile?.ForEach(x => files.Add(new FileContract { FilePath = x, ContractId = Contract.Id }));
                     _newRec.FileContracts = files;
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
                     _db.Contracts.Attach(_newRec);
@@ -369,9 +369,9 @@ namespace RealEstate.DataAccess
                 var Project = new BaseSpecifications<CancelledContract>(x => x.Project.Contains(search.Project));
                 specification = specification?.And(Project) ?? Project;
             }
-            if (search.Paid!=null)
+            if (search.Paid != null)
             {
-                var Paid = new BaseSpecifications<CancelledContract>(x => x.Paid==(search.Paid));
+                var Paid = new BaseSpecifications<CancelledContract>(x => x.Paid == (search.Paid));
                 specification = specification?.And(Paid) ?? Paid;
             }
             if (search.Back != null)
@@ -401,9 +401,9 @@ namespace RealEstate.DataAccess
 
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-             
 
-           //   var  filter = _db.CancelledContracts;
+
+                //   var  filter = _db.CancelledContracts;
                 IQueryable<CancelledContract> filter;
 
                 var specification = SpecificationsCancell(search);
@@ -411,7 +411,7 @@ namespace RealEstate.DataAccess
                 filter = _db.CancelledContracts.Pagtion(specification, out int count);
 
                 var entity = _mapper.Map<List<CancelledContractDto>>(filter);
-             
+
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -436,6 +436,75 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-       
+        public async Task<ResponseData> GetByName(string name)
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                Contract emp = await _db.Contracts.Include(x=>x.ProjectUnit.ProjectUnitDescription).FirstOrDefaultAsync(x => x.Name.Contains(name));
+
+                var _contract = _mapper.Map<Contract, ContractReportDto>(emp);
+                if (_contract.ProjectId > 0)
+                {
+                   var item = _db.Projects.Find(_contract.ProjectId);
+                    _contract.ProjectName = item.Name;
+                    _contract.ProjectAddress = item.Address;
+                }
+                  
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = _contract
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+
+
+
+
+        }
+        public async Task<ResponseData> GetAllName()
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var  filter = _db.Contracts;
+                var entity = _mapper.Map<List<ContractDto>>(filter);     
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+                  
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+
     }
 }

@@ -60,6 +60,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContractExtraDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="CustomerCardStock.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerCardStock.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerCardStock2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerCardStock2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +94,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\ExtraContrcat.rdlc" />
     <None Include="ContractExtraDataSet.xsc">
       <DependentUpon>ContractExtraDataSet.xsd</DependentUpon>
@@ -95,6 +106,28 @@
     </None>
     <None Include="ContractExtraDataSet.xss">
       <DependentUpon>ContractExtraDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CustomerCardStock.xsc">
+      <DependentUpon>CustomerCardStock.xsd</DependentUpon>
+    </None>
+    <None Include="CustomerCardStock.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CustomerCardStock.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CustomerCardStock.xss">
+      <DependentUpon>CustomerCardStock.xsd</DependentUpon>
+    </None>
+    <None Include="CustomerCardStock2.xsc">
+      <DependentUpon>CustomerCardStock2.xsd</DependentUpon>
+    </None>
+    <None Include="CustomerCardStock2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CustomerCardStock2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CustomerCardStock2.xss">
+      <DependentUpon>CustomerCardStock2.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
