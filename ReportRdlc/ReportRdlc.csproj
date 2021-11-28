@@ -55,6 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CancelledContract.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CancelledContract.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ContractExtraDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,8 +105,19 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
-    <EmbeddedResource Include="RdlsDegsine\CustomerData.rdlc" />
+    <EmbeddedResource Include="RdlsDegsine\SalesYear.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\ExtraContrcat.rdlc" />
+    <None Include="CancelledContract.xsc">
+      <DependentUpon>CancelledContract.xsd</DependentUpon>
+    </None>
+    <None Include="CancelledContract.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CancelledContract.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CancelledContract.xss">
+      <DependentUpon>CancelledContract.xsd</DependentUpon>
+    </None>
     <None Include="ContractExtraDataSet.xsc">
       <DependentUpon>ContractExtraDataSet.xsd</DependentUpon>
     </None>

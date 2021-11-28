@@ -52,6 +52,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<SupervisorDetail> SupervisorDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
+        public virtual DbSet<ViewCancelledContract> ViewCancelledContracts { get; set; }
         public virtual DbSet<ViewCustomerDatum> ViewCustomerData { get; set; }
         public virtual DbSet<ViewDailyReport> ViewDailyReports { get; set; }
         public virtual DbSet<ViewPayInstallment> ViewPayInstallments { get; set; }
@@ -613,6 +614,23 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.SupplierPayments)
                     .HasForeignKey(d => d.SupplierId)
                     .HasConstraintName("FK_DealerPayment_Dealer1");
+            });
+
+            modelBuilder.Entity<ViewCancelledContract>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ViewCancelledContract");
+
+                entity.Property(e => e.Customer).IsRequired();
+
+                entity.Property(e => e.Date).HasMaxLength(4000);
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Project).IsRequired();
             });
 
             modelBuilder.Entity<ViewCustomerDatum>(entity =>

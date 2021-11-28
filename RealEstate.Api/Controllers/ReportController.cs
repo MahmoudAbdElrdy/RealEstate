@@ -102,5 +102,25 @@ namespace RealEstate.Api.Controllers
 
             return File(res.MainStream, "application/pdf");
         }
+        [HttpGet]
+        public async Task<IActionResult> ReportSalesYear(int year) 
+        {
+            string mym = "";
+            int ext = 1;
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\SalesYear.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+
+            LocalReport localReport = new LocalReport(path);
+            var data = (await _serviceReport.GetViewCustomerData(year)).Data;
+            var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
+
+            parmarters.Add("year", year.ToString());
+
+            localReport.AddDataSource("ViewCustomerData", data);
+            localReport.AddDataSource("CancelledContract", data2);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
+
+            return File(res.MainStream, "application/pdf");
+        }
     }
 }

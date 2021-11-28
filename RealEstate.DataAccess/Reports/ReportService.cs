@@ -67,11 +67,61 @@ namespace RealEstate.DataAccess
                     Message = ex.Message,
                 };
             }
-        }  public async Task<ResponseData> GetViewCustomerData()
+        } 
+        
+        public async Task<ResponseData> GetViewCustomerData()
         {
             try
             {
                 var result =_db.ViewCustomerData.ToList();
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetViewCustomerData(int year)
+        {
+            try
+            {
+                var result = _db.ViewCustomerData.Where(c=>c.Date.EndsWith(year.ToString())).ToList();
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetViewCancelledContract(int year)
+        {
+            try
+            {
+                var result =_db.ViewCancelledContracts.Where(c=>c.Date.EndsWith(year.ToString())).ToList();
 
                 return new ResponseData
                 {
