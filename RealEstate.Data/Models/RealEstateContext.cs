@@ -52,6 +52,7 @@ namespace RealEstate.Data.Models
         public virtual DbSet<SupervisorDetail> SupervisorDetails { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierPayment> SupplierPayments { get; set; }
+        public virtual DbSet<ViewCustomerDatum> ViewCustomerData { get; set; }
         public virtual DbSet<ViewDailyReport> ViewDailyReports { get; set; }
         public virtual DbSet<ViewPayInstallment> ViewPayInstallments { get; set; }
         public virtual DbSet<ViewSupervisor> ViewSupervisors { get; set; }
@@ -612,6 +613,33 @@ namespace RealEstate.Data.Models
                     .WithMany(p => p.SupplierPayments)
                     .HasForeignKey(d => d.SupplierId)
                     .HasConstraintName("FK_DealerPayment_Dealer1");
+            });
+
+            modelBuilder.Entity<ViewCustomerDatum>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ViewCustomerData");
+
+                entity.Property(e => e.Date).HasMaxLength(4000);
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Name).IsRequired();
+
+                entity.Property(e => e.NationalNumber).IsRequired();
+
+                entity.Property(e => e.Phone).IsRequired();
+
+                entity.Property(e => e.Program).IsRequired();
+
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
+
+                entity.Property(e => e.ProjectUnitId).HasColumnName("ProjectUnitID");
+
+                entity.Property(e => e.Stock)
+                    .IsRequired()
+                    .HasMaxLength(11);
             });
 
             modelBuilder.Entity<ViewDailyReport>(entity =>

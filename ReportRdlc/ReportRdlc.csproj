@@ -84,6 +84,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RealEstateDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ViewCustomerData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewCustomerData.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ViewPayInstallment.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -95,6 +100,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
+    <EmbeddedResource Include="RdlsDegsine\CustomerData.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\ExtraContrcat.rdlc" />
     <None Include="ContractExtraDataSet.xsc">
       <DependentUpon>ContractExtraDataSet.xsd</DependentUpon>
@@ -149,6 +155,17 @@
     </None>
     <None Include="RealEstateDataSet.xss">
       <DependentUpon>RealEstateDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ViewCustomerData.xsc">
+      <DependentUpon>ViewCustomerData.xsd</DependentUpon>
+    </None>
+    <None Include="ViewCustomerData.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ViewCustomerData.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ViewCustomerData.xss">
+      <DependentUpon>ViewCustomerData.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

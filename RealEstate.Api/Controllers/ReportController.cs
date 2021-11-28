@@ -84,5 +84,23 @@ namespace RealEstate.Api.Controllers
 
             return File(res.MainStream, "application/pdf");
         }
+        [HttpGet]
+        public async Task<IActionResult> ReportCustomerData() 
+        {
+            string mym = "";
+            int ext = 1;
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+
+            LocalReport localReport = new LocalReport(path);
+            var data = (await _serviceReport.GetViewCustomerData()).Data;
+           
+            parmarters.Add("Notes", "true" ?? "");
+          
+            localReport.AddDataSource("ViewCustomerData", data);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
+
+            return File(res.MainStream, "application/pdf");
+        }
     }
 }

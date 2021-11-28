@@ -2,6 +2,7 @@
 using RealEstate.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TanvirArjel.Extensions.Microsoft.DependencyInjection;
@@ -48,6 +49,29 @@ namespace RealEstate.DataAccess
             try
             {
                 var result = SqlProcedures.GetCustomerCard(_db,id, IsExtra);
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }  public async Task<ResponseData> GetViewCustomerData()
+        {
+            try
+            {
+                var result =_db.ViewCustomerData.ToList();
 
                 return new ResponseData
                 {
