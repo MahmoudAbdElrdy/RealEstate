@@ -85,11 +85,36 @@ namespace RealEstate.Api.Controllers
             return File(res.MainStream, "application/pdf");
         }
         [HttpGet]
-        public async Task<IActionResult> ReportCustomerData() 
+        public async Task<IActionResult> ReportCustomerData(int option) 
         {
             string mym = "";
             int ext = 1;
-            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc";
+            string path = "";
+            if (option == 1)
+            {
+                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc";
+            }
+            else if (option == 2)
+            {
+                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData2.rdlc";
+            }
+            else if (option ==3)
+            {
+                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData3.rdlc";
+            }
+            else if (option == 4)
+            {
+                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData4.rdlc";
+            }
+            else if (option == 5)
+            {
+                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData5.rdlc";
+            }
+            else 
+            {
+                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc";
+            }
+
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);

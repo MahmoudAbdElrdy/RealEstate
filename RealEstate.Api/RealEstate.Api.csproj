@@ -51,6 +51,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\Reports\CustomerData5.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\CustomerData4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\CustomerData3.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\CustomerData2.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Reports\CustomerData.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
