@@ -21,7 +21,6 @@ namespace RealEstate.Data.Models
         public virtual DbSet<CancelledContractBill> CancelledContractBills { get; set; }
         public virtual DbSet<CompanyBill> CompanyBills { get; set; }
         public virtual DbSet<Contract> Contracts { get; set; }
-        public virtual DbSet<ContractAccessoriesView> ContractAccessoriesViews { get; set; }
         public virtual DbSet<ContractDetail> ContractDetails { get; set; }
         public virtual DbSet<ContractDetailBill> ContractDetailBills { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
@@ -134,31 +133,6 @@ namespace RealEstate.Data.Models
                     .HasForeignKey(d => d.ProjectUnitId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Contract_ProjectUnit");
-            });
-
-            modelBuilder.Entity<ContractAccessoriesView>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ContractAccessoriesView");
-
-                entity.Property(e => e.ContractDetailBillDate).HasColumnType("date");
-
-                entity.Property(e => e.ContractDetailDate).HasColumnType("date");
-
-                entity.Property(e => e.ContractDetailId).HasColumnName("ContractDetailID");
-
-                entity.Property(e => e.ContractDetailName).IsRequired();
-
-                entity.Property(e => e.ContractName).IsRequired();
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.NationalNumber).IsRequired();
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.ProjectName).IsRequired();
             });
 
             modelBuilder.Entity<ContractDetail>(entity =>
