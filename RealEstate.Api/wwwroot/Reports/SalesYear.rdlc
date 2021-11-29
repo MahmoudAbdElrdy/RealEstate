@@ -665,7 +665,7 @@
             </TablixRowHierarchy>
             <DataSetName>CancelledContract</DataSetName>
             <Top>2.94978cm</Top>
-            <Left>10.59461cm</Left>
+            <Left>6.08227cm</Left>
             <Height>1.8cm</Height>
             <Width>13.6802cm</Width>
             <Style>
@@ -1556,7 +1556,7 @@
             <Top>0.23817cm</Top>
             <Left>0cm</Left>
             <Height>1.8cm</Height>
-            <Width>28.51896cm</Width>
+            <Width>28.51898cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1565,7 +1565,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>4.74978cm</Height>
+        <Height>5.02495cm</Height>
         <Style />
       </Body>
       <Width>28.83646cm</Width>
