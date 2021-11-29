@@ -87,6 +87,11 @@ namespace RealEstate.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> ReportCustomerData(int option) 
         {
+      // { option: 'الكل', value: 1 },
+      //{ option: 'رقم التليفون فقط', value: 2 },
+      //{ option: 'تليفون والعنوان ورقم القومى', value: 3 },
+      //{ option: ' العنوان فقط', value: 4 },
+      //{ option: ' تاريخ التعاقد وملاحظات ونظام الدفع ', value: 5}
             string mym = "";
             int ext = 1;
             string path = "";
