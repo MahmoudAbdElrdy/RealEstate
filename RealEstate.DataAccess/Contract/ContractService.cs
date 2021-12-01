@@ -80,7 +80,7 @@ namespace RealEstate.DataAccess
 
             if (specification == null)
                 specification = new BaseSpecifications<Contract>();
-
+           // specification.AddInclude(c => c.FileContracts);
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
@@ -104,6 +104,8 @@ namespace RealEstate.DataAccess
                 {
                     if (project.ProjectId > 0)
                         project.ProjectName = _db.Projects.Find(project.ProjectId).Name;
+                    project.ContractFile = _db.FileContracts.Where(c=>c.ContractId==project.Id).Select(x => x.FilePath).ToList();
+
                 }
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
