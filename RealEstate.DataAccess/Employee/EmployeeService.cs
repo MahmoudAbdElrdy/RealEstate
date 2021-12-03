@@ -224,7 +224,7 @@ namespace RealEstate.DataAccess
             if(!string.IsNullOrEmpty(employee.PassWord))
             employee.PassWord = ClsStringEncryptionDecryption.Encrypt(employee.PassWord, false);
 
-            if (employee.Id == 0)
+            if (employee.Id == 0|| employee.Id==null)
             {
                 try
                 {

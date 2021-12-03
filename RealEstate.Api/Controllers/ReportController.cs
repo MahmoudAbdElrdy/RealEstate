@@ -6,6 +6,7 @@ using RealEstate.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,7 +41,7 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
             int ext = 1;
-            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc";
+            var path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
@@ -58,7 +59,7 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
             int ext = 1;
-            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc";
+            var path =Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
@@ -97,27 +98,27 @@ namespace RealEstate.Api.Controllers
             string path = "";
             if (option == 1)
             {
-                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc";
+                path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc");
             }
             else if (option == 2)
             {
-                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData2.rdlc";
+                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData2.rdlc");
             }
             else if (option ==3)
             {
-                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData3.rdlc";
+                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData3.rdlc");
             }
             else if (option == 4)
             {
-                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData4.rdlc";
+                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData4.rdlc");
             }
             else if (option == 5)
             {
-                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData5.rdlc";
+                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData5.rdlc");
             }
             else 
             {
-                path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc";
+                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc");
             }
 
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
