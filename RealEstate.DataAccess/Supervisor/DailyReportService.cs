@@ -204,7 +204,8 @@ namespace RealEstate.DataAccess
 
                     DailyReport newRec = new DailyReport();
                     newRec = _mapper.Map<DailyReportDto, DailyReport>(DailyReport);
-
+                    newRec.Employee = null;
+                    newRec.Supervisor = null;
                     _db.DailyReports.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };

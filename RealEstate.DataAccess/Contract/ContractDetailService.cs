@@ -343,7 +343,14 @@ namespace RealEstate.DataAccess
                 filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == ContractId/*&& !contractDetailsId.Contains(x.Id)*/);
 
                 var entity = _mapper.Map<List<ContractDetailDto>>(filter);
+               
                 entity=entity.Distinct().GroupBy(x => x.Id).Select(y => y.First()).ToList();
+                foreach (var item in entity)
+                {
+                    var modelPaid = _db.ContractDetailBills.Where(c => c.ContractDetailId == item.Id).Sum(c => c.Paid);
+                    item.Remainder = item.Amount - modelPaid;
+
+                }
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData

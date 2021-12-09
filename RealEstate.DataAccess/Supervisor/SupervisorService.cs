@@ -25,29 +25,29 @@ namespace RealEstate.DataAccess
             _mapper = mapper;
 
         }
-        private BaseSpecifications<ViewSupervisor> Specifications(SupervisorSearch search)
+        private BaseSpecifications<Supervisor> Specifications(SupervisorSearch search)
         {
-            BaseSpecifications<ViewSupervisor> specification = null;
+            BaseSpecifications<Supervisor> specification = null;
 
             if (!string.IsNullOrEmpty(search.Name))
             {
-                var name = new BaseSpecifications<ViewSupervisor>(x => x.Name.Contains(search.Name));
+                var name = new BaseSpecifications<Supervisor>(x => x.Name.Contains(search.Name));
                 specification = specification?.And(name) ?? name;
             }
             if (!string.IsNullOrEmpty(search.Phone))
             {
-                var phone = new BaseSpecifications<ViewSupervisor>(x => x.Phone.Contains(search.Phone));
+                var phone = new BaseSpecifications<Supervisor>(x => x.Phone.Contains(search.Phone));
                 specification = specification?.And(phone) ?? phone;
             }
             if (!string.IsNullOrEmpty(search.Job))
             {
-                var referrer = new BaseSpecifications<ViewSupervisor>(x => x.Job.Contains(search.Job));
+                var referrer = new BaseSpecifications<Supervisor>(x => x.Job.Contains(search.Job));
                 specification = specification?.And(referrer) ?? referrer;
             }
 
 
             if (specification == null)
-                specification = new BaseSpecifications<ViewSupervisor>();
+                specification = new BaseSpecifications<Supervisor>();
            
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
@@ -60,16 +60,21 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                IQueryable<ViewSupervisor> filter;
+                IQueryable<Supervisor> filter;
 
                 var specification = Specifications(search);
 
-                filter = _db.ViewSupervisors.Pagtion(specification, out int count);
+                filter = _db.Supervisors.Pagtion(specification, out int count);
 
                 //  var entity = _db.Supervisors.Include(x => x.Department);
 
                 var entity = _mapper.Map<List<SupervisorDto>>(filter);
-               
+               foreach(var item in entity)
+                {
+                    item.Credit = _db.SupervisorDetails.Where(c=>c.SupervisorId==item.Id).Sum(c => c.Credit);
+                    item.Debt = _db.SupervisorDetails.Where(c=>c.SupervisorId==item.Id).Sum(c => c.Debt);
+                    item.Net = _db.SupervisorDetails.Where(c=>c.SupervisorId==item.Id).Sum(c => c.Net);
+                }
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
