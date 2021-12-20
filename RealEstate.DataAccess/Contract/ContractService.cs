@@ -74,7 +74,7 @@ namespace RealEstate.DataAccess
             }
             if ((search.Date) != null)
             {
-                var date = new BaseSpecifications<Contract>(x => x.Date.Date.Month.Equals(search.Date.Value.Date.Month) && x.Date.Date.Year.Equals(search.Date.Value.Date.Year));
+                var date = new BaseSpecifications<Contract>(x =>  x.Date.Date.Year.Equals(search.Date));
                 specification = specification?.And(date) ?? date;
             }
 
