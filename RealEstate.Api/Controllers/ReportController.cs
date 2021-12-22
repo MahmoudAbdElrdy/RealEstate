@@ -41,7 +41,7 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
             int ext = 1;
-            var path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc");
+            var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
@@ -59,7 +59,7 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
             int ext = 1;
-            var path =Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc");
+            var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
@@ -79,20 +79,20 @@ namespace RealEstate.Api.Controllers
 
             parmarters.Add("Date", parmarter?.Date.Value.ToString("dd-MM-yyyy") ?? "");
 
-            localReport.AddDataSource("CustomerCardStock", data.Where(x=>x.IsExtra==false));
+            localReport.AddDataSource("CustomerCardStock", data.Where(x => x.IsExtra == false));
             localReport.AddDataSource("CustomerCardStock2", data.Where(x => x.IsExtra == true));
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");
         }
         [HttpGet]
-        public async Task<IActionResult> ReportCustomerData(int option) 
+        public async Task<IActionResult> ReportCustomerData(int option)
         {
-      // { option: 'الكل', value: 1 },
-      //{ option: 'رقم التليفون فقط', value: 2 },
-      //{ option: 'تليفون والعنوان ورقم القومى', value: 3 },
-      //{ option: ' العنوان فقط', value: 4 },
-      //{ option: ' تاريخ التعاقد وملاحظات ونظام الدفع ', value: 5}
+            // { option: 'الكل', value: 1 },
+            //{ option: 'رقم التليفون فقط', value: 2 },
+            //{ option: 'تليفون والعنوان ورقم القومى', value: 3 },
+            //{ option: ' العنوان فقط', value: 4 },
+            //{ option: ' تاريخ التعاقد وملاحظات ونظام الدفع ', value: 5}
             string mym = "";
             int ext = 1;
             string path = "";
@@ -102,39 +102,39 @@ namespace RealEstate.Api.Controllers
             }
             else if (option == 2)
             {
-                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData2.rdlc");
+                path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData2.rdlc");
             }
-            else if (option ==3)
+            else if (option == 3)
             {
-                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData3.rdlc");
+                path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData3.rdlc");
             }
             else if (option == 4)
             {
-                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData4.rdlc");
+                path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData4.rdlc");
             }
             else if (option == 5)
             {
-                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData5.rdlc");
+                path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData5.rdlc");
             }
-            else 
+            else
             {
-                path = Path.Combine( $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc");
+                path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerData.rdlc");
             }
 
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetViewCustomerData()).Data;
-           
+
             parmarters.Add("Notes", "true" ?? "");
-          
+
             localReport.AddDataSource("ViewCustomerData", data);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");
         }
         [HttpGet]
-        public async Task<IActionResult> ReportSalesYear(int year) 
+        public async Task<IActionResult> ReportSalesYear(int year)
         {
             string mym = "";
             int ext = 1;
@@ -149,6 +149,26 @@ namespace RealEstate.Api.Controllers
 
             localReport.AddDataSource("ViewCustomerData", data);
             localReport.AddDataSource("CancelledContract", data2);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
+
+            return File(res.MainStream, "application/pdf");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReportAlert(int id, DateTime from, DateTime to)
+        {
+            string mym = "";
+            int ext = 1;
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\SalesYear.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+
+            LocalReport localReport = new LocalReport(path);
+            var data = (await _serviceReport.GetAlert(id, from, to)).Data;
+
+
+            // parmarters.Add("year", year.ToString());
+
+            localReport.AddDataSource("ViewCustomerData", data);
+            //localReport.AddDataSource("CancelledContract", data2);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");

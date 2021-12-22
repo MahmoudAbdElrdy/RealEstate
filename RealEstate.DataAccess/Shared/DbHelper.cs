@@ -74,6 +74,10 @@ namespace RealEstate.DataAccess
         public static List<CustomerCard> GetCustomerCard(RealEstateContext context, int ContractID, bool IsExtra)
         {
             return DbHelper.ExecuteQuery<CustomerCard>(context, $"EXEC dbo.CustomerCard @ContractID = '{ContractID}'");
+        }  
+        public static List<Alert> GetAlert(RealEstateContext context, int ProjectID, DateTime FromDate,DateTime ToDate)
+        {
+            return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Alert @ProjectID = '{ProjectID}',@FromDate='{FromDate}',@ToDate='{ToDate}'");
         }
 
     }
