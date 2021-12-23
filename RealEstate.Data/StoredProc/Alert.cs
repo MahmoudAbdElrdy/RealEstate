@@ -7,12 +7,14 @@ namespace RealEstate.Data.StoredProc
     public class Alert
     {
         public string Name { get; set; }
-        public string ContractName { get; set; } 
-        public string ContractNationalNumber { get; set; }  
+        public string CustomerName { get; set; } 
+        public string ProjectName { get; set; }  
+        public string CustomerPhone { get; set; }   
         public string DateSting { get; set; } 
         public string Stock { get; set; } 
         public DateTime? Date { get; set; }
         public int? ContractID { get; set; }
+        public int? ContractDetailBillId { get; set; } 
         public int? ProjectUnitID { get; set; }
         public int? ProjectID { get; set; } 
         public double? Paid { get; set; }

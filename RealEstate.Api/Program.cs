@@ -21,6 +21,6 @@ namespace RealEstate.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }); 
     }
 }

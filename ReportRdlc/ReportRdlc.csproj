@@ -55,6 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="CancelledContract.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,6 +94,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RealEstateDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="RealEstateDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ViewCustomerData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,9 +114,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlsDegsine\Alert.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\SalesYear.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\ExtraContrcat.rdlc" />
+    <None Include="AlertDataSet.xsc">
+      <DependentUpon>AlertDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="AlertDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AlertDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AlertDataSet.xss">
+      <DependentUpon>AlertDataSet.xsd</DependentUpon>
+    </None>
     <None Include="CancelledContract.xsc">
       <DependentUpon>CancelledContract.xsd</DependentUpon>
     </None>
@@ -171,6 +193,17 @@
     </None>
     <None Include="RealEstateDataSet.xss">
       <DependentUpon>RealEstateDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RealEstateDataSet1.xsc">
+      <DependentUpon>RealEstateDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="RealEstateDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RealEstateDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RealEstateDataSet1.xss">
+      <DependentUpon>RealEstateDataSet1.xsd</DependentUpon>
     </None>
     <None Include="ViewCustomerData.xsc">
       <DependentUpon>ViewCustomerData.xsd</DependentUpon>

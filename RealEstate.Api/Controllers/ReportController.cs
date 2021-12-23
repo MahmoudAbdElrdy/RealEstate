@@ -158,18 +158,40 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
             int ext = 1;
-            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\SalesYear.rdlc";
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Overdue.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetAlert(id, from, to)).Data;
-
-
-            // parmarters.Add("year", year.ToString());
-
-            localReport.AddDataSource("ViewCustomerData", data);
+            var projectName = (await _serviceProjec.GetName((int)id)).Data;
+            parmarters.Add("ProjectName", projectName ?? "");
+            parmarters.Add("FromDate", from.ToString("dd-MM-yyyy") ?? "");
+            parmarters.Add("ToDate", to.ToString("dd-MM-yyyy") ?? "");
+            localReport.AddDataSource("AlertDataSet", data);
             //localReport.AddDataSource("CancelledContract", data2);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
+
+            return File(res.MainStream, "application/pdf");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReportOverdue(int id)
+        {
+            string mym = "";
+            int ext = 1;
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Overdue.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+
+            LocalReport localReport = new LocalReport(path);
+            var data = (await _serviceReport.GetOverdue(id)).Data;
+            var projectName = (await _serviceProjec.GetName((int)id)).Data;
+            parmarters.Add("ProjectName", projectName ?? "");
+            DateTime now = DateTime.Now;
+            var startDate = new DateTime(now.Year, now.Month, 1);
+            //  parmarters.Add("FromDate", from.ToString("dd-MM-yyyy") ?? "");
+           // parmarters.Add("ToDate", now.ToString("dd-MM-yyyy") ?? "");
+            localReport.AddDataSource("AlertDataSet", data);
+            //localReport.AddDataSource("CancelledContract", data2);
+            var res = localReport.Execute(RenderType.Pdf, ext, null, mym);
 
             return File(res.MainStream, "application/pdf");
         }

@@ -77,8 +77,18 @@ namespace RealEstate.DataAccess
         }  
         public static List<Alert> GetAlert(RealEstateContext context, int ProjectID, DateTime FromDate,DateTime ToDate)
         {
+            if(ProjectID==0)
+            {
+                return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Alert @ProjectID = null,@FromDate='{FromDate}',@ToDate='{ToDate}'");
+
+
+            }
             return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Alert @ProjectID = '{ProjectID}',@FromDate='{FromDate}',@ToDate='{ToDate}'");
         }
-
+        public static List<Alert> GetOverdue(RealEstateContext context, int ProjectID, DateTime FromDate)
+        {
+           
+            return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Overdue @ProjectID = '{ProjectID}',@FromDate='{FromDate}'");
+        }
     }
 }

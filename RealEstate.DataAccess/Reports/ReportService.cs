@@ -11,7 +11,7 @@ using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 namespace RealEstate.DataAccess
 {
     [ScopedService]
-   public class ReportService
+    public class ReportService
     {
         RealEstateContext _db;
         readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace RealEstate.DataAccess
         {
             try
             {
-                var result = SqlProcedures.GetExtraContrcat(_db,id, contractExtraName);
+                var result = SqlProcedures.GetExtraContrcat(_db, id, contractExtraName);
 
                 return new ResponseData
                 {
@@ -36,7 +36,7 @@ namespace RealEstate.DataAccess
             }
             catch (Exception ex)
             {
-                
+
                 return new ResponseData
                 {
                     IsSuccess = false,
@@ -44,12 +44,12 @@ namespace RealEstate.DataAccess
                     Message = ex.Message,
                 };
             }
-        } 
+        }
         public async Task<ResponseData> GetCustomerCard(int id, bool IsExtra)
         {
             try
             {
-                var result = SqlProcedures.GetCustomerCard(_db,id, IsExtra);
+                var result = SqlProcedures.GetCustomerCard(_db, id, IsExtra);
 
                 return new ResponseData
                 {
@@ -60,7 +60,7 @@ namespace RealEstate.DataAccess
             }
             catch (Exception ex)
             {
-                
+
                 return new ResponseData
                 {
                     IsSuccess = false,
@@ -68,13 +68,13 @@ namespace RealEstate.DataAccess
                     Message = ex.Message,
                 };
             }
-        } 
-        
+        }
+
         public async Task<ResponseData> GetViewCustomerData()
         {
             try
             {
-                var result =_db.ViewCustomerData.ToList();
+                var result = _db.ViewCustomerData.ToList();
 
                 return new ResponseData
                 {
@@ -85,7 +85,7 @@ namespace RealEstate.DataAccess
             }
             catch (Exception ex)
             {
-                
+
                 return new ResponseData
                 {
                     IsSuccess = false,
@@ -98,7 +98,7 @@ namespace RealEstate.DataAccess
         {
             try
             {
-                var result = _db.ViewCustomerData.Where(c=>c.Date.EndsWith(year.ToString())).ToList();
+                var result = _db.ViewCustomerData.Where(c => c.Date.EndsWith(year.ToString())).ToList();
 
                 return new ResponseData
                 {
@@ -122,7 +122,7 @@ namespace RealEstate.DataAccess
         {
             try
             {
-                var result =_db.ViewCancelledContracts.Where(c=>c.Date.EndsWith(year.ToString())).ToList();
+                var result = _db.ViewCancelledContracts.Where(c => c.Date.EndsWith(year.ToString())).ToList();
 
                 return new ResponseData
                 {
@@ -133,7 +133,7 @@ namespace RealEstate.DataAccess
             }
             catch (Exception ex)
             {
-                
+
                 return new ResponseData
                 {
                     IsSuccess = false,
@@ -142,17 +142,59 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-        public async Task<ResponseData> GetAlert(int id, DateTime from,DateTime to)
+        public async Task<ResponseData> GetAlert(int id, DateTime from, DateTime to)
         {
             try
             {
-                var result = SqlProcedures.GetAlert(_db, id, from,to);
-                foreach(var alert in result)
+               
+                var result = SqlProcedures.GetAlert(_db, id, from, to);
+                foreach (var alert in result)
                 {
-                    alert.FloorNumber =(int) _db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
-                    alert.Number =(int) _db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
-                    alert.Details = $"  رقم الطابق='{ alert.FloorNumber}'{Environment.NewLine}' رقم الوحدة={ alert.Number}'";
-                }  
+                    alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
+                    alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
+                    alert.Details = $"  رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
+
+                }
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        } 
+        
+        public async Task<ResponseData> GetOverdue(int ProjectId)
+        {
+            try
+            {
+                DateTime now = DateTime.Now;
+                var startDate = new DateTime(now.Year, now.Month, 1);
+                
+                var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail.Contract).Where(c => c.ContractDetail.Contract.ProjectId == ProjectId&&c.Date<=now);
+                var contractDetailsId = filterDate.Select(c => c.Id).ToList();
+              
+                var result = SqlProcedures.GetOverdue(_db, ProjectId, now).Where(x=>x.ContractDetailBillId!=null);
+                result = result.Where(x => !contractDetailsId.Contains((int)x.ContractDetailBillId)).ToList();
+                foreach (var alert in result)
+                {
+                    alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
+                    alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
+                    alert.Details = $"  رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
+
+                }
                 return new ResponseData
                 {
                     IsSuccess = true,

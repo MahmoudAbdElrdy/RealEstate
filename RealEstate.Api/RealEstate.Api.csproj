@@ -43,6 +43,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\Reports\Overdue.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\Alert.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Reports\CustomerCardStock.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
