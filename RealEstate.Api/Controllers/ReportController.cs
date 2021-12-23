@@ -187,11 +187,10 @@ namespace RealEstate.Api.Controllers
             parmarters.Add("ProjectName", projectName ?? "");
             DateTime now = DateTime.Now;
             var startDate = new DateTime(now.Year, now.Month, 1);
-            //  parmarters.Add("FromDate", from.ToString("dd-MM-yyyy") ?? "");
-           // parmarters.Add("ToDate", now.ToString("dd-MM-yyyy") ?? "");
+           
             localReport.AddDataSource("AlertDataSet", data);
             //localReport.AddDataSource("CancelledContract", data2);
-            var res = localReport.Execute(RenderType.Pdf, ext, null, mym);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");
         }

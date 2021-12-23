@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Overdue.rdlc" />
+    <Content Remove="wwwroot\Reports\Overdue.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Reports\Overdue.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="BoldReports.Net.Core" Version="3.2.27" />
@@ -43,9 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\Reports\Overdue.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\Reports\Alert.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

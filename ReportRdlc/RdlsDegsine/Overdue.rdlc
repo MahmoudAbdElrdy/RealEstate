@@ -958,7 +958,7 @@
       <Width>24.40251cm</Width>
       <Page>
         <PageHeader>
-          <Height>1.10067cm</Height>
+          <Height>1.14187cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -973,32 +973,18 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
+                  <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ProjectName</rd:DefaultName>
-              <Top>0.125in</Top>
-              <Left>1.57862in</Left>
-              <Height>0.25in</Height>
-              <Width>4.53443in</Width>
+              <Top>0.36548cm</Top>
+              <Left>6.52913cm</Left>
+              <Height>0.6cm</Height>
+              <Width>7.65112cm</Width>
               <Style>
                 <Border>
-                  <Style>Double</Style>
+                  <Style>None</Style>
                 </Border>
-                <TopBorder>
-                  <Style>Double</Style>
-                </TopBorder>
-                <BottomBorder>
-                  <Style>Double</Style>
-                </BottomBorder>
-                <LeftBorder>
-                  <Style>Double</Style>
-                </LeftBorder>
-                <RightBorder>
-                  <Style>Double</Style>
-                </RightBorder>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>

@@ -60,6 +60,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="AlertDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertDataSet2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="CancelledContract.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,6 +92,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Model.cs" />
+    <Compile Include="OverdueDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OverdueDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealEstateDataSet.Designer.cs">
@@ -116,6 +126,7 @@
     </Compile>
     <EmbeddedResource Include="RdlsDegsine\Alert.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
+    <EmbeddedResource Include="RdlsDegsine\Overdue.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\SalesYear.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\ExtraContrcat.rdlc" />
     <None Include="AlertDataSet.xsc">
@@ -128,6 +139,17 @@
     </None>
     <None Include="AlertDataSet.xss">
       <DependentUpon>AlertDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="AlertDataSet2.xsc">
+      <DependentUpon>AlertDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="AlertDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AlertDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AlertDataSet2.xss">
+      <DependentUpon>AlertDataSet2.xsd</DependentUpon>
     </None>
     <None Include="CancelledContract.xsc">
       <DependentUpon>CancelledContract.xsd</DependentUpon>
@@ -172,6 +194,17 @@
     </None>
     <None Include="CustomerCardStock2.xss">
       <DependentUpon>CustomerCardStock2.xsd</DependentUpon>
+    </None>
+    <None Include="OverdueDataSet.xsc">
+      <DependentUpon>OverdueDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="OverdueDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OverdueDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="OverdueDataSet.xss">
+      <DependentUpon>OverdueDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
