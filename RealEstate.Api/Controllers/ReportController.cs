@@ -158,20 +158,24 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
             int ext = 1;
-            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Overdue.rdlc";
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Alert.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetAlert(id, from, to)).Data;
             var projectName = (await _serviceProjec.GetName((int)id)).Data;
+            if (id == null||id==0)
+                projectName = "لايوجد";
             parmarters.Add("ProjectName", projectName ?? "");
             parmarters.Add("FromDate", from.ToString("dd-MM-yyyy") ?? "");
             parmarters.Add("ToDate", to.ToString("dd-MM-yyyy") ?? "");
             localReport.AddDataSource("AlertDataSet", data);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             //localReport.AddDataSource("CancelledContract", data2);
-            var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
+            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
-            return File(res.MainStream, "application/pdf");
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Pdf, "Alert");
         }
         [HttpGet]
         public async Task<IActionResult> ReportOverdue(int id)

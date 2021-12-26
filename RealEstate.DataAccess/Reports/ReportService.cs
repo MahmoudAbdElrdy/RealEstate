@@ -152,8 +152,10 @@ namespace RealEstate.DataAccess
                 {
                     alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
                     alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
-                    alert.Details = $"  رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
                     alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
+                    alert.Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
+                    alert.Remainder = alert.Amount - alert.Paid;
 
                 }
                 return new ResponseData
@@ -181,25 +183,30 @@ namespace RealEstate.DataAccess
             {
                 DateTime now = DateTime.Now;
                 var startDate = new DateTime(now.Year, now.Month, 1);
-                
-                var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail.Contract).Where(c => c.ContractDetail.Contract.ProjectId == ProjectId&&c.Date<=now);
-                var contractDetailsId = filterDate.Select(c => c.Id).ToList();
+                var result = SqlProcedures.GetOverdue(_db, ProjectId, now);
+                var contrcatDatiesIDs = result.Select(c=>c.ContractID);
+                var filterDate = _db.ContractDetailBills.Where(c => contrcatDatiesIDs.Contains(c.ContractDetailId));
+
+              //  var filterDate = _db.ContractDetailBills.Include(c => c.ContractDetail.Contract).Where(c => c.ContractDetail.Contract.ProjectId == ProjectId&&c.Date<=now);
+                var contractDetailsId = filterDate.Select(c => c.ContractDetailId).ToList();
               
-                var result = SqlProcedures.GetOverdue(_db, ProjectId, now).Where(x=>x.ContractDetailBillId!=null);
-                result = result.Where(x => !contractDetailsId.Contains((int)x.ContractDetailBillId)).ToList();
+              
+                result = result.Where(x => !contractDetailsId.Contains((int)x.ContractID)).ToList();
                 foreach (var alert in result)
                 {
                     alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
                     alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
-                    alert.Details = $"  رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
                     alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
+                    alert.Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
+                    alert.Remainder = alert.Amount-alert.Paid;
 
                 }
                 return new ResponseData
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Data = result
+                    Data = result.Where(c=>c.Remainder!=0)
                 };
             }
             catch (Exception ex)

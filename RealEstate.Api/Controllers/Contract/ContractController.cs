@@ -78,6 +78,11 @@ namespace RealEstate.Api.Controllers.Contract
         public async Task<ActionResult<ResponseData>> DeleteContractDetail(int id)
         {
             return await _contractDetailservice.DeleteContractDetail(id);
+        } 
+        [HttpGet("DeleteAllContractDetail")]
+        public async Task<ActionResult<ResponseData>> DeleteAllContractDetail(int id)
+        {
+            return await _contractDetailservice.DeleteAllContractDetail(id);
         }
         [HttpPost]
         [Route("SaveContractDetail")]

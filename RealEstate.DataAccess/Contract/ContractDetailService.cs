@@ -32,7 +32,7 @@ namespace RealEstate.DataAccess
 
 
 
-                filter = _db.ContractDetails.Where(x => x.ContractId == ContractId);
+                filter = _db.ContractDetails.Where(x => x.ContractId == ContractId).OrderBy(c=>c.Date);
                 var entity = _mapper.Map<List<ContractDetailDto>>(filter);
 
                 sw.Stop();
@@ -261,7 +261,7 @@ namespace RealEstate.DataAccess
                 var endDate = startDate.AddMonths(1).AddDays(-1);
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                var data =await _db.ViewPayInstallments.Where(x => x.ContractId == ContractId).ToListAsync();
+                var data =await _db.ViewPayInstallments.Where(x => x.ContractId == ContractId).OrderBy(c=>c.ContractDetailDate).ToListAsync();
                 var entity = _mapper.Map<List<ViewPayInstallmentDto>>(data);
                 for (int i = 1; i < entity.Count(); i++)
                 {
@@ -340,7 +340,7 @@ namespace RealEstate.DataAccess
               //  var contractDetailsId = filterDate.Select(c => c.ContractDetailId);
                 IQueryable<ContractDetail> filter;
 
-                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).Where(x => x.ContractId == ContractId/*&& !contractDetailsId.Contains(x.Id)*/);
+                filter = _db.ContractDetails.Include(c => c.ContractDetailBills).OrderBy(c=>c.Date).Where(x => x.ContractId == ContractId/*&& !contractDetailsId.Contains(x.Id)*/);
 
                 var entity = _mapper.Map<List<ContractDetailDto>>(filter);
                
@@ -370,6 +370,64 @@ namespace RealEstate.DataAccess
                     Message = ex.Message,
                 };
             }
+        }
+        public async Task<ResponseData> DeleteAllContractDetail(int id)
+        {
+            try
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var emp = await _db.ContractDetails.Where(a => a.ContractId == id).ToArrayAsync();
+                _db.ContractDetails.RemoveRange(emp);
+                _db.SaveChanges();
+                sw.Stop();
+                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Message = "تم الحذف بنجاح"
+                };
+            }
+            catch (DbUpdateException ex)
+            {
+                var sqlException = ex.GetBaseException() as SqlException;
+
+                if (sqlException != null && sqlException.Number == 547)
+                {
+
+                    return new ResponseData
+                    {
+                        IsSuccess = false,
+                        Code = EResponse.UnSuccess,
+                        Message = " حدث خطأ لايمكنك الحذف لانه مرتبط ببيانات اخري"
+                    };
+                }
+                else
+                {
+
+                    return new ResponseData
+                    {
+                        IsSuccess = false,
+                        Code = EResponse.UnexpectedError,
+                        Message = "حدث خطأ لايمكنك الحذف"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = "حدث خطأ  "
+                };
+            }
+
+
+
+
         }
     }
 }
