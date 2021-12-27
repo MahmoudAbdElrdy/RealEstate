@@ -90,5 +90,10 @@ namespace RealEstate.DataAccess
            
             return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Overdue @ProjectID = '{ProjectID}',@FromDate='{FromDate}'");
         }
+        public static List<PrintBill> GetPrintBill(RealEstateContext context, int ContractID) 
+        {
+
+            return DbHelper.ExecuteQuery<PrintBill>(context, $"EXEC dbo.PrintBill @ContractID = '{ContractID}'");
+        }
     }
 }

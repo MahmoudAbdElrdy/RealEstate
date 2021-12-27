@@ -27,8 +27,8 @@ namespace RealEstate.Data.Models
         public int ProjectId { get; set; }
         public double? StockCount { get; set; }
         public double? MetersCount { get; set; }
-        public double? MetersNumer { get; set; } 
         public string Notes { get; set; }
+        public double? MetersNumer { get; set; }
 
         public virtual ProjectUnit ProjectUnit { get; set; }
         public virtual ICollection<ContractDetail> ContractDetails { get; set; }

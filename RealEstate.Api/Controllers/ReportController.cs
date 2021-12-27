@@ -157,7 +157,7 @@ namespace RealEstate.Api.Controllers
         public async Task<IActionResult> ReportAlert(int id, DateTime from, DateTime to)
         {
             string mym = "";
-            int ext = 1;
+            int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Alert.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
@@ -194,6 +194,32 @@ namespace RealEstate.Api.Controllers
            
             localReport.AddDataSource("AlertDataSet", data);
             //localReport.AddDataSource("CancelledContract", data2);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
+
+            return File(res.MainStream, "application/pdf");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReportBill(int id)
+        {
+            string mym = "";
+            int ext = 1;
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\PrintBill.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+
+            LocalReport localReport = new LocalReport(path);
+            var data = (await _serviceReport.GetPrintBill(id)).Data;
+            parmarters.Add("ProjectName", data[0].ProjectName ?? "");
+            parmarters.Add("CustomerPhone", data[0].CustomerPhone ?? "");
+            parmarters.Add("NationalNumber", data[0].NationalNumber ?? "");
+            parmarters.Add("Stock", data[0].Stock ?? "");
+            parmarters.Add("CustomerName", data[0].CustomerName ?? "");
+           
+            var paid = (await _serviceReport.Getpaid((int)id)).Data;
+            parmarters.Add("Paid", paid.ToString() ?? "");
+          
+
+            localReport.AddDataSource("PrintBillDataSet", data);
+           
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");

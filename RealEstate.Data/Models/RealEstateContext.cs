@@ -658,6 +658,8 @@ namespace RealEstate.Data.Models
                 entity.Property(e => e.ContractId).HasColumnName("ContractID");
 
                 entity.Property(e => e.Name).IsRequired();
+
+                entity.Property(e => e.Remainder).HasColumnType("numeric(2, 2)");
             });
 
             modelBuilder.Entity<ViewSupervisor>(entity =>

@@ -32,7 +32,7 @@ namespace RealEstate.DataAccess
         public int? Number { get; set; }
         public double? Paid { get; set; }
         public DateTime? ContractDetailBillDate { get; set; }
-        public double? Remainder { get; set; }
+        public decimal? Remainder { get; set; }
         public double? PreviousPaid { get; set; }  
         public void CreateMappings(Profile configuration)
         {

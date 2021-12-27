@@ -17,6 +17,6 @@ namespace RealEstate.Data.Models
         public int? Number { get; set; }
         public double? Paid { get; set; }
         public DateTime? ContractDetailBillDate { get; set; }
-        public double? Remainder { get; set; }
+        public decimal Remainder { get; set; }
     }
 }

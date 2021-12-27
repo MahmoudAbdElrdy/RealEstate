@@ -97,6 +97,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OverdueDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="PrintBillDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintBillDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealEstateDataSet.Designer.cs">
@@ -124,9 +129,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlsDegsine\Alert - Copy.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\Alert.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\Overdue.rdlc" />
+    <EmbeddedResource Include="RdlsDegsine\PrintBill.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\SalesYear.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\ExtraContrcat.rdlc" />
     <None Include="AlertDataSet.xsc">
@@ -207,6 +214,17 @@
       <DependentUpon>OverdueDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="PrintBillDataSet.xsc">
+      <DependentUpon>PrintBillDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PrintBillDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PrintBillDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PrintBillDataSet.xss">
+      <DependentUpon>PrintBillDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

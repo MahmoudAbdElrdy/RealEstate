@@ -266,7 +266,9 @@ namespace RealEstate.DataAccess
                 for (int i = 1; i < entity.Count(); i++)
                 {
                     entity[i].PreviousPaid = entity[i-1].Paid;
-                  
+                   var Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == entity[i].ContractDetailId).Sum(c => c.Paid);
+                    entity[i].Remainder = (decimal?)(entity[i].Amount - Paid);
+
                 }
 
 

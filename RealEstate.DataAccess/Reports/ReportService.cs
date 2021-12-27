@@ -220,5 +220,61 @@ namespace RealEstate.DataAccess
                 };
             }
         }
+        public async Task<ResponseData> GetPrintBill(int id)
+        {
+            try
+            {
+
+                var result = SqlProcedures.GetPrintBill(_db, id);
+                foreach (var alert in result)
+                {
+                     alert.Paid = (decimal)_db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
+                     alert.Remainder = (decimal)alert.Amount - alert.Paid;
+
+                }
+                result = result.Where(c => c.Remainder != 0).ToList();
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> Getpaid(int id) 
+        {
+            try
+            {
+
+                var result =_db.ContractDetailBills.Include(x=>x.ContractDetail).Where(c=>c.ContractDetail.ContractId==id).Sum(m=>m.Paid);
+               
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }
     }
 }
