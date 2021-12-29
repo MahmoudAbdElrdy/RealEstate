@@ -31,6 +31,6 @@ namespace RealEstate.DataAccess
     {
         public int? CustomerId { get; set; }
         public DateTime? Date { get; set; }
-
+        public string Region { get; set; }
     }
 }

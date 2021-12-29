@@ -41,6 +41,11 @@ namespace RealEstate.DataAccess
                 var dateSalary = new BaseSpecifications<Question>(x => x.Date.Date.Month.Equals(search.Date.Value.Date.Month) && x.Date.Date.Year.Equals(search.Date.Value.Date.Year));
                 specification = specification?.And(dateSalary) ?? dateSalary;
             }
+            if (!string.IsNullOrEmpty(search.Region))
+            {
+                var name = new BaseSpecifications<Question>(x => x.Region.Contains(search.Region));
+                specification = specification?.And(name) ?? name;
+            }
             if (specification == null)
                 specification = new BaseSpecifications<Question>();
             specification.AddInclude(x => x.Employee);
@@ -59,7 +64,7 @@ namespace RealEstate.DataAccess
 
                 var specification = Specifications(search);
 
-                filter = _db.Questions.Pagtion(specification, out int count);
+                filter = _db.Questions.OrderBy(c=>c.Date).Pagtion(specification, out int count);
 
                 //  var entity = _db.Questions.Include(x => x.Department);
                 var entity = _mapper.Map<List<QuestionDto>>(filter);
@@ -190,6 +195,7 @@ namespace RealEstate.DataAccess
                     newRec = _mapper.Map<QuestionDto, Question>(Question);
                     newRec.Customer = null;
                     newRec.Employee = null;
+                    //newRec.Date = DateTime.Now;
                     _db.Questions.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };

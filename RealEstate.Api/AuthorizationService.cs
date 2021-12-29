@@ -40,7 +40,7 @@ namespace RealEstate.Service.Classes
                 var claims = (_principal.Claims).ToList();
                 Settings.Id  = Convert.ToInt32(claims.Where(c => c.Type == "Id").FirstOrDefault().Value);
                 Settings.Department = claims.Where(c => c.Type == "Department").FirstOrDefault().Value;
-                Settings.Name = claims.Where(c => c.Type == "Department").FirstOrDefault().Value;
+                Settings.Name = claims.Where(c => c.Type == "Name").FirstOrDefault().Value;
                 context.HttpContext.User = _principal;
             }
             catch (Exception ex)

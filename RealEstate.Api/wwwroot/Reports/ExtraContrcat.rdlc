@@ -255,11 +255,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!ContractDetailAmount.Value-Fields!Paid.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -287,11 +289,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Paid.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -319,11 +323,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!ContractDetailAmount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -339,6 +345,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

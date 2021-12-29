@@ -86,7 +86,7 @@ namespace RealEstate.Api.Controllers
             return File(res.MainStream, "application/pdf");
         }
         [HttpGet]
-        public async Task<IActionResult> ReportCustomerData(int option)
+        public async Task<IActionResult> ReportCustomerData(int option,int? ProjectId)
         {
             // { option: 'الكل', value: 1 },
             //{ option: 'رقم التليفون فقط', value: 2 },
@@ -124,7 +124,7 @@ namespace RealEstate.Api.Controllers
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
 
             LocalReport localReport = new LocalReport(path);
-            var data = (await _serviceReport.GetViewCustomerData()).Data;
+            var data = (await _serviceReport.GetViewCustomerData(ProjectId)).Data;
 
             parmarters.Add("Notes", "true" ?? "");
 
@@ -144,8 +144,9 @@ namespace RealEstate.Api.Controllers
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetViewCustomerData(year)).Data;
             var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
-
-            parmarters.Add("year", year.ToString());
+            var res1 = year;
+            parmarters.Add("year", Convert.ToString(res1));
+            //parmarters.Add("ReportParameter1", res1 ?? "");
 
             localReport.AddDataSource("ViewCustomerData", data);
             localReport.AddDataSource("CancelledContract", data2);

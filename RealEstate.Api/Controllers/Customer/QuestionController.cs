@@ -38,7 +38,7 @@ namespace RealEstate.Api.Controllers.Question
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdatEQuestion(QuestionDto Question)
         {
-            if (Question.Id == null || Question.Id == 0)
+            if (Question.Id == null||Question.EmployeeId==null || Question.EmployeeId == 0 || Question.Id == 0)
             {
                 Question.EmployeeId =Settings.Id ;
             }

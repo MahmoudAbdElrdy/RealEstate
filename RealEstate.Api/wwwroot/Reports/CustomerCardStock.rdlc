@@ -474,11 +474,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Remainder.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -506,11 +508,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Paid.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -664,11 +668,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Amount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -765,11 +771,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=SUM(IIf(Fields!IsExtra.Value =false, Val(Fields!Remainder.Value),0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -797,11 +805,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=SUM(IIf(Fields!IsExtra.Value =False, Val(Fields!Paid.Value),0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -950,12 +960,14 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=SUM(IIf(Fields!IsExtra.Value =False, Val(Fields!Amount.Value),0))</Value>
-                                  <Style />
+                                  <Value>=(IIf(Fields!IsExtra.Value =False, SUM(Val(Fields!Paid.Value+Fields!Remainder.Value)),0))</Value>
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1153,11 +1165,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Remainder.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1185,11 +1199,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Paid.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1343,11 +1359,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Amount.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1363,6 +1381,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1444,11 +1463,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(IIf(Fields!IsExtra.Value = True, Val(Fields!Remainder.Value), 0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1476,11 +1497,13 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Sum(IIf(Fields!IsExtra.Value = True, Val(Fields!Paid.Value), 0))</Value>
-                                  <Style />
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1629,12 +1652,14 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(IIf(Fields!IsExtra.Value = True, Val(Fields!Amount.Value), 0))</Value>
-                                  <Style />
+                                  <Value>=Sum(IIf(Fields!IsExtra.Value = True, Val(Fields!Paid.Value+Fields!Remainder.Value), 0))</Value>
+                                  <Style>
+                                    <Format>#,0.00</Format>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>

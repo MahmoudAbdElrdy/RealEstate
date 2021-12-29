@@ -15,9 +15,9 @@ using TanvirArjel.Extensions.Microsoft.DependencyInjection;
 namespace RealEstate.DataAccess
 {
     [ScopedService]
-    public  class CustomerService
+    public class CustomerService
     {
-       RealEstateContext _db;
+        RealEstateContext _db;
         readonly IMapper _mapper;
         public CustomerService(RealEstateContext db, IMapper mapper)
         {
@@ -29,7 +29,7 @@ namespace RealEstate.DataAccess
         {
             BaseSpecifications<Customer> specification = null;
 
-         
+
             if (!string.IsNullOrEmpty(search.Name))
             {
                 var name = new BaseSpecifications<Customer>(x => x.Name.Contains(search.Name));
@@ -48,7 +48,7 @@ namespace RealEstate.DataAccess
 
             if (specification == null)
                 specification = new BaseSpecifications<Customer>();
-            
+
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
@@ -68,7 +68,10 @@ namespace RealEstate.DataAccess
 
                 //  var entity = _db.Customers.Include(x => x.Department);
                 var entity = _mapper.Map<List<CustomerDto>>(filter);
-
+                foreach (var item in entity)
+                {
+                    item.CustomerType = _db.Questions?.OrderBy(c=>c.Date)?.LastOrDefault(c => c.CustomerId == item.Id)?.CustomerType;
+                }
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -99,9 +102,9 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Customer emp =await _db.Customers.Where(a => a.Id == id).FirstOrDefaultAsync();
+                Customer emp = await _db.Customers.Where(a => a.Id == id).FirstOrDefaultAsync();
                 var _Customer = _mapper.Map<Customer, CustomerDto>(emp);
-               
+
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -121,12 +124,12 @@ namespace RealEstate.DataAccess
                     Message = ex.Message,
                 };
             }
-          
-           
-          
-           
+
+
+
+
         }
-        public async Task<ResponseData> Delete(int id) 
+        public async Task<ResponseData> Delete(int id)
         {
             try
             {
@@ -141,7 +144,7 @@ namespace RealEstate.DataAccess
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Message="تم الحذف بنجاح"
+                    Message = "تم الحذف بنجاح"
                 };
             }
             catch (DbUpdateException ex)
@@ -186,11 +189,11 @@ namespace RealEstate.DataAccess
         }
         public ResponseData SaveCustomer(CustomerDto Customer)
         {
-           if (Customer.Id == 0|| Customer.Id==null)
+            if (Customer.Id == 0 || Customer.Id == null)
             {
                 try
                 {
-                    if (_db.Customers.Any(x => x.Name.Equals(Customer.Name)&& x.Phone.Equals(Customer.Phone)))
+                    if (_db.Customers.Any(x => x.Name.Equals(Customer.Name) && x.Phone.Equals(Customer.Phone)))
                     {
                         return new ResponseData { Message = "إسم المستخدم موجود بالفعل", IsSuccess = false };
                     }
@@ -232,6 +235,6 @@ namespace RealEstate.DataAccess
             }
             return new ResponseData { Message = "حدث خطأ", IsSuccess = false };
         }
-      
+
     }
 }

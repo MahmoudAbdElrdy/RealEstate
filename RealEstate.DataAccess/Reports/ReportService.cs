@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RealEstate.Data.Models;
+using RealEstate.Data.StoredProc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,27 @@ namespace RealEstate.DataAccess
             try
             {
                 var result = SqlProcedures.GetExtraContrcat(_db, id, contractExtraName);
+                result = result.Distinct().GroupBy(x => x.ContractDetailId).Select(y => y.First()).ToList();
+                var ids = result.Select(x => x.ContractId);
+                var dataAll = _db.Contracts.Where(x => x.ProjectId == id&& !ids.Contains(x.Id));
 
+                foreach (var alert in result)
+                {
+                    alert.Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
+                  //  alert.ContractDetailAmount = alert.ContractDetailAmount - alert.Paid;
+
+                }
+                ExtraContrcat extraContrcat = new ExtraContrcat();
+                foreach (var alert in dataAll)
+                {
+                     extraContrcat = new ExtraContrcat();
+                    extraContrcat.CustomerName = alert.Name;
+                    extraContrcat.Paid = 0;
+                    extraContrcat.ContractDetailAmount = 0;
+                    result.Add(extraContrcat);
+
+
+                }
                 return new ResponseData
                 {
                     IsSuccess = true,
@@ -49,8 +70,14 @@ namespace RealEstate.DataAccess
         {
             try
             {
-                var result = SqlProcedures.GetCustomerCard(_db, id, IsExtra);
+                var result = SqlProcedures.GetCustomerCard(_db, id, IsExtra).OrderBy(c=>c.Date).ToList();
+                foreach (var model in result)
+                {
+                    
+                    var Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == model.ContractDetailId).Sum(c => c.Paid);
+                    model.Remainder = model.Amount - Paid;
 
+                }
                 return new ResponseData
                 {
                     IsSuccess = true,
@@ -70,11 +97,20 @@ namespace RealEstate.DataAccess
             }
         }
 
-        public async Task<ResponseData> GetViewCustomerData()
+        public async Task<ResponseData> GetViewCustomerData(int? ProjectId)
         {
             try
             {
-                var result = _db.ViewCustomerData.ToList();
+                var result = new List<ViewCustomerDatum>();
+                if (ProjectId == null)
+                {
+                     result = _db.ViewCustomerData.ToList();
+                }
+                else
+                {
+                     result = _db.ViewCustomerData.Where(c => c.ProjectId == ProjectId).ToList();
+                }
+                
 
                 return new ResponseData
                 {

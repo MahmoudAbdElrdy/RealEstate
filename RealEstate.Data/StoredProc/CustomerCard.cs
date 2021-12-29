@@ -1,5 +1,7 @@
 ﻿
 
+using System;
+
 namespace RealEstate.Data.StoredProc
 {
     public  class CustomerCard 
@@ -15,5 +17,6 @@ namespace RealEstate.Data.StoredProc
         public double? Paid { get; set; }
         public string ContractDetailBillDate { get; set; }
         public double? Remainder { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

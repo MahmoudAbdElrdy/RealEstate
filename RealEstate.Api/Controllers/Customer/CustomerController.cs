@@ -38,7 +38,7 @@ namespace RealEstate.Api.Controllers.Customer
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdatECustomer(CustomerDto Customer)
         {
-            if (Customer.Id == null || Customer.Id == 0)
+            if ((Customer.Id == null||Customer.Referrer==null) || Customer.Id == 0)
             {
                 Customer.Referrer = Settings.Name ?? Settings.Name;
             }
