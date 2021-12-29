@@ -85,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomerCardStock2.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSetCustomer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetCustomer.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +137,7 @@
     <EmbeddedResource Include="RdlsDegsine\Alert - Copy.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\Alert.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\CustomerCardStock.rdlc" />
+    <EmbeddedResource Include="RdlsDegsine\CustomerWaiting.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\Overdue.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\PrintBill.rdlc" />
     <EmbeddedResource Include="RdlsDegsine\SalesYear.rdlc" />
@@ -201,6 +207,17 @@
     </None>
     <None Include="CustomerCardStock2.xss">
       <DependentUpon>CustomerCardStock2.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetCustomer.xsc">
+      <DependentUpon>DataSetCustomer.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetCustomer.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetCustomer.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetCustomer.xss">
+      <DependentUpon>DataSetCustomer.xsd</DependentUpon>
     </None>
     <None Include="OverdueDataSet.xsc">
       <DependentUpon>OverdueDataSet.xsd</DependentUpon>

@@ -20,9 +20,11 @@ namespace RealEstate.Api.Controllers
         private readonly ReportService _serviceReport;
         private readonly ContractDetailService _contractDetailservice;
         private readonly ContractService _contractService;
+        private readonly CustomerService _customerService;
         public ReportController(IWebHostEnvironment webHostEnvironment,
             ReportService serviceReport, ProjectService projectService,
             ContractService contractService,
+            CustomerService customerService,
             ContractDetailService contractDetailservice)
         {
             _webHostEnvironment = webHostEnvironment;
@@ -31,6 +33,7 @@ namespace RealEstate.Api.Controllers
             _serviceReport = serviceReport;
             _serviceProjec = projectService;
             _contractService = contractService;
+            _customerService = customerService;
         }
         public IActionResult Index()
         {
@@ -224,6 +227,30 @@ namespace RealEstate.Api.Controllers
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
             return File(res.MainStream, "application/pdf");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReportCustomerWaiting(string region, DateTime? from, DateTime? to)
+        {
+            string mym = "";
+            int ext = (int)(DateTime.Now.Ticks >> 10);
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerWaiting.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+
+            LocalReport localReport = new LocalReport(path);
+            CustomerReport customerReport = new CustomerReport();
+            customerReport.Region = region;
+            customerReport.FormDate = from;
+            customerReport.ToDate = to;
+            var data = (await _serviceReport.GetCustomerReport(customerReport)).Data;
+          
+            parmarters.Add("Region", region ?? "");
+            parmarters.Add("FromDate", from?.ToString("dd-MM-yyyy") ?? "");
+            parmarters.Add("ToDate", to?.ToString("dd-MM-yyyy") ?? "");
+            localReport.AddDataSource("DataSetCustomer", data);
+          
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
+          
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Pdf, "Alert");
         }
     }
 }

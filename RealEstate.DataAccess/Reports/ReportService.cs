@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RealEstate.Data.Models;
 using RealEstate.Data.StoredProc;
+using RealEstate.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -308,6 +309,52 @@ namespace RealEstate.DataAccess
                 {
                     IsSuccess = false,
                     Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }
+        
+        public async Task<ResponseData> GetCustomerReport(CustomerReport search)
+        {
+            try
+            {
+                IQueryable<Customer> filter;
+
+               var questions = _db.Questions.Where(c=>c.CustomerType==3);
+                if(!string.IsNullOrEmpty(search.Region))
+                {
+                     questions = questions.Where(c=>c.Region.Contains(search.Region));
+                }
+                if (search.FormDate!=null)
+                {
+                    questions = questions.Where(c => c.Date>=search.FormDate);
+                }
+                if (search.ToDate!=null)
+                {
+                    questions = questions.Where(c => c.Date <= search.ToDate);
+                }
+                filter = questions.Select(c => c.Customer).Distinct();
+                 var entity = _mapper.Map<List<CustomerDto>>(filter);
+                foreach (var item in entity)
+                {
+                   
+                }
+               
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+                   
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
                     Message = ex.Message,
                 };
             }
