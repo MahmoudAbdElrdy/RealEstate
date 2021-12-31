@@ -1381,7 +1381,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1785,7 +1784,7 @@
       <Width>29.00321cm</Width>
       <Page>
         <PageHeader>
-          <Height>3.19829cm</Height>
+          <Height>3.30412cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <ReportItems>
             <Textbox Name="Name">
@@ -2173,9 +2172,9 @@
               </Paragraphs>
               <rd:DefaultName>Phone</rd:DefaultName>
               <Top>0.955in</Top>
-              <Left>0.1108in</Left>
+              <Left>0.13666in</Left>
               <Height>0.25in</Height>
-              <Width>3.84122in</Width>
+              <Width>4.17369in</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <Border>
@@ -2198,14 +2197,16 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
               <Top>0.955in</Top>
-              <Left>4.02146in</Left>
+              <Left>4.37979in</Left>
               <Height>0.23945in</Height>
-              <Width>0.76041in</Width>
+              <Width>0.40208in</Width>
               <ZIndex>13</ZIndex>
               <Style>
                 <Border>
@@ -2329,9 +2330,9 @@
               </Paragraphs>
               <rd:DefaultName>Date</rd:DefaultName>
               <Top>0.65278in</Top>
-              <Left>0.93001in</Left>
+              <Left>0.28001in</Left>
               <Height>0.25in</Height>
-              <Width>1.66667in</Width>
+              <Width>2.31667in</Width>
               <ZIndex>17</ZIndex>
               <Style>
                 <Border>

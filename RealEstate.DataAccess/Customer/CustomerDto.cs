@@ -12,6 +12,7 @@ namespace RealEstate.DataAccess
         public string Referrer { get; set; }
         public string Phone { get; set; }
         public int? CustomerType { get; set; }
+        public string Notes { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Customer, CustomerDto>().ReverseMap();

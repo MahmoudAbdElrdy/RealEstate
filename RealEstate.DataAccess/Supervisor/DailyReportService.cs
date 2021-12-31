@@ -206,6 +206,10 @@ namespace RealEstate.DataAccess
                     newRec = _mapper.Map<DailyReportDto, DailyReport>(DailyReport);
                     newRec.Employee = null;
                     newRec.Supervisor = null;
+                    var item = _db.SupervisorDetails.FirstOrDefault(c => c.Id == DailyReport.SupervisorId);
+                    item.Net = item.Net + DailyReport.Value;
+                    item.Debt = item.Debt + DailyReport.Value;
+                    _db.SupervisorDetails.Update(item);
                     _db.DailyReports.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -227,6 +231,10 @@ namespace RealEstate.DataAccess
                 //Mapper.Map(ServicesProvider, servicesProvider);
                 try
                 {
+                    var item = _db.SupervisorDetails.FirstOrDefault(c => c.Id == DailyReport.SupervisorId);
+                    item.Net = item.Net + DailyReport.Value;
+                    item.Debt = item.Debt + DailyReport.Value;
+                    _db.SupervisorDetails.Update(item);
                     _db.Entry(_newRec).CurrentValues.SetValues(newRec);
 
                     _db.DailyReports.Attach(_newRec);

@@ -199,7 +199,7 @@ namespace RealEstate.DataAccess
 
                     Supervisor newRec = new Supervisor();
                     newRec = _mapper.Map<SupervisorDto, Supervisor>(Supervisor);
-
+                    
                     _db.Supervisors.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };
@@ -276,7 +276,7 @@ namespace RealEstate.DataAccess
 
                     SupervisorDetail newRec = new SupervisorDetail();
                     newRec = _mapper.Map<SupervisorDetailDto, SupervisorDetail>(Supervisor);
-
+                    newRec.Date = DateTime.Now;
                     _db.SupervisorDetails.Add(newRec);
                     _db.SaveChanges();
                     return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };

@@ -18,6 +18,7 @@ namespace RealEstate.DataAccess
         public double? Credit { get; set; }
         public double? Debt { get; set; }
         public double? Net { get; set; }
+        public DateTime? Date { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<Supervisor, SupervisorDto>()
@@ -35,6 +36,14 @@ namespace RealEstate.DataAccess
         public string Job { get; set; }
 
     }
+    public class SupervisorReport
+    {
+
+        public int? SupervisorId { get; set; }
+        public DateTime? FromDate { get; set; } 
+        public DateTime? ToDate { get; set; } 
+
+    }
     public class SupervisorDetailDto: ICustomMapping
     {
         public int? Id { get; set; }
@@ -42,6 +51,7 @@ namespace RealEstate.DataAccess
         public double? Credit { get; set; }
         public double? Debt { get; set; }
         public double? Net { get; set; }
+        public DateTime? Date { get; set; }
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<SupervisorDetail, SupervisorDetailDto>().ReverseMap();

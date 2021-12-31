@@ -380,13 +380,13 @@ namespace RealEstate.DataAccess
                     {
                         return new ResponseData { Message = "يجب املاء تفاصيل الشقة", IsSuccess = false };
                     }
-                    else if (unit.IsBooked == true)
+                    else if (unit.IsBooked == 3)
                     {
                         return new ResponseData { Message = "الشقة محجوزة من قبل", IsSuccess = false };
                     }
                     else
                     {
-                        unit.IsBooked = true;
+                        unit.IsBooked = 2;
                         _db.ProjectUnitDescriptions.Attach(unit);
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);
@@ -421,13 +421,13 @@ namespace RealEstate.DataAccess
                     {
                         return new ResponseData { Message = "يجب املاء تفاصيل الشقة", IsSuccess = false };
                     }
-                    else if (unit.IsBooked == true)
+                    else if (unit.IsBooked == 3)
                     {
                         return new ResponseData { Message = "الشقة محجوزة من قبل", IsSuccess = false };
                     }
                     else
                     {
-                        unit.IsBooked = true;
+                       // unit.IsBooked = 3;
                         _db.ProjectUnitDescriptions.Attach(unit);
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);

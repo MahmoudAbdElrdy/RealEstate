@@ -18,6 +18,7 @@ namespace RealEstate.Data.Models
         public string Name { get; set; }
         public string Referrer { get; set; }
         public string Phone { get; set; }
+        public string Notes { get; set; }
 
         public virtual ICollection<ProjectVisit> ProjectVisits { get; set; }
         public virtual ICollection<Question> Questions { get; set; }

@@ -335,10 +335,7 @@ namespace RealEstate.DataAccess
                 }
                 filter = questions.Select(c => c.Customer).Distinct();
                  var entity = _mapper.Map<List<CustomerDto>>(filter);
-                foreach (var item in entity)
-                {
-                   
-                }
+               
                
                 return new ResponseData
                 {
@@ -355,6 +352,69 @@ namespace RealEstate.DataAccess
                 {
                     IsSuccess = false,
                     Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetSupervisorReport(SupervisorReport search)
+        {
+            try
+            {
+               
+                var supervisorDetail = _db.SupervisorDetails.Where(c=>c.SupervisorId==search.SupervisorId);
+               
+                if (search.FromDate != null)
+                {
+                    supervisorDetail = supervisorDetail.Where(c => c.Date >= search.FromDate);
+                }
+                if (search.ToDate != null)
+                {
+                    supervisorDetail = supervisorDetail.Where(c => c.Date <= search.ToDate);
+                }
+               // filter = supervisorDetail.Select(c => c.Customer).Distinct();
+                var entity = _mapper.Map<List<SupervisorDetailDto>>(supervisorDetail);
+             
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = entity,
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.OK,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseData> GetSupervisor(int id)
+        {
+            try
+            {
+
+                var result = _db.Supervisors.FirstOrDefault(c=>c.Id==id)?.Name;
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
                     Message = ex.Message,
                 };
             }

@@ -16,7 +16,7 @@ namespace RealEstate.DataAccess
         public int? Kitchen { get; set; }
         public int? Bath { get; set; }
         public int? Room { get; set; }
-        public bool? IsBooked { get; set; }
+        public int? IsBooked { get; set; }
         public int? FlatID { get; set; }
         public int? FloorNumber { get; set; } 
         public void CreateMappings(Profile configuration)

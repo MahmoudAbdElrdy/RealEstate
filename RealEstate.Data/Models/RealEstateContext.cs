@@ -557,6 +557,8 @@ namespace RealEstate.Data.Models
 
             modelBuilder.Entity<SupervisorDetail>(entity =>
             {
+                entity.Property(e => e.Date).HasColumnType("date");
+
                 entity.HasOne(d => d.Supervisor)
                     .WithMany(p => p.SupervisorDetails)
                     .HasForeignKey(d => d.SupervisorId)

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace RealEstate.Api.Controllers
@@ -43,10 +44,11 @@ namespace RealEstate.Api.Controllers
         public async Task<IActionResult> ReportExtraContrcat(ExtraContrcatDto dto)
         {
             string mym = "";
-            int ext = 1;
+             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetExtraContrcat((int)dto.ProjectID, dto.ContractExtraName)).Data;
             var projectName = (await _serviceProjec.GetName((int)dto.ProjectID)).Data;
@@ -55,16 +57,17 @@ namespace RealEstate.Api.Controllers
             localReport.AddDataSource("ContractExtraDataSet", data);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
-            return File(res.MainStream, "application/pdf");
+           return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> CustomerCard(string customerName)
         {
             string mym = "";
-            int ext = 1;
+             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             ContractReportDto parmarter = (await _contractService.GetByName(customerName)).Data;
             List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
@@ -86,7 +89,7 @@ namespace RealEstate.Api.Controllers
             localReport.AddDataSource("CustomerCardStock2", data.Where(x => x.IsExtra == true));
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
-            return File(res.MainStream, "application/pdf");
+           return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> ReportCustomerData(int option,int? ProjectId)
@@ -97,7 +100,7 @@ namespace RealEstate.Api.Controllers
             //{ option: ' العنوان فقط', value: 4 },
             //{ option: ' تاريخ التعاقد وملاحظات ونظام الدفع ', value: 5}
             string mym = "";
-            int ext = 1;
+             int ext = (int)(DateTime.Now.Ticks >> 10);
             string path = "";
             if (option == 1)
             {
@@ -125,7 +128,8 @@ namespace RealEstate.Api.Controllers
             }
 
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetViewCustomerData(ProjectId)).Data;
 
@@ -134,16 +138,17 @@ namespace RealEstate.Api.Controllers
             localReport.AddDataSource("ViewCustomerData", data);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
-            return File(res.MainStream, "application/pdf");
+           return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> ReportSalesYear(int year)
         {
             string mym = "";
-            int ext = 1;
+             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\SalesYear.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetViewCustomerData(year)).Data;
             var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
@@ -155,7 +160,7 @@ namespace RealEstate.Api.Controllers
             localReport.AddDataSource("CancelledContract", data2);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
-            return File(res.MainStream, "application/pdf");
+           return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> ReportAlert(int id, DateTime from, DateTime to)
@@ -164,7 +169,8 @@ namespace RealEstate.Api.Controllers
             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Alert.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetAlert(id, from, to)).Data;
             var projectName = (await _serviceProjec.GetName((int)id)).Data;
@@ -179,16 +185,17 @@ namespace RealEstate.Api.Controllers
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
             //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
-            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Pdf, "Alert");
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Alert");
         }
         [HttpGet]
         public async Task<IActionResult> ReportOverdue(int id)
         {
             string mym = "";
-            int ext = 1;
+             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Overdue.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetOverdue(id)).Data;
             var projectName = (await _serviceProjec.GetName((int)id)).Data;
@@ -200,16 +207,17 @@ namespace RealEstate.Api.Controllers
             //localReport.AddDataSource("CancelledContract", data2);
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
-            return File(res.MainStream, "application/pdf");
+           return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> ReportBill(int id)
         {
             string mym = "";
-            int ext = 1;
+             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\PrintBill.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetPrintBill(id)).Data;
             parmarters.Add("ProjectName", data[0].ProjectName ?? "");
@@ -226,7 +234,7 @@ namespace RealEstate.Api.Controllers
            
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
-            return File(res.MainStream, "application/pdf");
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> ReportCustomerWaiting(string region, DateTime? from, DateTime? to)
@@ -235,7 +243,8 @@ namespace RealEstate.Api.Controllers
             int ext = (int)(DateTime.Now.Ticks >> 10);
             var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerWaiting.rdlc";
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
             CustomerReport customerReport = new CustomerReport();
             customerReport.Region = region;
@@ -250,7 +259,33 @@ namespace RealEstate.Api.Controllers
           
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
           
-            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Pdf, "Alert");
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Alert");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReportSupervisor(int supervisorId, DateTime? from, DateTime? to)
+        { 
+            string mym = "";
+            int ext = (int)(DateTime.Now.Ticks >> 10);
+            var path = $"{_webHostEnvironment.WebRootPath}\\Reports\\Supervisor.rdlc";
+            Dictionary<string, string> parmarters = new Dictionary<string, string>();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1252");
+            LocalReport localReport = new LocalReport(path);
+            SupervisorReport customerReport = new SupervisorReport();
+            customerReport.SupervisorId = supervisorId;
+            customerReport.FromDate = from;
+            customerReport.ToDate = to;
+            var data = (await _serviceReport.GetSupervisorReport(customerReport)).Data;
+            var supervisor = (await _serviceReport.GetSupervisor((int)customerReport.SupervisorId)).Data;
+
+            parmarters.Add("Supervisor", supervisor ?? "");
+            parmarters.Add("FromDate", from?.ToString("dd-MM-yyyy") ?? "");
+            parmarters.Add("ToDate", to?.ToString("dd-MM-yyyy") ?? "");
+            localReport.AddDataSource("DataSetSupervisor", data);
+
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
+
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, supervisor);
         }
     }
 }
