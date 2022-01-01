@@ -16,16 +16,16 @@ namespace RealEstate.Data.Models
         public int Id { get; set; }
         public int EmployeeId { get; set; }
         public DateTime Date { get; set; }
-        public int? Fixed { get; set; }
-        public int? ProductionIncentive { get; set; }
-        public int? Rewards { get; set; }
-        public int? AdvancePayment { get; set; }
-        public int? Sanctions { get; set; }
-        public int? Delays { get; set; }
-        public int? SocialInsurance { get; set; }
-        public int? Holidays { get; set; }
-        public int? Buffet { get; set; }
-        public int? Commission { get; set; }
+        public double? Fixed { get; set; }
+        public double? ProductionIncentive { get; set; }
+        public double? Rewards { get; set; }
+        public double? AdvancePayment { get; set; }
+        public double? Sanctions { get; set; }
+        public double? Delays { get; set; }
+        public double? SocialInsurance { get; set; }
+        public double? Holidays { get; set; }
+        public double? Buffet { get; set; }
+        public double? Commission { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual ICollection<EmployeePenalty> EmployeePenalties { get; set; }

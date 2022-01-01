@@ -48,7 +48,32 @@ namespace RealEstate.DataAccess
 
               //  var entity = _db.EmployeeSalaries.Include(x => x.Department);
                 var entity = _mapper.Map<List<EmployeeSalaryDto>>(filter);
-               
+               foreach(var item in entity)
+                {
+                    if (item.AdvancePayment==null)
+                        item.AdvancePayment = 0;
+                    if (item.Buffet == null)
+                        item.Buffet = 0;
+                    if (item.Commission == null)
+                        item.Commission = 0;
+                    if (item.Delays == null)
+                        item.Delays = 0;
+                    if (item.Fixed == null)
+                        item.Fixed = 0;
+                    if (item.Holidays == null)
+                        item.Holidays = 0; 
+                    if (item.ProductionIncentive == null)
+                        item.ProductionIncentive = 0;
+                    if (item.Rewards == null)
+                        item.Rewards = 0;
+                    if (item.Sanctions == null)
+                        item.Sanctions = 0;
+                    if (item.SocialInsurance == null)
+                        item.SocialInsurance = 0;
+                    item.Total= item.Commission + item.Fixed + item.ProductionIncentive + item.Rewards
+                        - item.AdvancePayment-item.Buffet-
+                        item.Sanctions-item.SocialInsurance - item.Holidays - item.Delays;
+                }
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
@@ -80,15 +105,38 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                EmployeeSalary emp =await _db.EmployeeSalaries.Where(a => a.Id == id).FirstOrDefaultAsync();
-                var _EmployeeSalary = _mapper.Map<EmployeeSalary, EmployeeSalaryDto>(emp);
+                EmployeeSalary employee =await _db.EmployeeSalaries.Where(a => a.Id == id).FirstOrDefaultAsync();
+                var item = _mapper.Map<EmployeeSalary, EmployeeSalaryDto>(employee);
                         sw.Stop();
+                if (item.AdvancePayment == null)
+                    item.AdvancePayment = 0;
+                if (item.Buffet == null)
+                    item.Buffet = 0;
+                if (item.Commission == null)
+                    item.Commission = 0;
+                if (item.Delays == null)
+                    item.Delays = 0;
+                if (item.Fixed == null)
+                    item.Fixed = 0;
+                if (item.Holidays == null)
+                    item.Holidays = 0;
+                if (item.ProductionIncentive == null)
+                    item.ProductionIncentive = 0;
+                if (item.Rewards == null)
+                    item.Rewards = 0;
+                if (item.Sanctions == null)
+                    item.Sanctions = 0;
+                if (item.SocialInsurance == null)
+                    item.SocialInsurance = 0;
+                item.Total = item.Commission + item.Fixed + item.ProductionIncentive + item.Rewards
+                        - item.AdvancePayment - item.Buffet -
+                        item.Sanctions - item.SocialInsurance - item.Holidays - item.Delays;
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);
                 return new ResponseData
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Data = _EmployeeSalary
+                    Data = item
                 };
             }
             catch (Exception ex)

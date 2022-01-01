@@ -64,13 +64,16 @@ namespace RealEstate.Api.Controllers
         {
             string mym = "";
              int ext = (int)(DateTime.Now.Ticks >> 10);
+            ContractReportDto parmarter = (await _contractService.GetByName(customerName)).Data;
+            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
             var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc");
+            var path2 = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock2.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
-            ContractReportDto parmarter = (await _contractService.GetByName(customerName)).Data;
-            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
+            if (data.Where(x => x.IsExtra == true).Count() <= 0)
+                localReport = new LocalReport(path2);
             //  var date = DateTime.ParseExact((DateTime)parmarter.Date, "yyyyMMdd", CultureInfo.InvariantCulture);
             parmarters.Add("ProjectName", parmarter.ProjectName ?? "");
             parmarters.Add("Name", parmarter.Name ?? "");
@@ -84,9 +87,11 @@ namespace RealEstate.Api.Controllers
             parmarters.Add("Notes", parmarter.Notes ?? "");
 
             parmarters.Add("Date", parmarter?.Date.Value.ToString("dd-MM-yyyy") ?? "");
-
+            if (data.Where(x => x.IsExtra == false).Count()>0)
             localReport.AddDataSource("CustomerCardStock", data.Where(x => x.IsExtra == false));
-            localReport.AddDataSource("CustomerCardStock2", data.Where(x => x.IsExtra == true));
+            if (data.Where(x => x.IsExtra == true).Count() > 0)
+                localReport.AddDataSource("CustomerCardStock2", data.Where(x => x.IsExtra == true));
+           
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters, mym);
 
            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
@@ -152,8 +157,8 @@ namespace RealEstate.Api.Controllers
             LocalReport localReport = new LocalReport(path);
             var data = (await _serviceReport.GetViewCustomerData(year)).Data;
             var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
-            var res1 = year;
-            parmarters.Add("year", Convert.ToString(res1));
+            var res1 = Convert.ToString(year);
+            parmarters.Add("Year", res1);
             //parmarters.Add("ReportParameter1", res1 ?? "");
 
             localReport.AddDataSource("ViewCustomerData", data);
@@ -182,7 +187,7 @@ namespace RealEstate.Api.Controllers
             localReport.AddDataSource("AlertDataSet", data);
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             //localReport.AddDataSource("CancelledContract", data2);
-            var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters,mym);
             //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
             return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Alert");
@@ -255,11 +260,11 @@ namespace RealEstate.Api.Controllers
             parmarters.Add("Region", region ?? "");
             parmarters.Add("FromDate", from?.ToString("dd-MM-yyyy") ?? "");
             parmarters.Add("ToDate", to?.ToString("dd-MM-yyyy") ?? "");
-            localReport.AddDataSource("DataSetCustomer", data);
+            localReport.AddDataSource("DataSetCustomer", data.ToArray());
           
             var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
           
-            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Alert");
+            return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet);
         }
         [HttpGet]
         public async Task<IActionResult> ReportSupervisor(int supervisorId, DateTime? from, DateTime? to)
@@ -283,7 +288,7 @@ namespace RealEstate.Api.Controllers
             parmarters.Add("ToDate", to?.ToString("dd-MM-yyyy") ?? "");
             localReport.AddDataSource("DataSetSupervisor", data);
 
-            var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
+            var res = localReport.Execute(RenderType.Pdf, ext, parmarters,mym);
 
             return File(res.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, supervisor);
         }

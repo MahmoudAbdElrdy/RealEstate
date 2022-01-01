@@ -40,8 +40,7 @@ namespace RealEstate.Api.Controllers
         [Route("CreateUpdate")]
         public ActionResult<ResponseData> CreateUpdatEEmployeeSalary(EmployeeSalaryDto EmployeeSalary) 
         {
-
-              var result = _service.SaveEmployeeSalary(EmployeeSalary);
+            var result = _service.SaveEmployeeSalary(EmployeeSalary);
                 return Ok(result);
            
         }

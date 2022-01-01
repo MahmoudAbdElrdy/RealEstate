@@ -12,16 +12,17 @@ namespace RealEstate.DataAccess
         public int? Id { get; set; }
         public int? EmployeeId { get; set; }
         public DateTime? Date { get; set; }
-        public int? Fixed { get; set; }
-        public int? ProductionIncentive { get; set; }
-        public int? Rewards { get; set; }
-        public int? AdvancePayment { get; set; }
-        public int? Sanctions { get; set; }
-        public int? Delays { get; set; }
-        public int? SocialInsurance { get; set; }
-        public int? Holidays { get; set; }
-        public int? Buffet { get; set; }
-        public int? Commission { get; set; }
+        public double? Fixed { get; set; } = 0;
+        public double? ProductionIncentive { get; set; } = 0;
+        public double? Rewards { get; set; } = 0;
+        public double? AdvancePayment { get; set; } = 0;
+        public double? Sanctions { get; set; } = 0;
+        public double? Delays { get; set; } = 0;
+        public double? SocialInsurance { get; set; } = 0;
+        public double? Holidays { get; set; } = 0;
+        public double? Buffet { get; set; } = 0;
+        public double? Commission { get; set; } = 0;
+        public double? Total { get; set; } = 0;
         public void CreateMappings(Profile configuration)
         {
             configuration.CreateMap<EmployeeSalary, EmployeeSalaryDto>().ReverseMap();
