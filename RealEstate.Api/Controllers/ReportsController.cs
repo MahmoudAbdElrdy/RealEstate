@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Reporting.WebForms;
+using RealEstate.Data.StoredProc;
 using RealEstate.DataAccess;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace RealEstate.Api.Controllers
         private readonly ContractDetailService _contractDetailservice;
         private readonly ContractService _contractService;
         private readonly CustomerService _customerService;
+
         public ReportsController(IWebHostEnvironment webHostEnvironment,
             ReportService serviceReport, ProjectService projectService,
             ContractService contractService,
@@ -33,50 +36,95 @@ namespace RealEstate.Api.Controllers
             _contractService = contractService;
             _customerService = customerService;
         }
+
         [HttpGet]
-        public async Task<IActionResult> ReportExtraContrcat(ExtraContrcatDto dto)
+        public async Task<ResponseData> ReportExtraContrcat(ExtraContrcatDto dto)
         {
+
             var data = (await _serviceReport.GetExtraContrcat((int)dto.ProjectID, dto.ContractExtraName)).Data;
             var projectName = (await _serviceProjec.GetName((int)dto.ProjectID)).Data;
-            var reportViewer = new ReportViewer { ProcessingMode = ProcessingMode.Local };
-            reportViewer.LocalReport.ReportPath = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc");
-            var rds = new ReportDataSource();
-            rds.Name = "ContractExtraDataSet";
-            reportViewer.LocalReport.DataSources.Clear();
-            reportViewer.LocalReport.DataSources.Add(data);
+            return new ResponseData();
 
-            string mym = "";
-            int ext = (int)(DateTime.Now.Ticks >> 10);
-            var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\ExtraContrcat.rdlc");
-            //Dictionary<string, string> parmarters = new Dictionary<string, string>();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            Encoding.GetEncoding("windows-1252");
-          //  LocalReport localReport = new LocalReport(path);
+        }
+        [HttpGet]
+        public async Task<ResponseData> CustomerCard(string customerName)
+        {
+            
+            ContractReportDto parmarter = (await _contractService.GetByName(customerName)).Data;
+            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
+           
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportCustomerData(int option, int? ProjectId)
+        {
+           
 
+            var data = (await _serviceReport.GetViewCustomerData(ProjectId)).Data;
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportSalesYear(int year)
+        {
+           
+
+            var data = (await _serviceReport.GetViewCustomerData(year)).Data;
+            var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
           
-            //parmarters.Add("ProjectName", projectName ?? "");
-            //parmarters.Add("ExtraName", dto.ContractExtraName ?? "");
-            //localReport.AddDataSource("ContractExtraDataSet", data.ToArray());
-            Warning[] warnings;
-            string[] streamids;
-            string mimeType;
-            string encoding;
-            string extension;
-            reportViewer.LocalReport.SetParameters(new ReportParameter("ProjectName", projectName ?? ""));
-            reportViewer.LocalReport.SetParameters(new ReportParameter("ExtraName", dto.ContractExtraName ?? ""));
-            var bytes = reportViewer.LocalReport.Render("application/pdf", null, out mimeType, out encoding, out extension, out streamids, out warnings);
 
-            try
-            {
-             //   var res = localReport.Execute(RenderType.Pdf, ext, parmarters);
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportAlert(int id, DateTime from, DateTime to)
+        {
+           
 
-                return File(bytes, System.Net.Mime.MediaTypeNames.Application.Octet);
-            }
-            catch (Exception ex)
-            {
+            var data = (await _serviceReport.GetAlert(id, from, to)).Data;
+            var projectName = (await _serviceProjec.GetName((int)id)).Data;
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportOverdue(int id)
+        {
+            
+            var data = (await _serviceReport.GetOverdue(id)).Data;
+            var projectName = (await _serviceProjec.GetName((int)id)).Data;
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportBill(int id)
+        {
 
-                return File(ex.InnerException.Message, System.Net.Mime.MediaTypeNames.Application.Pdf);
-            }
+            var data = (await _serviceReport.GetPrintBill(id)).Data;
+
+
+            var paid = (await _serviceReport.Getpaid((int)id)).Data;
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportCustomerWaiting(string region, DateTime? from, DateTime? to)
+        {
+
+            CustomerReport customerReport = new CustomerReport();
+            customerReport.Region = region;
+            customerReport.FormDate = from;
+            customerReport.ToDate = to;
+            var data = (await _serviceReport.GetCustomerReport(customerReport)).Data;
+
+            return new ResponseData();
+        }
+        [HttpGet]
+        public async Task<ResponseData> ReportSupervisor(int supervisorId, DateTime? from, DateTime? to)
+        {
+            
+            SupervisorReport customerReport = new SupervisorReport();
+            customerReport.SupervisorId = supervisorId;
+            customerReport.FromDate = from;
+            customerReport.ToDate = to;
+            var data = (await _serviceReport.GetSupervisorReport(customerReport)).Data;
+            var supervisor = (await _serviceReport.GetSupervisor((int)customerReport.SupervisorId)).Data;
+
+            return new ResponseData();
         }
     }
 }
