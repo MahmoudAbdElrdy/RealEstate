@@ -36,7 +36,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSetCustomer</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\RealEstate.Api\ReportRdlc\DataSetCustomer.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\DataSetCustomer.xsd</rd:SchemaPath>
         <rd:TableName>Customer</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

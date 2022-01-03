@@ -100,7 +100,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ViewCustomerData</rd:DataSetName>
-        <rd:SchemaPath>E:\RealSatate\RealEstate\ReportRdlc\ViewCustomerData.xsd</rd:SchemaPath>
+        <rd:SchemaPath>E:\RealSatate\ReportFormCore\ReportRdlc\ViewCustomerData.xsd</rd:SchemaPath>
         <rd:TableName>ViewCustomerData</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

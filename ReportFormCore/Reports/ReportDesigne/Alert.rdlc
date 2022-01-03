@@ -84,7 +84,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>AlertDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\RealEstate.Api\ReportRdlc\AlertDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\AlertDataSet.xsd</rd:SchemaPath>
         <rd:TableName>Alert</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

@@ -44,7 +44,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSetSupervisor</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\RealEstate.Api\ReportRdlc\DataSetSupervisor.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\DataSetSupervisor.xsd</rd:SchemaPath>
         <rd:TableName>SupervisorDetails</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

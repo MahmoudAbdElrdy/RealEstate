@@ -80,7 +80,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>PrintBillDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\RealEstate.Api\ReportRdlc\PrintBillDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\PrintBillDataSet.xsd</rd:SchemaPath>
         <rd:TableName>PrintBill</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

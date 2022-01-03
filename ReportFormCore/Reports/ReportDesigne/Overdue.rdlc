@@ -88,7 +88,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>AlertDataSet2</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\RealEstate.Api\ReportRdlc\AlertDataSet2.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\AlertDataSet2.xsd</rd:SchemaPath>
         <rd:TableName>Overdue</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
