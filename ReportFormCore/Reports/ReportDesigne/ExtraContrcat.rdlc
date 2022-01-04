@@ -11,7 +11,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="ExtraContract">
+    <DataSet Name="ExtraContrcat">
       <Query>
         <DataSourceName>ExtraContract</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -85,7 +85,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportFormCore.Reports.ReportForm</rd:DataSetName>
         <rd:TableName>ReportPage</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>ContractExtraDataSet</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethod>ExtraContrcat</rd:ObjectDataSourceSelectMethod>
         <rd:ObjectDataSourceType>ReportFormCore.Reports.ReportForm.ReportPage, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
@@ -403,7 +403,7 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>ExtraContract</DataSetName>
+            <DataSetName>ExtraContrcat</DataSetName>
             <Top>0.06944in</Top>
             <Left>0.30083in</Left>
             <Height>0.5in</Height>

@@ -184,15 +184,35 @@ namespace RealEstate.DataAccess
             try
             {
                
-                var result = SqlProcedures.GetAlert(_db, id, from, to);
+                var result = SqlProcedures.GetAlert(_db, id, from, to).Where(x=>x.ProjectUnitID!=null).ToList();
                 foreach (var alert in result)
                 {
-                    alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
-                    alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
-                    alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    if (alert.ProjectUnitID != null)
+                    {
+                        alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
+                        alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
+                        alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    }
+                  
                     alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
-                    alert.Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
-                    alert.Remainder = alert.Amount - alert.Paid;
+                    if (alert.ContractDetailId != null)
+                    {
+                        if (alert.Paid == null)
+                            alert.Paid = 0;
+                        var itemlist = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId);
+                        if (itemlist.Count() > 0)
+                        {
+                            alert.Paid = itemlist.Sum(c => c.Paid);
+
+
+                        }
+                        if (alert.Remainder == null)
+                            alert.Remainder = 0;
+                        if (alert.Amount == null)
+                            alert.Amount = 0;
+                        alert.Remainder = (double)(alert.Amount - alert.Paid);
+                    }
+                  
 
                 }
                 return new ResponseData
@@ -229,14 +249,44 @@ namespace RealEstate.DataAccess
               
               
                 result = result.Where(x => !contractDetailsId.Contains((int)x.ContractID)).ToList();
+                //foreach (var alert in result)
+                //{
+                //    alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
+                //    alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
+                //    alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                //    alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
+                //    alert.Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
+                //    alert.Remainder = (double)(alert.Amount-alert.Paid);
+
+                //}
                 foreach (var alert in result)
                 {
-                    alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
-                    alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
-                    alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    if (alert.ProjectUnitID != null)
+                    {
+                        alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
+                        alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
+                        alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    }
+
                     alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
-                    alert.Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId).Sum(c => c.Paid);
-                    alert.Remainder = alert.Amount-alert.Paid;
+                    if (alert.ContractDetailId != null)
+                    {
+                        if (alert.Paid == null)
+                            alert.Paid = 0;
+                        var itemlist = _db.ContractDetailBills.Where(c => c.ContractDetailId == alert.ContractDetailId);
+                        if (itemlist.Count() > 0)
+                        {
+                            alert.Paid = itemlist.Sum(c => c.Paid);
+
+
+                        }
+                        if (alert.Remainder == null)
+                            alert.Remainder = 0;
+                        if (alert.Amount == null)
+                            alert.Amount = 0;
+                        alert.Remainder = (double)(alert.Amount - alert.Paid);
+                    }
+
 
                 }
                 return new ResponseData
@@ -362,7 +412,10 @@ namespace RealEstate.DataAccess
             {
                
                 var supervisorDetail = _db.SupervisorDetails.Where(c=>c.SupervisorId==search.SupervisorId);
-               
+                var dailyReports = _db.ViewDailyReports.Where(c => c.SupervisorId == search.SupervisorId).ToList();
+
+            
+
                 if (search.FromDate != null)
                 {
                     supervisorDetail = supervisorDetail.Where(c => c.Date >= search.FromDate);
@@ -380,6 +433,7 @@ namespace RealEstate.DataAccess
                     IsSuccess = true,
                     Code = EResponse.OK,
                     Data = entity,
+                    Data2= dailyReports
 
                 };
             }

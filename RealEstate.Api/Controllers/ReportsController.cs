@@ -44,9 +44,8 @@ namespace RealEstate.Api.Controllers
 
             var data = (await _serviceReport.GetExtraContrcat((int)dto.ProjectID, dto.ContractExtraName)).Data;
             var projectName = (await _serviceProjec.GetName((int)dto.ProjectID)).Data;
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.projectName = projectName;
+      
+           
             return new ResponseData
             {
                 IsSuccess = true,
@@ -110,38 +109,46 @@ namespace RealEstate.Api.Controllers
             };
         }
         [HttpPost("ReportAlert")]
-        public async Task<ResponseData> ReportAlert(int id, DateTime from, DateTime to)
+        public async Task<ResponseData> ReportAlert(AlertReport model)
         {
+            DateTime fromDate = ((DateTime)model.from);
+            DateTime toDate = ((DateTime)model.to);
+            int id = (int)model.id;
+            var data = (await _serviceReport.GetAlert(id,fromDate , toDate)).Data;
+            string projectName = "لايوجد مختار";
+            if (id != 0)
+            {
+                 projectName = (await _serviceProjec.GetName(id)).Data;
+            }
+          
            
-
-            var data = (await _serviceReport.GetAlert(id, from, to)).Data;
-            var projectName = (await _serviceProjec.GetName((int)id)).Data;
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.projectName = projectName;
-
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data,
+                Message = projectName
             };
         }
         [HttpPost("ReportOverdue")]
         public async Task<ResponseData> ReportOverdue(int id)
         {
-            
+
             var data = (await _serviceReport.GetOverdue(id)).Data;
-            var projectName = (await _serviceProjec.GetName((int)id)).Data;
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.projectName = projectName;
+           
+            string projectName = "لايوجد مختار";
+            if (id != 0)
+            {
+                projectName = (await _serviceProjec.GetName(id)).Data;
+            }
+
 
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data,
+                Message = projectName
             };
         }
         [HttpPost("ReportBill")]
@@ -164,47 +171,49 @@ namespace RealEstate.Api.Controllers
             };
         }
         [HttpPost("ReportCustomerWaiting")]
-        public async Task<ResponseData> ReportCustomerWaiting(string region, DateTime? from, DateTime? to)
+        public async Task<ResponseData> ReportCustomerWaiting(CustomerReport customerReport)
         {
 
-            CustomerReport customerReport = new CustomerReport();
-            customerReport.Region = region;
-            customerReport.FormDate = from;
-            customerReport.ToDate = to;
+           
             var data = (await _serviceReport.GetCustomerReport(customerReport)).Data;
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            
+         
 
+            
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data
             };
          
         }
         [HttpPost("ReportSupervisor")]
-        public async Task<ResponseData> ReportSupervisor(int supervisorId, DateTime? from, DateTime? to)
+        public async Task<ResponseData> ReportSupervisor(SupervisorReport model) 
         {
-            
-            SupervisorReport customerReport = new SupervisorReport();
-            customerReport.SupervisorId = supervisorId;
-            customerReport.FromDate = from;
-            customerReport.ToDate = to;
-            var data = (await _serviceReport.GetSupervisorReport(customerReport)).Data;
-            var supervisor = (await _serviceReport.GetSupervisor((int)customerReport.SupervisorId)).Data;
 
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.supervisor = supervisor;
+            var res = await _serviceReport.GetSupervisorReport(model);
+            var data = (res).Data;
+            var data2 = (res).Data2;
+            var supervisor = (await _serviceReport.GetSupervisor((int)model.SupervisorId)).Data;
+
+        
 
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data,
+                Data2 = data2,
+                Message= supervisor
             };
         }
+    }
+    public class AlertReport
+    {
+        public DateTime? from { get; set; }
+        public DateTime? to { get; set; }
+        public int? id { get; set; }
+        public string region { get; set; }
+
     }
 }

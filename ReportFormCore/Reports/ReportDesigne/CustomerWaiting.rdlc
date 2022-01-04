@@ -2,23 +2,23 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="DataSetCustomer">
+    <DataSource Name="ReportFormCoreReportsReportForm">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>eba00b47-e36d-40a6-9f19-0d736310cc4f</rd:DataSourceID>
+      <rd:DataSourceID>8bcc43b8-ae28-4f53-8190-3485d5873ee4</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetCustomer">
+    <DataSet Name="CustomerWaiting">
       <Query>
-        <DataSourceName>DataSetCustomer</DataSourceName>
+        <DataSourceName>ReportFormCoreReportsReportForm</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="ID">
-          <DataField>ID</DataField>
+        <Field Name="Id">
+          <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Name">
@@ -33,14 +33,28 @@
           <DataField>Phone</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Notes">
+          <DataField>Notes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectVisits">
+          <DataField>ProjectVisits</DataField>
+          <rd:TypeName>System.Collections.Generic.ICollection`1[[ReportFormCore.Data.Models.ProjectVisit, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]</rd:TypeName>
+        </Field>
+        <Field Name="Questions">
+          <DataField>Questions</DataField>
+          <rd:TypeName>System.Collections.Generic.ICollection`1[[ReportFormCore.Data.Models.Question, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]</rd:TypeName>
+        </Field>
+        <Field Name="Reservations">
+          <DataField>Reservations</DataField>
+          <rd:TypeName>System.Collections.Generic.ICollection`1[[ReportFormCore.Data.Models.Reservation, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DataSetCustomer</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\DataSetCustomer.xsd</rd:SchemaPath>
-        <rd:TableName>Customer</rd:TableName>
-        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
-        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>CustomerTableAdapter</rd:TableAdapterName>
+        <rd:DataSetName>ReportFormCore.Reports.ReportForm</rd:DataSetName>
+        <rd:TableName>ReportPage</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>CustomerWaiting</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceType>ReportFormCore.Reports.ReportForm.ReportPage, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -52,13 +66,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>5.03718cm</Width>
+                  <Width>6.55412cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.71968cm</Width>
+                  <Width>6.23662cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.37068cm</Width>
+                  <Width>7.88762cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -283,11 +297,11 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>DataSetCustomer</DataSetName>
+            <DataSetName>CustomerWaiting</DataSetName>
             <Top>0.3302cm</Top>
-            <Left>0cm</Left>
+            <Left>0.254cm</Left>
             <Height>1.2cm</Height>
-            <Width>16.12754cm</Width>
+            <Width>20.67837cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -298,7 +312,7 @@
         <Height>1.86267cm</Height>
         <Style />
       </Body>
-      <Width>16.51cm</Width>
+      <Width>22.75417cm</Width>
       <Page>
         <PageHeader>
           <Height>2.8575cm</Height>

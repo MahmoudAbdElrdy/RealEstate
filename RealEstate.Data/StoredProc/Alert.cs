@@ -18,9 +18,9 @@ namespace RealEstate.Data.StoredProc
         public int? ContractDetailId { get; set; }  
         public int? ProjectUnitID { get; set; }
         public int? ProjectID { get; set; } 
-        public double? Paid { get; set; }
+        public double Paid { get; set; }
         public double? Amount { get; set; }
-        public double? Remainder { get; set; }
+        public double Remainder { get; set; }
         public int FloorNumber { get; set; }
         public int Number { get; set; }
         public string Details { get; set; } 

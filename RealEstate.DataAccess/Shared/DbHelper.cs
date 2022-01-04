@@ -87,7 +87,11 @@ namespace RealEstate.DataAccess
         }
         public static List<Alert> GetOverdue(RealEstateContext context, int ProjectID, DateTime FromDate)
         {
-           
+            if (ProjectID == 0)
+            {
+                return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Overdue @ProjectID = null,@FromDate='{FromDate}'");
+
+            }
             return DbHelper.ExecuteQuery<Alert>(context, $"EXEC dbo.Overdue @ProjectID = '{ProjectID}',@FromDate='{FromDate}'");
         }
         public static List<PrintBill> GetPrintBill(RealEstateContext context, int ContractID) 

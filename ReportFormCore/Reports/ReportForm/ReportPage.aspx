@@ -34,11 +34,11 @@
 
     </style>
 </head>
-<body dir="rtl" style="width: 94%">
+<body dir="rtl" style="width: 96%; height: 115px;">
 <form id="form1" runat="server" style="float:left!important">
     <%-- <asp:DropDownList runat="server" ID="lstPrinters"></asp:DropDownList>--%>
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <rsweb:ReportViewer ID="reportViewer1" Height="100%" Width="100%" SizeToReportContent="true" ShowPrintButton="true" AsyncRendering="false"  runat="server"></rsweb:ReportViewer>
+    <rsweb:ReportViewer ID="reportViewer1" Height="77%" Width="100%" SizeToReportContent="true" ShowPrintButton="true" AsyncRendering="false"  runat="server"></rsweb:ReportViewer>
     <%-- style="float:left!important"--%>
 </form>
 </body>

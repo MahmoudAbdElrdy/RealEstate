@@ -63,9 +63,17 @@ namespace RealEstate.DataAccess
                 IQueryable<Customer> filter;
 
                 var specification = Specifications(search);
+                 int count = 0;
+                if (search.CustomerType == null|| search.CustomerType == 0)
+                {
+                    filter = _db.Customers.Pagtion(specification, out  count);
+                }
+                   
+               else
+                {
+                    filter = _db.Questions.Include(c => c.Customer).Where(c => c.CustomerType == search.CustomerType).Select(c => c.Customer).Pagtion(specification, out count);
 
-                filter = _db.Customers.Pagtion(specification, out int count);
-
+                }
                 //  var entity = _db.Customers.Include(x => x.Department);
                 var entity = _mapper.Map<List<CustomerDto>>(filter);
                 foreach (var item in entity)
