@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -56,20 +57,19 @@ namespace RealEstate.Api.Controllers
 
         }
         [HttpPost("CustomerCard")]
-        public async Task<ResponseData> CustomerCard(string customerName)
+        public async Task<ResponseData> CustomerCard(ContrcatCard customerName)
         {
             
-            ContractReportDto parmarter = (await _contractService.GetByName(customerName)).Data;
+            ContractReportDto parmarter = (await _contractService.GetByName(customerName.customerName)).Data;
             List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
 
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.parmarter = parmarter;
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data.Where(x => x.IsExtra == false),
+                Data2 = data.Where(x => x.IsExtra == true),
+                Data3 = parmarter
             };
         }
         [HttpPost("ReportCustomerData")]
@@ -89,23 +89,21 @@ namespace RealEstate.Api.Controllers
             };
         }
         [HttpPost("ReportSalesYear")]
-        public async Task<ResponseData> ReportSalesYear(int year)
+        public async Task<ResponseData> ReportSalesYear(Year year)
         {
-           
-
-            var data = (await _serviceReport.GetViewCustomerData(year)).Data;
-            var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
 
 
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.data2 = data2;
+            var data = (await _serviceReport.GetViewCustomerDatayear((int)year.year)).Data;
+            var data2 = (await _serviceReport.GetViewCancelledContract((int)year.year)).Data;
+
+
 
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data,
+                Data2=data2
             };
         }
         [HttpPost("ReportAlert")]
@@ -215,5 +213,13 @@ namespace RealEstate.Api.Controllers
         public int? id { get; set; }
         public string region { get; set; }
 
+    }
+    public class ContrcatCard
+    {
+        public string customerName { get; set; }
+    }
+    public class Year
+    {
+        public int? year { get; set; }
     }
 }

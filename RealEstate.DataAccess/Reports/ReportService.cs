@@ -131,7 +131,7 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-        public async Task<ResponseData> GetViewCustomerData(int year)
+        public async Task<ResponseData> GetViewCustomerDatayear(int year)
         {
             try
             {

@@ -8,6 +8,7 @@
         public string[] Errors { get; set; }
         public dynamic Data { get; set; }
         public dynamic Data2 { get; set; } 
+        public dynamic Data3 { get; set; }  
         public int? TotalRecordsCount { get; set; }
         public int? CurrentPage { get; set; }
         public int? PageSize { get; set; }

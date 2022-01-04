@@ -55,6 +55,19 @@ namespace ReportFormCore.Reports.ReportForm
             reportViewer1.LocalReport.DataSources.Add(source2);
             reportViewer1.DataBind();
         }
+        private void BindReport3(string reportName, dynamic DataSet, dynamic DataSet2)
+        {
+
+            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/" + reportName + ".rdlc");// reportPath + ReportName + ".rdlc";
+            reportViewer1.LocalReport.DataSources.Clear();
+
+            ReportDataSource source = new ReportDataSource(reportName, DataSet);
+            ReportDataSource source2 = new ReportDataSource("CustomerCardStock2", DataSet2);
+
+            reportViewer1.LocalReport.DataSources.Add(source);
+            reportViewer1.LocalReport.DataSources.Add(source2);
+            reportViewer1.DataBind();
+        }
         public List<ExtraContrcat> ExtraContrcat()  
         {
             List<ExtraContrcat> dataSets = new List<ExtraContrcat>();
@@ -392,8 +405,175 @@ namespace ReportFormCore.Reports.ReportForm
             }
 
         }
+
+        public List<CustomerCard> CustomerCardStock() 
+        {
+            List<CustomerCard> dataSets = new List<CustomerCard>();
+            string customerName = null;
+            if (Request.QueryString["customerName"] != null)
+            {
+                customerName = Request.QueryString["customerName"].ToString();
+            }
+           
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri(UrlAPI);
+
+                    dynamic Model = new ExpandoObject();
+                    if (customerName == "null")
+                        Model.customerName = null;
+                    else
+                        Model.customerName = customerName;
+                   
+
+
+                    var jsonString = JsonConvert.SerializeObject(Model);
+                    var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+                    client.DefaultRequestHeaders.Clear();
+
+                    var response = client.PostAsync("api/Reports/CustomerCard/", content);
+                    response.Wait();
+
+                    dynamic ResultResponse = response.Result.Content.ReadAsStringAsync();
+
+                    {
+
+
+                        var o2 = JsonConvert.DeserializeObject<JObject>(ResultResponse.Result);
+                        var results = o2.Value<JArray>("data").ToObject<List<CustomerCard>>();
+                        var results2 = o2.Value<JArray>("data2").ToObject<List<CustomerCard>>();
+
+                        var parmarter = o2.Value<JObject>("data3").ToObject<ContractReportDto>();
+                       // var list = results.Where(x => x.IsExtra);
+                        BindReport3("CustomerCardStock", results,results2);
+                        //this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", customerName));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("ProjectName", parmarter.ProjectName ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Name", parmarter.Name ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Number", parmarter?.Number.ToString() ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Area", parmarter?.Area.ToString() ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("FloorNumber", parmarter?.FloorNumber.ToString() ?? "")); 
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("NationalNumber", parmarter.NationalNumber ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Address", parmarter.Address ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Phone", parmarter?.Phone ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("ProjectAddress", parmarter.ProjectAddress ?? "")); ;
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Notes", parmarter.Notes ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Date", parmarter?.Date.ToString("dd-MM-yyyy") ?? ""));
+                    }
+
+                }
+                return dataSets;
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+                return null;
+            }
+
+        }
+        public List<CustomerCard> CustomerCardStock2() 
+        {
+            return new List<CustomerCard>();
+        }
+        public List<ViewCustomerDatum> SalesYear() 
+        {
+            List<ViewCustomerDatum> dataSets = new List<ViewCustomerDatum>();
+            string year = null;
+            if (Request.QueryString["year"] != null)
+            {
+                year = Request.QueryString["year"].ToString();
+            }
+
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri(UrlAPI);
+
+                    dynamic Model = new ExpandoObject();
+                    if (year == "null")
+                        Model.year = null;
+                    else
+                        Model.year = year;
+
+
+
+                    var jsonString = JsonConvert.SerializeObject(Model);
+                    var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+                    client.DefaultRequestHeaders.Clear();
+
+                    var response = client.PostAsync("api/Reports/ReportSalesYear/", content);
+                    response.Wait();
+
+                    dynamic ResultResponse = response.Result.Content.ReadAsStringAsync();
+
+                    {
+
+
+                        var o2 = JsonConvert.DeserializeObject<JObject>(ResultResponse.Result);
+                        var results = o2.Value<JArray>("data").ToObject<List<ViewCustomerDatum>>();
+                        var results2 = o2.Value<JArray>("data2").ToObject<List<ViewCancelledContract>>();
+
+                       
+                        reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/SalesYear.rdlc");// reportPath + ReportName + ".rdlc";
+                        reportViewer1.LocalReport.DataSources.Clear();
+
+                        ReportDataSource source = new ReportDataSource("ViewCustomerData", results);
+                        ReportDataSource source2 = new ReportDataSource("CancelledContract", results2);
+
+                        reportViewer1.LocalReport.DataSources.Add(source);
+                        reportViewer1.LocalReport.DataSources.Add(source2);
+                        reportViewer1.DataBind();
+                        //this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", customerName));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Year", year ?? ""));
+                }
+
+                }
+                return dataSets;
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+                return null;
+            }
+
+        }
     }
 }
+public class ContractReportDto
+{
+    public int? Id { get; set; }
+    public string Name { get; set; }
+    public string NationalNumber { get; set; }
+    public string Phone { get; set; }
+    public DateTime? Date { get; set; }
+    public string Program { get; set; }
+    public string Address { get; set; }
+    public bool? IsStock { get; set; }
+    public double? TotalCost { get; set; }
+    public double? MeterCost { get; set; }
+    public int? ProjectUnitId { get; set; }
+    public string ProjectName { get; set; }
+    public double? StockCount { get; set; }
+    public double? MetersCount { get; set; }
+    public string Notes { get; set; }
+    public int ProjectId { get; set; }
+
+    public int? Number { get; set; }
+    public int? FloorNumber { get; set; }
+    public double? Area { get; set; }
+    public string ProjectAddress { get; set; }
+    public int? Floors { get; set; }
+  
+}
+
 public enum EResponse
 {
     OK,

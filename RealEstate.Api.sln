@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Data", "RealEsta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.DataAccess", "RealEstate.DataAccess\RealEstate.DataAccess.csproj", "{0C1444B2-DC2A-420C-8C6B-69FADC287D1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportRdlc", "ReportRdlc\ReportRdlc.csproj", "{83F497CE-CBDA-477A-A7FA-564128148EEF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportFormCore", "ReportFormCore\ReportFormCore.csproj", "{DBFB3D56-DEF0-44AC-8D32-8C79A9E8CD57}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{0C1444B2-DC2A-420C-8C6B-69FADC287D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C1444B2-DC2A-420C-8C6B-69FADC287D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C1444B2-DC2A-420C-8C6B-69FADC287D1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83F497CE-CBDA-477A-A7FA-564128148EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83F497CE-CBDA-477A-A7FA-564128148EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83F497CE-CBDA-477A-A7FA-564128148EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83F497CE-CBDA-477A-A7FA-564128148EEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBFB3D56-DEF0-44AC-8D32-8C79A9E8CD57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBFB3D56-DEF0-44AC-8D32-8C79A9E8CD57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBFB3D56-DEF0-44AC-8D32-8C79A9E8CD57}.Release|Any CPU.ActiveCfg = Release|Any CPU

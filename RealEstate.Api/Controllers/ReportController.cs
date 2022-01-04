@@ -85,7 +85,6 @@ namespace RealEstate.Api.Controllers
             parmarters.Add("Phone", parmarter?.Phone ?? "");
             parmarters.Add("ProjectAddress", parmarter.ProjectAddress ?? "");
             parmarters.Add("Notes", parmarter.Notes ?? "");
-
             parmarters.Add("Date", parmarter?.Date.Value.ToString("dd-MM-yyyy") ?? "");
             if (data.Where(x => x.IsExtra == false).Count()>0)
             localReport.AddDataSource("CustomerCardStock", data.Where(x => x.IsExtra == false));
@@ -155,7 +154,7 @@ namespace RealEstate.Api.Controllers
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Encoding.GetEncoding("windows-1252");
             LocalReport localReport = new LocalReport(path);
-            var data = (await _serviceReport.GetViewCustomerData(year)).Data;
+            var data = (await _serviceReport.GetViewCustomerDatayear(year)).Data;
             var data2 = (await _serviceReport.GetViewCancelledContract(year)).Data;
             var res1 = Convert.ToString(year);
             parmarters.Add("Year", res1);
