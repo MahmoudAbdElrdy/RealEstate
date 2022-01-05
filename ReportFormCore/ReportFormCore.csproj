@@ -340,7 +340,6 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Reports\ReportDesigne\Alert.rdlc" />
     <EmbeddedResource Include="Reports\ReportDesigne\CustomerCardStock.rdlc" />
-    <EmbeddedResource Include="Reports\ReportDesigne\CustomerCardStock2.rdlc" />
     <EmbeddedResource Include="Reports\ReportDesigne\CustomerData.rdlc" />
     <EmbeddedResource Include="Reports\ReportDesigne\CustomerData2.rdlc" />
     <EmbeddedResource Include="Reports\ReportDesigne\CustomerData3.rdlc" />

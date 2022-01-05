@@ -220,7 +220,7 @@ namespace ReportFormCore.Reports.ReportForm
 
                     dynamic Model = new ExpandoObject();
                     if (id == "null")
-                        Model.id = 0;
+                        Model.id = null;
                     else
                         Model.id = id;
 
@@ -287,9 +287,16 @@ namespace ReportFormCore.Reports.ReportForm
                         Model.SupervisorId = 0;
                     else
                         Model.SupervisorId = SupervisorId;
+                    if (FromDate == "null")
+                        Model.FromDate = null;
+                    else
+                        Model.FromDate = FromDate;
 
-                    Model.FromDate = FromDate;
-                    Model.ToDate = ToDate;
+                    if (ToDate == "null")
+                        Model.ToDate = null;
+                    else
+                        Model.ToDate = FromDate;
+                    
                     var jsonString = JsonConvert.SerializeObject(Model);
                     var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
@@ -545,6 +552,160 @@ namespace ReportFormCore.Reports.ReportForm
             }
 
         }
+        public List<ViewCustomerDatum> CustomerData()
+        {
+            List<ViewCustomerDatum> dataSets = new List<ViewCustomerDatum>();
+            string ProjectId = null;
+            if (Request.QueryString["ProjectId"] != null)
+            {
+                ProjectId = Request.QueryString["ProjectId"].ToString();
+            }
+
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri(UrlAPI);
+
+                    dynamic Model = new ExpandoObject();
+                    if (ProjectId == "ProjectId")
+                        Model.ProjectId = 0;
+                    else
+                        Model.ProjectId = ProjectId;
+
+
+
+                    var jsonString = JsonConvert.SerializeObject(Model);
+                    var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+                    client.DefaultRequestHeaders.Clear();
+
+                    var response = client.PostAsync("api/Reports/ReportCustomerData/", content);
+                    response.Wait();
+
+                    dynamic ResultResponse = response.Result.Content.ReadAsStringAsync();
+
+                    {
+
+
+                        var o2 = JsonConvert.DeserializeObject<JObject>(ResultResponse.Result);
+                        var results = o2.Value<JArray>("data").ToObject<List<ViewCustomerDatum>>();
+
+                        int option = 0;
+                        if (Request.QueryString["option"] != null)
+                        {
+                            option =Convert.ToInt32(Request.QueryString["option"].ToString());
+                        }
+                        if (option == 1)
+                        {
+                            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/CustomerData.rdlc");
+                        }
+                        else if (option == 2)
+                        {
+                            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/CustomerData2.rdlc");
+                        }
+                        else if (option == 3)
+                        {
+                            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/CustomerData3.rdlc");
+                        }
+                        else if (option == 4)
+                        {
+                            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/CustomerData4.rdlc");
+                        }
+                        else if (option == 5)
+                        {
+                            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/CustomerData5.rdlc");
+                        }
+                        else
+                        {
+                            reportViewer1.LocalReport.ReportPath = Server.MapPath("../ReportDesigne/CustomerData.rdlc");
+                        }
+      
+                        reportViewer1.LocalReport.DataSources.Clear();
+
+                        ReportDataSource source = new ReportDataSource("ViewCustomerData", results);
+                      
+                        reportViewer1.LocalReport.DataSources.Add(source);
+                        reportViewer1.DataBind();
+                        //this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", customerName));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Notes", ""));
+                    }
+
+                }
+                return dataSets;
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+                return null;
+            }
+
+        }
+
+        public List<PrintBill> PrintBill()  
+        {
+            List<PrintBill> dataSets = new List<PrintBill>();
+            string id = null;
+            if (Request.QueryString["id"] != null)
+            {
+                id = Request.QueryString["id"].ToString();
+            }
+
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri(UrlAPI);
+
+                    dynamic Model = new ExpandoObject();
+                    if (id == "null")
+                        Model.id = 0;
+                    else
+                        Model.id = id;
+
+                    var jsonString = JsonConvert.SerializeObject(Model);
+                    var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+                    client.DefaultRequestHeaders.Clear();
+
+                    var response = client.PostAsync("api/Reports/ReportBill/", content);
+                    response.Wait();
+
+                    dynamic ResultResponse = response.Result.Content.ReadAsStringAsync();
+
+                    {
+
+
+                        var o2 = JsonConvert.DeserializeObject<JObject>(ResultResponse.Result);
+                        var data = o2.Value<JArray>("data") 
+                            .ToObject<List<PrintBill>>();
+                        string Paid = ((Newtonsoft.Json.Linq.JValue)o2["message"])?.Value.ToString();
+                      
+
+                        BindReport("PrintBill", data);
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("ProjectName", data[0].ProjectName ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerPhone", data[0].CustomerPhone ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("NationalNumber", data[0].NationalNumber ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Stock", data[0].Stock ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", data[0].CustomerName ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Paid", Paid));
+                    }
+
+                }
+                return dataSets;
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+                return null;
+            }
+
+        }
+
     }
 }
 public class ContractReportDto

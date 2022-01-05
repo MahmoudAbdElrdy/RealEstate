@@ -21,8 +21,8 @@
           <DataField>Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ID">
-          <DataField>ID</DataField>
+        <Field Name="Id">
+          <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="NationalNumber">
@@ -59,23 +59,23 @@
         </Field>
         <Field Name="MeterCost">
           <DataField>MeterCost</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="ProjectUnitID">
-          <DataField>ProjectUnitID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="ProjectUnitId">
+          <DataField>ProjectUnitId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
+        <Field Name="ProjectId">
+          <DataField>ProjectId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="StockCount">
           <DataField>StockCount</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="MetersCount">
           <DataField>MetersCount</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="Notes">
           <DataField>Notes</DataField>
@@ -91,20 +91,18 @@
         </Field>
         <Field Name="Floors">
           <DataField>Floors</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="ApartmentNumber">
           <DataField>ApartmentNumber</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>ViewCustomerData</rd:DataSetName>
-        <rd:SchemaPath>E:\RealSatate\ReportFormCore\ReportRdlc\ViewCustomerData.xsd</rd:SchemaPath>
-        <rd:TableName>ViewCustomerData</rd:TableName>
-        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
-        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>ViewCustomerDataTableAdapter</rd:TableAdapterName>
+        <rd:DataSetName>ReportFormCore.Reports.ReportForm</rd:DataSetName>
+        <rd:TableName>ReportPage</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>CustomerData</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceType>ReportFormCore.Reports.ReportForm.ReportPage, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

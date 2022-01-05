@@ -73,19 +73,17 @@ namespace RealEstate.Api.Controllers
             };
         }
         [HttpPost("ReportCustomerData")]
-        public async Task<ResponseData> ReportCustomerData(int? ProjectId)
+        public async Task<ResponseData> ReportCustomerData(ReportCustomerData report)
         {
            
 
-            var data = (await _serviceReport.GetViewCustomerData(ProjectId)).Data;
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
+            var data = (await _serviceReport.GetViewCustomerData(report.ProjectId)).Data;
           
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data
             };
         }
         [HttpPost("ReportSalesYear")]
@@ -129,15 +127,15 @@ namespace RealEstate.Api.Controllers
             };
         }
         [HttpPost("ReportOverdue")]
-        public async Task<ResponseData> ReportOverdue(int id)
+        public async Task<ResponseData> ReportOverdue(ReportPrintBill report)
         {
 
-            var data = (await _serviceReport.GetOverdue(id)).Data;
+            var data = (await _serviceReport.GetOverdue((int)report.id)).Data;
            
             string projectName = "لايوجد مختار";
-            if (id != 0)
+            if ((int)report.id != 0)
             {
-                projectName = (await _serviceProjec.GetName(id)).Data;
+                projectName = (await _serviceProjec.GetName((int)report.id)).Data;
             }
 
 
@@ -150,22 +148,20 @@ namespace RealEstate.Api.Controllers
             };
         }
         [HttpPost("ReportBill")]
-        public async Task<ResponseData> ReportBill(int id)
+        public async Task<ResponseData> ReportBill(ReportPrintBill report)
         {
 
-            var data = (await _serviceReport.GetPrintBill(id)).Data;
+            var data = (await _serviceReport.GetPrintBill((int)report.id)).Data;
 
 
-            var paid = (await _serviceReport.Getpaid((int)id)).Data;
-            dynamic responseData = new ExpandoObject();
-            responseData.data = data;
-            responseData.paid = paid;
-
+            var paid = (await _serviceReport.Getpaid((int)report.id)).Data;
+            var paidReport =Convert.ToString(paid);
             return new ResponseData
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = responseData
+                Data = data,
+                Message = paidReport
             };
         }
         [HttpPost("ReportCustomerWaiting")]
@@ -193,7 +189,10 @@ namespace RealEstate.Api.Controllers
             var data = (res).Data;
             var data2 = (res).Data2;
             var supervisor = (await _serviceReport.GetSupervisor((int)model.SupervisorId)).Data;
-
+            if (supervisor == null)
+            {
+                supervisor = "لم يتم اختار";
+            }
         
 
             return new ResponseData
@@ -221,5 +220,13 @@ namespace RealEstate.Api.Controllers
     public class Year
     {
         public int? year { get; set; }
+    }
+    public class ReportCustomerData
+    {
+      public  int? ProjectId { get; set; }
+    }
+    public class ReportPrintBill
+    {
+        public int? id { get; set; } 
     }
 }

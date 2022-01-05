@@ -11,34 +11,22 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="PrintBillDataSet">
+    <DataSet Name="PrintBill">
       <Query>
         <DataSourceName>PrintBillDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="ContractDetailId">
-          <DataField>ContractDetailId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Name">
           <DataField>Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Date">
-          <DataField>Date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="ContractID">
-          <DataField>ContractID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="CustomerName">
           <DataField>CustomerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectName">
+          <DataField>ProjectName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CustomerPhone">
@@ -57,34 +45,44 @@
           <DataField>Stock</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ID">
-          <DataField>ID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="ProjectName">
-          <DataField>ProjectName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="ContractID">
+          <DataField>ContractID</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ContractDetailBillId">
+          <DataField>ContractDetailBillId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ContractDetailId">
+          <DataField>ContractDetailId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="Paid">
           <DataField>Paid</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ContractBillDate">
-          <DataField>ContractBillDate</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="Amount">
+          <DataField>Amount</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="Remainder">
           <DataField>Remainder</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>PrintBillDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\الفولي\ReportFormCore.Api\ReportRdlc\PrintBillDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>PrintBill</rd:TableName>
-        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
-        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>PrintBillTableAdapter</rd:TableAdapterName>
+        <rd:DataSetName>ReportFormCore.Reports.ReportForm</rd:DataSetName>
+        <rd:TableName>ReportPage</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>PrintBill</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceType>ReportFormCore.Reports.ReportForm.ReportPage, ReportFormCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -343,7 +341,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -400,7 +397,7 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>PrintBillDataSet</DataSetName>
+            <DataSetName>PrintBill</DataSetName>
             <Top>0.17639cm</Top>
             <Left>0.58115cm</Left>
             <Height>1.2cm</Height>
@@ -418,7 +415,7 @@
       <Width>19.76404cm</Width>
       <Page>
         <PageHeader>
-          <Height>2.93337cm</Height>
+          <Height>3.20854cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -437,7 +434,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.18265in</Top>
+              <Top>0.37015in</Top>
               <Left>6.53243in</Left>
               <Height>0.25in</Height>
               <Width>0.76042in</Width>
@@ -466,7 +463,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.15834in</Top>
+              <Top>0.35834in</Top>
               <Left>2.99916in</Left>
               <Height>0.25in</Height>
               <Width>0.94845in</Width>
@@ -496,7 +493,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox12</rd:DefaultName>
-              <Top>0.50209in</Top>
+              <Top>0.68959in</Top>
               <Left>6.53243in</Left>
               <Height>0.25in</Height>
               <Width>0.76042in</Width>
@@ -526,7 +523,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
-              <Top>0.4639in</Top>
+              <Top>0.6639in</Top>
               <Left>2.99916in</Left>
               <Height>0.25in</Height>
               <Width>0.94845in</Width>
@@ -556,7 +553,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox12</rd:DefaultName>
-              <Top>0.77987in</Top>
+              <Top>0.96737in</Top>
               <Left>6.53243in</Left>
               <Height>0.25in</Height>
               <Width>0.76041in</Width>
@@ -586,7 +583,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>CustomerName</rd:DefaultName>
-              <Top>0.43718cm</Top>
+              <Top>0.94518cm</Top>
               <Left>11.01937cm</Left>
               <Height>0.6cm</Height>
               <Width>5.46716cm</Width>
@@ -616,7 +613,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>NationalNumber</rd:DefaultName>
-              <Top>1.31031cm</Top>
+              <Top>1.81831cm</Top>
               <Left>11.01937cm</Left>
               <Height>0.6cm</Height>
               <Width>5.46716cm</Width>
@@ -646,7 +643,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Paid1</rd:DefaultName>
-              <Top>2.01587cm</Top>
+              <Top>2.52387cm</Top>
               <Left>11.01937cm</Left>
               <Height>0.6cm</Height>
               <Width>5.46716cm</Width>
@@ -676,7 +673,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ProjectName</rd:DefaultName>
-              <Top>0.43718cm</Top>
+              <Top>0.94518cm</Top>
               <Left>0.58115cm</Left>
               <Height>0.6cm</Height>
               <Width>6.86033cm</Width>
@@ -706,7 +703,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>CustomerPhone</rd:DefaultName>
-              <Top>1.21357cm</Top>
+              <Top>1.72157cm</Top>
               <Left>0.58115cm</Left>
               <Height>0.6cm</Height>
               <Width>6.89561cm</Width>
@@ -736,7 +733,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Stock</rd:DefaultName>
-              <Top>1.95468cm</Top>
+              <Top>2.46268cm</Top>
               <Left>0.58115cm</Left>
               <Height>0.6cm</Height>
               <Width>6.86033cm</Width>
@@ -766,11 +763,41 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
-              <Top>0.76946in</Top>
+              <Top>0.96946in</Top>
               <Left>2.99916in</Left>
               <Height>0.25in</Height>
               <Width>0.94845in</Width>
               <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>فاتورة عميل</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0.16879cm</Top>
+              <Left>8.8667cm</Left>
+              <Height>0.6cm</Height>
+              <Width>2.40906cm</Width>
+              <ZIndex>12</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>

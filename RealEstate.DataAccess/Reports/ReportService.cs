@@ -103,7 +103,7 @@ namespace RealEstate.DataAccess
             try
             {
                 var result = new List<ViewCustomerDatum>();
-                if (ProjectId == null)
+                if (ProjectId == null|| ProjectId == 0)
                 {
                      result = _db.ViewCustomerData.ToList();
                 }
@@ -410,10 +410,15 @@ namespace RealEstate.DataAccess
         {
             try
             {
-               
-                var supervisorDetail = _db.SupervisorDetails.Where(c=>c.SupervisorId==search.SupervisorId);
-                var dailyReports = _db.ViewDailyReports.Where(c => c.SupervisorId == search.SupervisorId).ToList();
-
+                IQueryable<SupervisorDetail> supervisorDetail;
+                List<ViewDailyReport> dailyReports;
+                supervisorDetail = _db.SupervisorDetails;
+                dailyReports = _db.ViewDailyReports.ToList();
+                if (search.SupervisorId != null && search.SupervisorId != 0)
+                {
+                    supervisorDetail = supervisorDetail.Where(c => c.SupervisorId == search.SupervisorId);
+                    dailyReports = dailyReports.Where(c => c.SupervisorId == search.SupervisorId).ToList();
+                }
             
 
                 if (search.FromDate != null)
