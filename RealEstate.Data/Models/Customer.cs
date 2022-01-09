@@ -11,7 +11,6 @@ namespace RealEstate.Data.Models
         {
             ProjectVisits = new HashSet<ProjectVisit>();
             Questions = new HashSet<Question>();
-            Reservations = new HashSet<Reservation>();
         }
 
         public int Id { get; set; }
@@ -22,6 +21,5 @@ namespace RealEstate.Data.Models
 
         public virtual ICollection<ProjectVisit> ProjectVisits { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

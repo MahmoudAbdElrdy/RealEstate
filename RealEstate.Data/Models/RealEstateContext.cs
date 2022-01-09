@@ -517,11 +517,7 @@ namespace RealEstate.Data.Models
             {
                 entity.ToTable("Reservation");
 
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Reservation_Customer");
+               
 
                 entity.HasOne(d => d.ProjectUnitDescription)
                     .WithMany(p => p.Reservations)

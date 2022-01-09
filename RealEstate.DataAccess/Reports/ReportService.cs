@@ -184,7 +184,7 @@ namespace RealEstate.DataAccess
             try
             {
                
-                var result = SqlProcedures.GetAlert(_db, id, from, to).Where(x=>x.ProjectUnitID!=null).ToList();
+                var result = SqlProcedures.GetAlert(_db, id, from, to).Where(x=>x.ProjectUnitID!=null).OrderByDescending(c=>c.CustomerName).ToList();
                 foreach (var alert in result)
                 {
                     if (alert.ProjectUnitID != null)
@@ -219,7 +219,7 @@ namespace RealEstate.DataAccess
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Data = result
+                    Data = result.Where(c=>c.Remainder!=0)
                 };
             }
             catch (Exception ex)

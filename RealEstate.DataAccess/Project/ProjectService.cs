@@ -391,7 +391,7 @@ namespace RealEstate.DataAccess
                         _db.Entry(unit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         var newRecProgram = _mapper.Map<ProgramDto, Program>(reservation.program);
 
-                        _db.Reservations.Add(newRec);
+                      //  _db.Reservations.Add(newRec);
                         _db.Programs.Add(newRecProgram);
 
                     }
