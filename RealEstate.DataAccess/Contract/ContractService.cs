@@ -30,7 +30,7 @@ namespace RealEstate.DataAccess
         private BaseSpecifications<Contract> Specifications(ContractSearch search)
         {
             BaseSpecifications<Contract> specification = null;
-
+            specification?.AddInclude(c => c.ProjectUnit);
 
             if (!string.IsNullOrEmpty(search.Name))
             {
@@ -67,6 +67,12 @@ namespace RealEstate.DataAccess
                 var projectId = new BaseSpecifications<Contract>(x => x.ProjectId == search.ProjectId);
                 specification = specification?.And(projectId) ?? projectId;
             }
+           
+            if (search.ProjectId != null && search.ProjectId > 0)
+            {
+                var projectId = new BaseSpecifications<Contract>(x => x.ProjectId == search.ProjectId);
+                specification = specification?.And(projectId) ?? projectId;
+            }
             if (search.IsStock != null)
             {
                 var isStock = new BaseSpecifications<Contract>(x => x.IsStock == search.IsStock);
@@ -77,13 +83,23 @@ namespace RealEstate.DataAccess
                 var date = new BaseSpecifications<Contract>(x =>  x.Date.Date.Year.Equals(search.Date));
                 specification = specification?.And(date) ?? date;
             }
-
+            if (search.Number != null && search.Number > 0)
+            {
+                var projectId = new BaseSpecifications<Contract>(x => x.ProjectUnit.Number == search.Number);
+                specification = specification?.And(projectId) ?? projectId;
+            }
+            if (search.NumberFloor != null && search.NumberFloor > 0)
+            {
+                var projectId = new BaseSpecifications<Contract>(x => x.ProjectUnit.FloorNumber == search.NumberFloor);
+                specification = specification?.And(projectId) ?? projectId;
+            }
             if (specification == null)
                 specification = new BaseSpecifications<Contract>();
-           // specification.AddInclude(c => c.FileContracts);
+          
             specification.isPagingEnabled = true;
             specification.page = search.PageNumber;
             specification.pageSize = search.PageSize;
+           
             return specification;
         }
         public async Task<ResponseData> GetAll(ContractSearch search)
@@ -96,7 +112,7 @@ namespace RealEstate.DataAccess
 
                 var specification = Specifications(search);
 
-                filter = _db.Contracts.Pagtion(specification, out int count);
+                filter = _db.Contracts.Include(c=>c.ProjectUnit).Pagtion(specification, out int count);
 
                 //  var entity = _db.Contracts.Include(x => x.Department);
                 var entity = _mapper.Map<List<ContractDto>>(filter);
@@ -228,24 +244,63 @@ namespace RealEstate.DataAccess
 
 
         }
+        public async Task<ResponseData> Getpaid(int? id)
+        {
+            try
+            {
+
+                var result = _db.ContractDetailBills.Include(x => x.ContractDetail).Where(c => c.ContractDetail.ContractId == id).Sum(m => m.Paid);
+
+                return new ResponseData
+                {
+                    IsSuccess = true,
+                    Code = EResponse.OK,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseData
+                {
+                    IsSuccess = false,
+                    Code = EResponse.UnexpectedError,
+                    Message = ex.Message,
+                };
+            }
+        }
         public async Task<ResponseData> CancellContract(CancelledContractDto cancelledContract)
         {
             try
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Include(c => c.FileContracts).Where(a => a.Id == cancelledContract.ContractId).FirstOrDefaultAsync();
-                var projectName = _db.Projects.Where(c => c.Id == emp.ProjectId).FirstOrDefault();
-                CancelledContract cancelled = new CancelledContract();
-                cancelled.Customer = emp.Name;
-                cancelled.Project = projectName.Name;
-                cancelled.Paid = (double)cancelledContract.Paid;
-                cancelled.Back = (double)cancelledContract.Back;
-                cancelled.Date = DateTime.Now;
-                if (emp.FileContracts != null)
-                    _db.FileContracts.RemoveRange(emp.FileContracts);
-                _db.Contracts.Remove(emp);
-                _db.CancelledContracts.Add(cancelled);
+
+                CancelledContract cancelled = _db.CancelledContracts.Where(c => c.Id == cancelledContract.Id).FirstOrDefault();
+                if (cancelled == null)
+                {
+                    cancelled = new CancelledContract();
+                    Contract emp = await _db.Contracts.Include(c => c.FileContracts).Where(a => a.Id == cancelledContract.ContractId).FirstOrDefaultAsync();
+                    var projectName = _db.Projects.Where(c => c.Id == emp.ProjectId).FirstOrDefault();
+                    cancelled.Customer = emp.Name;
+                    cancelled.Project = projectName.Name;
+                    cancelled.Paid = (double)cancelledContract.Paid;
+                    cancelled.Back = (double)cancelledContract.Back;
+                    cancelled.Date = (DateTime)cancelledContract.Date;
+                    if (emp.FileContracts != null)
+                        _db.FileContracts.RemoveRange(emp.FileContracts);
+                    _db.Contracts.Remove(emp);
+                    _db.CancelledContracts.Add(cancelled);
+                }
+                else
+                {
+                
+                    cancelled.Paid = (double)cancelledContract.Paid;
+                    cancelled.Back = (double)cancelledContract.Back;
+                    cancelled.Date = (DateTime)cancelledContract.Date;
+
+                }
+              
                 _db.SaveChanges();
                 sw.Stop();
                 Console.WriteLine("Elapsed={0}", sw.Elapsed);

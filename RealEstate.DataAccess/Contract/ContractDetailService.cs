@@ -201,7 +201,13 @@ namespace RealEstate.DataAccess
 
                 List<ContractDetail> newRec = new List<ContractDetail>();
                 newRec = _mapper.Map<List<ContractDetailDto>, List<ContractDetail>>(ContractDetail);
+                //Utilities.ChangeDateTimezone((DateTime)filter.FromDate, LoggedUser.Timezone);
+                TimeZoneInfo tzone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                foreach (var item in newRec)
+                {
 
+                   item.Date = TimeZoneInfo.ConvertTimeFromUtc(item.Date, TimeZoneInfo.Local);
+                }
                 _db.ContractDetails.AddRange(newRec);
                 _db.SaveChanges();
                 return new ResponseData { Message = "تم الحفظ بنجاح", IsSuccess = true };

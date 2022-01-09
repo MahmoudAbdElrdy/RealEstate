@@ -61,7 +61,11 @@ namespace RealEstate.Api.Controllers.Contract
         {
             return await _service.GetAllCancelledContracts(search);
         }
-
+        [HttpGet("Getpaid")]
+        public async Task<ActionResult<ResponseData>> Getpaid(int contractId)
+        {
+            return await _service.Getpaid(contractId);
+        }
         // ContractDetail 
         [HttpGet("GetAllContractDetail")]
         public async Task<ActionResult<ResponseData>> GetAllContractDetail(int contractId)
