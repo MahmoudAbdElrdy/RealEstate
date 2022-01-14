@@ -111,7 +111,24 @@ namespace RealEstate.DataAccess
                 {
                      result = _db.ViewCustomerData.Where(c => c.ProjectId == ProjectId).ToList();
                 }
-                
+                foreach(var item in result)
+                {
+                    var unit=_db.ProjectUnits.FirstOrDefault(c => c.Id == item.ProjectUnitId);
+                    if (unit != null)
+                    {
+                        item.Floors = unit?.FloorNumber;
+                        item.ApartmentNumber = unit?.Number;
+
+                    }
+                    else
+                    {
+                        item.Floors =0;
+                        item.ApartmentNumber = 0;
+                    }
+                 
+                   // alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+
+                }
 
                 return new ResponseData
                 {

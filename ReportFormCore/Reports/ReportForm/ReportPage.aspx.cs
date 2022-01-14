@@ -461,7 +461,16 @@ namespace ReportFormCore.Reports.ReportForm
                         //this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", customerName));
                         this.reportViewer1.LocalReport.SetParameters(new ReportParameter("ProjectName", parmarter.ProjectName ?? ""));
                         this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Name", parmarter.Name ?? ""));
-                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Number", parmarter?.Number.ToString() ?? ""));
+                        if (parmarter?.FloorNumber == 0)
+                        {
+                            this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Number","00"+ parmarter?.Number.ToString() ?? ""));
+
+                        }
+                        else
+                        {
+                            this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Number", parmarter?.Number.ToString() ?? ""));
+
+                        }
                         this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Area", parmarter?.Area.ToString() ?? ""));
                         this.reportViewer1.LocalReport.SetParameters(new ReportParameter("FloorNumber", parmarter?.FloorNumber.ToString() ?? "")); 
                         this.reportViewer1.LocalReport.SetParameters(new ReportParameter("NationalNumber", parmarter.NationalNumber ?? ""));
