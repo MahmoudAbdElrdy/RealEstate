@@ -15,6 +15,7 @@ namespace RealEstate.Data.StoredProc
         public int? ContractDetailBillId { get; set; }
         public int? Number { get; set; }
         public double? Paid { get; set; }
+        public double? AmountPaid { get; set; }  
         public string ContractDetailBillDate { get; set; }
         public double? Remainder { get; set; }
         public DateTime? Date { get; set; }

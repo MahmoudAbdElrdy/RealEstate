@@ -65,7 +65,7 @@ namespace RealEstate.Api.Controllers
             string mym = "";
              int ext = (int)(DateTime.Now.Ticks >> 10);
             ContractReportDto parmarter = (await _contractService.GetByName(customerName)).Data;
-            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
+            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id)).Data;
             var path = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock.rdlc");
             var path2 = Path.Combine($"{_webHostEnvironment.WebRootPath}\\Reports\\CustomerCardStock2.rdlc");
             Dictionary<string, string> parmarters = new Dictionary<string, string>();

@@ -61,7 +61,7 @@ namespace RealEstate.Api.Controllers
         {
             
             ContractReportDto parmarter = (await _contractService.GetByName(customerName.customerName)).Data;
-            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id, false)).Data;
+            List<CustomerCard> data = (await _serviceReport.GetCustomerCard((int)parmarter.Id)).Data;
 
             return new ResponseData
             {
@@ -151,7 +151,9 @@ namespace RealEstate.Api.Controllers
         public async Task<ResponseData> ReportBill(ReportPrintBill report)
         {
 
-            var data = (await _serviceReport.GetPrintBill((int)report.id)).Data;
+            var data = (await _serviceReport.GetPrintBill((int)report.id));
+            var data1 = data.Data;
+            var data2 = data.Data2;
 
 
             var paid = (await _serviceReport.Getpaid((int)report.id)).Data;
@@ -160,8 +162,9 @@ namespace RealEstate.Api.Controllers
             {
                 IsSuccess = true,
                 Code = EResponse.OK,
-                Data = data,
-                Message = paidReport
+                Data = data1,
+                Message = paidReport,
+                 Data2 = data2
             };
         }
         [HttpPost("ReportCustomerWaiting")]

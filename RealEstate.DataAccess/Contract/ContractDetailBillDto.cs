@@ -14,6 +14,7 @@ namespace RealEstate.DataAccess
         public int? ContractDetailId { get; set; }
         public int? Number { get; set; }
         public double? Paid { get; set; }
+        public double? AmountPaid { get; set; }
         public DateTime? Date { get; set; }
         public void CreateMappings(Profile configuration)
         {

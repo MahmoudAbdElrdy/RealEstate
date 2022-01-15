@@ -692,15 +692,17 @@ namespace ReportFormCore.Reports.ReportForm
                         var o2 = JsonConvert.DeserializeObject<JObject>(ResultResponse.Result);
                         var data = o2.Value<JArray>("data") 
                             .ToObject<List<PrintBill>>();
+                        var data2 = o2.Value<JObject>("data2")
+                         .ToObject<ViewCustomerDatum>();
                         string Paid = ((Newtonsoft.Json.Linq.JValue)o2["message"])?.Value.ToString();
                       
 
                         BindReport("PrintBill", data);
-                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("ProjectName", data[0].ProjectName ?? ""));
-                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerPhone", data[0].CustomerPhone ?? ""));
-                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("NationalNumber", data[0].NationalNumber ?? ""));
-                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Stock", data[0].Stock ?? ""));
-                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", data[0].CustomerName ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("ProjectName", data2.ProjectName ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerPhone", data2.Phone ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("NationalNumber", data2.NationalNumber ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Stock", data2.Stock ?? ""));
+                        this.reportViewer1.LocalReport.SetParameters(new ReportParameter("CustomerName", data2.Name ?? ""));
                         this.reportViewer1.LocalReport.SetParameters(new ReportParameter("Paid", Paid));
                     }
 
@@ -766,4 +768,27 @@ public class ResponseData
     public int? PageSize { get; set; }
     public int? PageCount { get; set; }
 
+}
+public  class ViewCustomerDatum
+{
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public string NationalNumber { get; set; }
+    public string Phone { get; set; }
+    public string Date { get; set; }
+    public string Program { get; set; }
+    public string Address { get; set; }
+    public bool IsStock { get; set; }
+    public string Stock { get; set; }
+    public double TotalCost { get; set; }
+    public double? MeterCost { get; set; }
+    public int? ProjectUnitId { get; set; }
+    public int ProjectId { get; set; }
+    public double? StockCount { get; set; }
+    public double? MetersCount { get; set; }
+    public string Notes { get; set; }
+    public string ProjectName { get; set; }
+    public string ProjectAddress { get; set; }
+    public int? Floors { get; set; }
+    public int? ApartmentNumber { get; set; }
 }

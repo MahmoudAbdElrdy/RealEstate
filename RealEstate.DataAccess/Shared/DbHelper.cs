@@ -71,7 +71,7 @@ namespace RealEstate.DataAccess
         {
             return DbHelper.ExecuteQuery<ExtraContrcat>(context, $"EXEC dbo.ExtraContrcat @ProjectID = '{ProjectID}' ,@ContractExtraName=N'{contractExtraName}'");
         }
-        public static List<CustomerCard> GetCustomerCard(RealEstateContext context, int ContractID, bool IsExtra)
+        public static List<CustomerCard> GetCustomerCard(RealEstateContext context, int ContractID)
         {
             return DbHelper.ExecuteQuery<CustomerCard>(context, $"EXEC dbo.CustomerCard @ContractID = '{ContractID}'");
         }  

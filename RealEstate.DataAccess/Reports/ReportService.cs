@@ -67,18 +67,28 @@ namespace RealEstate.DataAccess
                 };
             }
         }
-        public async Task<ResponseData> GetCustomerCard(int id, bool IsExtra)
+        public async Task<ResponseData> GetCustomerCard(int id)
         {
             try
             {
-                var result = SqlProcedures.GetCustomerCard(_db, id, IsExtra).OrderBy(c=>c.Date).ToList();
+                var result = SqlProcedures.GetCustomerCard(_db, id).ToList();
+                string name = "";
                 foreach (var model in result)
                 {
-                    
+                   
                     var Paid = _db.ContractDetailBills.Where(c => c.ContractDetailId == model.ContractDetailId).Sum(c => c.Paid);
+                  
                     model.Remainder = model.Amount - Paid;
-
+                    if (model.AmountPaid == null)
+                    {
+                        model.AmountPaid = 0;
+                    }
                 }
+                //for(int i = 0; i <= result.Count - 1; i++)
+                //{
+                //    name = result[i].Name;
+
+                //}
                 return new ResponseData
                 {
                     IsSuccess = true,
@@ -336,12 +346,14 @@ namespace RealEstate.DataAccess
                      alert.Remainder = (decimal)alert.Amount - alert.Paid;
 
                 }
+                var customer= _db.ViewCustomerData.Where(c => c.Id == id).FirstOrDefault();
                 result = result.Where(c => c.Remainder != 0).ToList();
                 return new ResponseData
                 {
                     IsSuccess = true,
                     Code = EResponse.OK,
-                    Data = result
+                    Data = result,
+                    Data2= customer
                 };
             }
             catch (Exception ex)
