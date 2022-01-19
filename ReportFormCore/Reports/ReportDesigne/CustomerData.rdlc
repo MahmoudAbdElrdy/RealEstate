@@ -114,43 +114,127 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.32044cm</Width>
+                  <Width>1.1665cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.44375cm</Width>
+                  <Width>1.23cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.94369cm</Width>
+                  <Width>1.10877cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.99131cm</Width>
+                  <Width>1.23208cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.52577cm</Width>
+                  <Width>1.73202cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.68452cm</Width>
+                  <Width>1.77964cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.52577cm</Width>
+                  <Width>2.3141cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.81679cm</Width>
+                  <Width>2.47285cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.52577cm</Width>
+                  <Width>2.3141cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.10785cm</Width>
+                  <Width>2.60512cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.97556cm</Width>
+                  <Width>2.3141cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.89618cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.76389cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
                   <Height>0.6cm</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox14">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>الامتار</Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontFamily>Times New Roman</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox10">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>الاسهم</Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontFamily>Times New Roman</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox6">
@@ -559,6 +643,70 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="MetersCount">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!MetersCount.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>MetersCount</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="StockCount">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!StockCount.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>StockCount</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="ApartmentNumber">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -587,7 +735,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -927,6 +1074,8 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -943,7 +1092,7 @@
             <Top>0.17639cm</Top>
             <Left>0.31962cm</Left>
             <Height>1.2cm</Height>
-            <Width>25.86119cm</Width>
+            <Width>25.92939cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -954,7 +1103,7 @@
         <Height>1.69333cm</Height>
         <Style />
       </Body>
-      <Width>27.18876cm</Width>
+      <Width>27.41317cm</Width>
       <Page>
         <PageHeader>
           <Height>1.27cm</Height>
