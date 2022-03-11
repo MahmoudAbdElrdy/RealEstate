@@ -269,6 +269,10 @@ namespace RealEstate.DataAccess
                 sw.Start();
                 var data =await _db.ViewPayInstallments.Where(x => x.ContractId == ContractId).OrderBy(c=>c.ContractDetailDate).ToListAsync();
                 var entity = _mapper.Map<List<ViewPayInstallmentDto>>(data);
+                entity[0].PreviousPaid = entity[0].Paid;
+                var Paid2 = _db.ContractDetailBills.Where(c => c.ContractDetailId == entity[0].ContractDetailId).Sum(c => c.Paid);
+                entity[0].Remainder = (decimal?)(entity[0].Amount - Paid2);
+
                 for (int i = 1; i < entity.Count(); i++)
                 {
                     entity[i].PreviousPaid = entity[i-1].Paid;

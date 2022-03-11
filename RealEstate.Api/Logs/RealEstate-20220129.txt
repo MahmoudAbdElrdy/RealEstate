@@ -1,0 +1,5 @@
+2022-01-29T00:20:01.9542728+02:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2022-01-29T00:20:01.9631879+02:00  [INF] Hosting environment: "Development" (c3307c92)
+2022-01-29T00:20:01.9654545+02:00  [INF] Content root path: "D:\الفولي\RealEstate.Api\RealEstate.Api" (b5d60022)
+2022-01-29T00:22:54.1771630+02:00 80000c6e-0004-fe00-b63f-84710c7967bb [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. (96eb03fe)
+2022-01-29T00:22:54.1811027+02:00 80000c6e-0004-fe00-b63f-84710c7967bb [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. (96eb03fe)

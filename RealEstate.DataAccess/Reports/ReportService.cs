@@ -211,7 +211,8 @@ namespace RealEstate.DataAccess
             try
             {
                
-                var result = SqlProcedures.GetAlert(_db, id, from, to).Where(x=>x.ProjectUnitID!=null).OrderByDescending(c=>c.CustomerName).ToList();
+              //  var result = SqlProcedures.GetAlert(_db, id, from, to).Where(x=>x.ProjectUnitID!=null).OrderByDescending(c=>c.CustomerName).ToList();
+                var result = SqlProcedures.GetAlert(_db, id, from, to).OrderByDescending(c=>c.CustomerName).ToList();
                 foreach (var alert in result)
                 {
                     if (alert.ProjectUnitID != null)
@@ -219,6 +220,11 @@ namespace RealEstate.DataAccess
                         alert.FloorNumber = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.FloorNumber;
                         alert.Number = (int)_db.ProjectUnits.FirstOrDefault(c => c.Id == alert.ProjectUnitID)?.Number;
                         alert.Details = $"رقم الطابق={ alert.FloorNumber}{Environment.NewLine}رقم الوحدة={ alert.Number}";
+                    }
+                    else
+                    {
+                        alert.Details = $"عدد الاسهم ={ alert.StockCount}{Environment.NewLine} عدد الامتار={ alert.MetersCount}";
+                        
                     }
                   
                     alert.CustomerName = $"{ alert.CustomerName}{Environment.NewLine}ت:{ alert.CustomerPhone}";
@@ -247,6 +253,7 @@ namespace RealEstate.DataAccess
                     IsSuccess = true,
                     Code = EResponse.OK,
                     Data = result.Where(c=>c.Remainder!=0)
+                   // Data = result.Where(c=>c.Remainder!=0)
                 };
             }
             catch (Exception ex)

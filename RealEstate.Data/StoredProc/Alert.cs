@@ -23,7 +23,9 @@ namespace RealEstate.Data.StoredProc
         public double Remainder { get; set; }
         public int FloorNumber { get; set; }
         public int Number { get; set; }
-        public string Details { get; set; } 
+        public string Details { get; set; }
+        public double? StockCount { get; set; }
+        public double? MetersCount { get; set; }
     }
     public class PrintBill
     {

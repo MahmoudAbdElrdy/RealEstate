@@ -499,7 +499,7 @@ namespace RealEstate.DataAccess
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                Contract emp = await _db.Contracts.Include(x=>x.ProjectUnit.ProjectUnitDescription).FirstOrDefaultAsync(x => x.Name.Contains(name));
+                Contract emp = await _db.Contracts.Include(x=>x.ProjectUnit.ProjectUnitDescription).FirstOrDefaultAsync(x => x.Id==Convert.ToInt32(name));
 
                 var _contract = _mapper.Map<Contract, ContractReportDto>(emp);
                 if (_contract.ProjectId > 0)
